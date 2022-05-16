@@ -1,9 +1,11 @@
 ## Software Engineering Project WS 2022 ##
 
+
 ### Contributors ###
 
--Simon Rauch
--Lars Bürger
+- Simon Rauch
+- Lars Bürger
+
 
 ### Description ###
 
