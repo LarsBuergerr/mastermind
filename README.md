@@ -8,4 +8,4 @@
 ### Description ###
 
 This project includes a simple mastermind game.
-Just hit sbt run and start playing.
+Just hit `sbt compile` and start playing.
