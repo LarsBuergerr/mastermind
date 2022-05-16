@@ -1,11 +1,12 @@
 ## Software Engineering Project WS 2022 ##
 
-###Contributors###
+### Contributors ###
 
 -Simon Rauch
+
 -Lars Bürger
 
-###Description###
+### Description ###
 
 This project includes a simple mastermind game.
 Just hit ´sbt run´ and start playing.
