@@ -3,19 +3,16 @@ import scala.util.Try
 import scala.util.Failure
 import scala.io.StdIn.readLine
 
-def RandomNumberGenerator(): Int =
-  
-  //this is a test
+val x = 5 + 1
+val y = RandomNumberGenerator()
+
+def RandomNumberGenerator(): Int = 
   val r = new scala.util.Random
-  
   return r.nextInt(100)
 
 def Loop():Unit =
-
   val randomnr = RandomNumberGenerator()
-
   print("Your guess: ")
-
   val input = readLine(" ").toInt
 
   if(randomnr == input)
@@ -27,17 +24,3 @@ def Loop():Unit =
 
   if(ans != "n")
     return Loop()
-
-@main def main: Unit = 
-
-  print("Random Number between 0 and 100 is getting generated... \n")
-  Loop()
-
-  print("Thank you for playing our game!!!\n")
-
-
-
-
-
-
-
