@@ -5,7 +5,7 @@ import scala.io.StdIn.readLine
 
 def RandomNumberGenerator(): Int =
   
-
+  //this is a test
   val r = new scala.util.Random
   
   return r.nextInt(100)
