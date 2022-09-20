@@ -1,10 +1,15 @@
+package de.htwg.se.mastermind
 
+import model._
 
 
 @main def main: Unit = 
 
-  print("Random Number between 0 and 100 is getting generated... \n")
-  print("Thank you for playing our game!!!\n")
+  val welcome = "Welcome to Mastermind!\n"
+  
+  val output = welcome + mesh()
+ 
+  print(output)
 
 
 
