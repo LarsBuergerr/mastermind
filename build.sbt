@@ -11,6 +11,9 @@ lazy val root = project
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % "test"
   )
 
+jacocoExcludes := Seq(
+  "*Main.*"
+)
 
 jacocoReportSettings := JacocoReportSettings(
   "Jacoco Coverage Report",
