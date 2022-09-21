@@ -1,12 +1,16 @@
-## sbt project compiled with Scala 3
+## Software Engineering Project WS 2022 ##
 
 ![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/scala.yml/badge.svg)
 Development: [![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/develop/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/develop)
 Master: [![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/development/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/master)
 
-### Usage
+### Contributors ###
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
+- Simon Rauch
+- Lars Bürger
 
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+
+### Description ###
+
+This project includes a simple mastermind game.
+Just hit `sbt compile` and start playing.
