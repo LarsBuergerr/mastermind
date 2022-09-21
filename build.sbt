@@ -12,7 +12,7 @@ lazy val root = project
   )
 
 jacocoExcludes := Seq(
-  "*Main.*"
+  "mastermind.Main"
 )
 
 jacocoReportSettings := JacocoReportSettings(
