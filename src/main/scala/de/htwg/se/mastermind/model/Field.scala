@@ -6,25 +6,27 @@ private val plus = "+"
 private val minus = "-"
 private val verLine = "|"
 private val space = " "
+private val rbracket = "["
+private val lbracket = "]"
 private val eol = sys.props("line.separator")
 
 
-def bar(cellWidth: Int = 3, cellCount: Int = 3) = 
+def bar(cellWidth: Int = 3, cellCount: Int = 4) = 
 {
-  /* default bar +---+---+---+ | +---+---+---+ */
-  (plus + (minus * cellWidth)) * cellCount + plus + space + verLine + space + (plus + (minus * cellWidth)) * cellCount + plus + eol
+  (plus + (minus * cellWidth)) * cellCount + plus + eol                         /* default bar: +---+---+---+---+ */
 }
 
-def cells(cellWidth: Int = 3, cellCount: Int = 3) = 
+def cells(cellWidth: Int = 3, cellCount: Int = 4) = 
 {
-  /* |   |   |   | | |   |   |   | */
-  (verLine + (space * cellWidth)) * cellCount + verLine + space + verLine + space + (verLine + (space * cellWidth)) * cellCount + verLine + eol
+  (verLine + (space * cellWidth)) * cellCount + verLine                         /* default cells :|   |   |   |   |  */
 }
 
-def mesh(cellWidth: Int = 3, rows: Int = 10, colls: Int = 4) = 
+def hint_bar(cellWidth: Int = 3, cellCount: Int = 4) =
 {
-  (bar(cellWidth, colls) + cells(cellWidth, colls)) * rows + bar(cellWidth, colls)
+  space * 3 + rbracket + (space * cellWidth + verLine) * (cellCount - 1) + space * cellWidth + lbracket + eol
 }
 
-/* Return mesh as string representation */
-override def toString(): String = mesh()
+def mesh(cellWidth: Int = 3, rows: Int = 6, colls: Int = 4) = 
+{
+  (bar(cellWidth, colls) + cells(cellWidth, colls) + hint_bar(cellWidth, colls)) * rows + bar(cellWidth, colls)
+}
