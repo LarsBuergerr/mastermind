@@ -10,23 +10,29 @@ private val rbracket = "["
 private val lbracket = "]"
 private val eol = sys.props("line.separator")
 
+case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
 
-def bar(cellWidth: Int = 3, cellCount: Int = 4) = 
-{
-  (plus + (minus * cellWidth)) * cellCount + plus + eol                         /* default bar: +---+---+---+---+ */
-}
+  def this(size: Int, filling: Stone, hfilling: HintStone) = this(new Matrix(8, 4, filling), new Matrix(8, 4, hfilling))
 
-def cells(cellWidth: Int = 3, cellCount: Int = 4) = 
-{
-  (verLine + (space * cellWidth)) * cellCount + verLine                         /* default cells :|   |   |   |   |  */
-}
+  val rows = matrix.rows
+  val cols = matrix.cols
 
-def hint_bar(cellWidth: Int = 3, cellCount: Int = 4) =
-{
-  space * 3 + rbracket + (space * cellWidth + verLine) * (cellCount - 1) + space * cellWidth + lbracket + eol
-}
+  def bar(cellWidth: Int = 3, cellCount: Int = 4): String = 
+  {
+    (plus + (minus * cellWidth)) * cellCount + plus + eol                         /* default bar: +---+---+---+---+ */
+  }
 
-def mesh(cellWidth: Int = 3, rows: Int = 6, colls: Int = 4) = 
-{
-  (bar(cellWidth, colls) + cells(cellWidth, colls) + hint_bar(cellWidth, colls)) * rows + bar(cellWidth, colls)
-}
+  def cells(row: Int, cellWidth: Int = 3, cellCount: Int = 4): String = 
+  {
+    matrix.row(row).map(_.toString).map(" " * ((cellWidth - 1) / 2) + _ + " " * ((cellWidth - 1) / 2)).mkString("|", "|", "|") + 
+    space * 3 + hmatrix.row(row).map(_.toString).map(" " + _ + " ").mkString("[", "|", "]") + eol
+    //(verLine + (space * cellWidth)) * cellCount + verLine                         /* default cells :|   |   |   |   |  */
+  }
+
+  def mesh(cellWidth: Int = 3, rows: Int = 6, colls: Int = 4):String = 
+  {
+    //(bar(cellWidth, colls) + cells(cellWidth, colls) + hint_bar(cellWidth, colls)) * rows + bar(cellWidth, colls)
+    (0 until rows).map(cells(_)).mkString(bar(cellWidth, colls), bar(cellWidth, colls), bar(cellWidth, colls))
+  } 
+  override def toString = mesh()
+
