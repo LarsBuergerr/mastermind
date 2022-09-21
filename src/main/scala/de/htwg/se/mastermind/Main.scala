@@ -1,27 +1,41 @@
 package de.htwg.se.mastermind
 
 import model._
-
+import scala.io.StdIn.readLine
 
 @main def main: Unit = 
 
-  val matrix = new Matrix(8, 8, Stone.Empty)
-  val hmatrix = new Matrix(8, 8, HintStone.Empty)
+  println("Welcome to Mastermind!")
+  val field = new Field(8, 5, Stone.Empty, HintStone.Empty)
 
-  val new_matrix = matrix.replaceCell(3, 3, Stone.Blue)
-  val new_hmatrix = hmatrix.fill(HintStone.Black)
-
-  val field = new Field(new_matrix, new_hmatrix)
-
-  val welcome = "Welcome to Mastermind!\n"
-  
-  val output = field.mesh(3, matrix.rows, matrix.cols) + "\n"
- 
-  print(output)
+  println(field.mesh(3, 8, 5))
+  getInputAndPrintLoop(field)
 
 
 
 
+def getInputAndPrintLoop(field: Field): Unit =
+  val input = readLine
+  parseInput(input) match
+    case None => field
+    case Some(newfield) =>
+      println(newfield.mesh(3, 8, 5))
+      getInputAndPrintLoop(newfield)
 
-
-
+  def parseInput(input: String): Option[Field] =
+    input match
+      case "q" => None
+      case _ => {
+        val chars = input.toCharArray
+        val stone = chars(0) match
+          case 'R' => Stone.Red
+          case 'r' => Stone.Red
+          case 'G' => Stone.Green
+          case 'g' => Stone.Green
+          case 'B' => Stone.Blue
+          case 'b' => Stone.Blue
+          case _   => Stone.Empty
+        val x = chars(1).toString.toInt
+        val y = chars(2).toString.toInt
+        Some(field.put(stone, x, y))
+      }

@@ -12,7 +12,7 @@ private val eol = sys.props("line.separator")
 
 case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
 
-  def this(size: Int, filling: Stone, hfilling: HintStone) = this(new Matrix(8, 4, filling), new Matrix(8, 4, hfilling))
+  def this(rows: Int, cols: Int, filling: Stone, hfilling: HintStone) = this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))
 
   val rows = matrix.rows
   val cols = matrix.cols
@@ -35,4 +35,6 @@ case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
     (0 until rows).map(cells(_)).mkString(bar(cellWidth, colls), bar(cellWidth, colls), bar(cellWidth, colls))
   } 
   override def toString = mesh()
+
+  def put(stone: Stone, row: Int, col: Int) = copy(matrix.replaceCell(row, col, stone))
 
