@@ -67,8 +67,12 @@ codeComp1.code(0)
 var equalCount = 0
 var presentCount = 0
 
-val solutionVector = codeComp7
-val compareVec2 = codeComp8
+val solutionCode = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
+val wrongCode = new Code(Vector(Stone.Red, Stone.Blue, Stone.Purple, Stone.Red))
+solutionCode.compareTo(wrongCode.code)
+
+val solutionVector = solutionCode
+val compareVec2 = wrongCode
 
 val intersectVec = solutionVector.code.intersect(compareVec2.code)
 intersectVec.size
@@ -119,6 +123,9 @@ solutionVector.compareTo(compareVec2.code)
 
 codeComp1.code(0)
 
+
+
+    
 /*------------------------------------------------------------------------------*/
 
 def RandomNumberGenerator(): Int = 
