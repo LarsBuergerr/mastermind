@@ -1,3 +1,7 @@
+/**
+  * Represents a mastermind field
+  */
+
 package de.htwg.se.mastermind.model
 
 
@@ -10,9 +14,15 @@ private val rbracket = "["
 private val lbracket = "]"
 private val eol = sys.props("line.separator")
 
+/**
+  * 
+  *
+  * @param matrix
+  * @param hmatrix
+  */
 case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
 
-  def this(rows: Int = 6, cols: Int = 4, filling: Stone, hfilling: HintStone) = {
+  def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone.Empty, hfilling: HintStone = HintStone.Empty) = {
     this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))
   }
   
@@ -23,7 +33,7 @@ case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
     (plus + (minus * cellWidth)) * cellCount + plus + eol
   }
 
-  def cells(row: Int, cellWidth: Int = 3, cellCount: Int = 4): String = {
+  def cells(row: Int = 0, cellWidth: Int = 3, cellCount: Int = 4): String = {
     matrix.row(row).map(_.toString).map(" " * ((cellWidth - 1) / 2) + _ + " " * ((cellWidth - 1) / 2)).mkString("|", "|", "|") + 
     space * 3 + hmatrix.row(row).map(_.toString).map(" " + _ + " ").mkString("[", "|", "]") + eol
   }

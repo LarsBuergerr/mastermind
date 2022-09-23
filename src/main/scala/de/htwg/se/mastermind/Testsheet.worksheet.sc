@@ -7,6 +7,8 @@ import scala.io.StdIn.readLine
 val x = 5 + 1
 val y = RandomNumberGenerator()
 
+val defaultField = new Field()
+println(defaultField)
 /*------------------------------------------------------------------------------ Code.scala tests*/
 val c1 = new Code(4)
 c1.size
@@ -47,9 +49,10 @@ val codeComp4 = new Code(Vector(Stone.Blue, Stone.Red, Stone.Green))
 val codeComp5 = new Code(Vector(Stone.Red, Stone.Purple, Stone.Blue))
 val codeComp6 = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue))
 val codeComp7 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Purple))
+val codeComp8 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Red))
 
-codeComp1.compare(codeComp2.code)
-codeComp1.compare(codeComp3.code)
+//codeComp1.compare(codeComp2.code)
+//codeComp1.compare(codeComp3.code)
 
 var testVec = Vector(HintStone.Empty)
 var testCount = 0
@@ -61,24 +64,42 @@ codeComp1.code(0)
 var equalCount = 0
 var presentCount = 0
 
-val solutionVector = codeComp6
-val compareVec2 = codeComp7
+val solutionVector = codeComp7
+val compareVec2 = codeComp8
+
+val intersectVec = solutionVector.code.intersect(compareVec2.code)
+intersectVec.size
+
+/* Transfer Vector to Array */
+val compareArray = compareVec2.code.toArray
+
+var testList: List[Int] = List()
+//testList = testList.appended(1)
+testList
+testList.contains(1)
 
 for(i <- 0 to (solutionVector.size-1)){
   
   if(solutionVector.code(i).equals(compareVec2.code(i))){
-    equalCount = equalCount + 1
+      equalCount = equalCount + 1
+      testList = testList.appended(i)
   }
-  
-  for(j <- 0 to  (solutionVector.size-1)){        
-    if((i != j) && (solutionVector.code(i).equals(compareVec2.code(j)))){
-      presentCount = presentCount + 1
+  else
+  {
+    for(j <- 0 to  (solutionVector.size-1)){        
+      if((i != j) && (!testList.contains(j)) && (solutionVector.code(i).equals(compareVec2.code(j)))){
+        presentCount = presentCount + 1 
+      }
     }
   }
 }
+testList
 //presentCount = presentCount - equalCount
 equalCount
 presentCount
+
+var mutableVector: Vector[HintStone] = Vector()
+mutableVector
 
 val equalsVector = Vector.fill(equalCount)(HintStone.Black)
 val presentVector = Vector.fill(presentCount)(HintStone.White)
@@ -91,7 +112,7 @@ testVec
 testVec.hashCode()
 testCount
 
-solutionVector.compare(compareVec2.code)
+solutionVector.compareTo(compareVec2.code)
 
 codeComp1.code(0)
 
