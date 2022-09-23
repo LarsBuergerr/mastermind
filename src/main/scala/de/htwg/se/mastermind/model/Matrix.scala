@@ -9,3 +9,4 @@ case class Matrix[T](m: Vector[Vector[T]]):
   def row(row: Int) = m(row)
   def fill(filling: T): Matrix[T] = copy(Vector.tabulate(rows, cols) { (row, col) => filling })
   def replaceCell(row: Int, col: Int, cell: T): Matrix[T] = copy(m.updated(row, m(row).updated(col, cell)))
+  def replaceRow(row: Int, vec: Vector[T]): Matrix[T] = copy(m.updated(row, vec))

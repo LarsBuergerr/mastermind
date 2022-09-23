@@ -12,8 +12,6 @@ import scala.io.StdIn.readLine
   getInputAndPrintLoop(field)
 
 
-
-
 def getInputAndPrintLoop(field: Field): Unit =
   val input = readLine
   parseInput(input) match
@@ -23,19 +21,22 @@ def getInputAndPrintLoop(field: Field): Unit =
       getInputAndPrintLoop(newfield)
 
   def parseInput(input: String): Option[Field] =
+    var vector: Vector[Stone] = Vector()
     input match
       case "q" => None
       case _ => {
         val chars = input.toCharArray
-        val stone = chars(0) match
-          case 'R' => Stone.Red
-          case 'r' => Stone.Red
-          case 'G' => Stone.Green
-          case 'g' => Stone.Green
-          case 'B' => Stone.Blue
-          case 'b' => Stone.Blue
-          case _   => Stone.Empty
-        val x = chars(1).toString.toInt
-        val y = chars(2).toString.toInt
-        Some(field.put(stone, x, y))
+
+        for (i <- 0 to (chars.size-1))
+          val stone = chars(i) match
+            case 'R'|'r' => vector = vector.appended(Stone.Red)
+            case 'G'|'g' => vector = vector.appended(Stone.Green)
+            case 'B'|'b' => vector = vector.appended(Stone.Blue)
+            case 'Y'|'y' => vector = vector.appended(Stone.Yellow)
+            case 'W'|'w' => vector = vector.appended(Stone.White)
+            case 'P'|'p' => vector = vector.appended(Stone.Purple)
+        
+        print(vector)
+        Some(field.put(vector, 0))
       }
+
