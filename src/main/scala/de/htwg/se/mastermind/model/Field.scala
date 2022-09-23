@@ -12,28 +12,27 @@ private val eol = sys.props("line.separator")
 
 case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
 
-  def this(rows: Int, cols: Int, filling: Stone, hfilling: HintStone) = this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))
-
+  def this(rows: Int = 6, cols: Int = 4, filling: Stone, hfilling: HintStone) = {
+    this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))
+  }
+  
   val rows = matrix.rows
   val cols = matrix.cols
 
-  def bar(cellWidth: Int = 3, cellCount: Int = 4): String = 
-  {
-    (plus + (minus * cellWidth)) * cellCount + plus + eol                         /* default bar: +---+---+---+---+ */
+  def bar(cellWidth: Int = 3, cellCount: Int = 4): String = {
+    (plus + (minus * cellWidth)) * cellCount + plus + eol
   }
 
-  def cells(row: Int, cellWidth: Int = 3, cellCount: Int = 4): String = 
-  {
+  def cells(row: Int, cellWidth: Int = 3, cellCount: Int = 4): String = {
     matrix.row(row).map(_.toString).map(" " * ((cellWidth - 1) / 2) + _ + " " * ((cellWidth - 1) / 2)).mkString("|", "|", "|") + 
     space * 3 + hmatrix.row(row).map(_.toString).map(" " + _ + " ").mkString("[", "|", "]") + eol
-    //(verLine + (space * cellWidth)) * cellCount + verLine                         /* default cells :|   |   |   |   |  */
   }
 
   def mesh(cellWidth: Int = 3, rows: Int = 6, colls: Int = 4):String = 
   {
-    //(bar(cellWidth, colls) + cells(cellWidth, colls) + hint_bar(cellWidth, colls)) * rows + bar(cellWidth, colls)
     (0 until rows).map(cells(_)).mkString(bar(cellWidth, colls), bar(cellWidth, colls), bar(cellWidth, colls))
-  } 
+  }
+   
   override def toString = mesh()
 
   def put(stone: Stone, row: Int, col: Int) = copy(matrix.replaceCell(row, col, stone))
