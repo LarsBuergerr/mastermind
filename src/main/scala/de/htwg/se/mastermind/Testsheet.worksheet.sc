@@ -9,6 +9,9 @@ val y = RandomNumberGenerator()
 
 val defaultField = new Field()
 println(defaultField)
+
+val smallField = new Field(1, 1)
+println(smallField)
 /*------------------------------------------------------------------------------ Code.scala tests*/
 val c1 = new Code(4)
 c1.size
