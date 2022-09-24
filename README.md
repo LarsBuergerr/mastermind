@@ -16,6 +16,18 @@
 - Simon Rauch
 - Lars Bürger
 
+## JOTD - Joke of the Day
+![Jokes Card](https://readme-jokes.vercel.app/api)
+# Contributors
+
+![GitHub Contributors Image](https://contrib.rocks/image?repo=LarsBuergerr/mastermind)
+
+#### [LarsBuergerr](https://github.com/LarsBuergerr)
+![image](https://github-readme-streak-stats.herokuapp.com/?user=LarsBuergerr)
+
+#### [Smokey95](https://github.com/Smokey95)
+![image](https://github-readme-streak-stats.herokuapp.com/?user=Smokey95)
+
 
 ### Description ###
 
