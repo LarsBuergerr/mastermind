@@ -21,22 +21,47 @@ def getInputAndPrintLoop(field: Field): Unit =
       getInputAndPrintLoop(newfield)
 
   def parseInput(input: String): Option[Field] =
-    var vector: Vector[Stone] = Vector()
+    val vector: Vector[Stone] = Vector()
     input match
       case "q" => None
       case _ => {
         val chars = input.toCharArray
-
-        for (i <- 0 to (chars.size-1))
-          val stone = chars(i) match
-            case 'R'|'r' => vector = vector.appended(Stone.Red)
-            case 'G'|'g' => vector = vector.appended(Stone.Green)
-            case 'B'|'b' => vector = vector.appended(Stone.Blue)
-            case 'Y'|'y' => vector = vector.appended(Stone.Yellow)
-            case 'W'|'w' => vector = vector.appended(Stone.White)
-            case 'P'|'p' => vector = vector.appended(Stone.Purple)
         
-        print(vector)
-        Some(field.put(vector, 0))
+        if(chars.size != field.cols)
+          print("Not enough values!\n")
+          return None
+        buildVector(vector, chars) match
+          case None => None
+          case Some(newvector) =>
+            Some(field.put(newvector, 0))
+                
       }
+
+  
+  def buildVector(vector: Vector[Stone], chars: Array[Char]): Option[Vector[Stone]] =
+    val stone = chars(vector.size) match
+      case 'R'|'r' => Stone.Red
+      case 'G'|'g' => Stone.Green
+      case 'B'|'b' => Stone.Blue
+      case 'Y'|'y' => Stone.Yellow
+      case 'W'|'w' => Stone.White
+      case 'P'|'p' => Stone.Purple
+
+      val newvector = vector.appended(stone)
+      if (newvector.size < field.cols){
+        buildVector(newvector, chars)
+      }
+      else
+      {
+        return Some(newvector)
+      }
+
+        
+
+
+      
+
+      
+
+
 
