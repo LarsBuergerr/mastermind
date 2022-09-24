@@ -8,28 +8,32 @@ import scala.io.StdIn.readLine
   println("Welcome to Mastermind!")
   val field = new Field(8, 5, Stone.Empty, HintStone.Empty)
   val code  = new Code(field.cols)
+  val loopCount = 0
 
   println(field.mesh(3, 8, 5))
-  getInputAndPrintLoop(field, code)
+  getInputAndPrintLoop(field, code, loopCount)
 
 
-def getInputAndPrintLoop(field: Field, code: Code): Unit =
+def getInputAndPrintLoop(field: Field, code: Code, loopCount: Int): Unit =
   val input = readLine
-  parseInput(input) match
-    case None => field
+  parseInput(input, loopCount) match
+    case None =>
+      getInputAndPrintLoop(field, code, loopCount)
     case Some(newfield) =>
       println(newfield.mesh(3, 8, 5))
-      getInputAndPrintLoop(newfield, code)
+      val newLoopCount = loopCount + 1
+      getInputAndPrintLoop(newfield, code, newLoopCount)
+      
 
-  def parseInput(input: String): Option[Field] =
+  def parseInput(input: String, loopCount: Int): Option[Field] =
     val vector: Vector[Stone] = Vector()
     input match
       case "q" => None
-      case _ => {
+      case _ => 
         val chars = input.toCharArray
         
         if(chars.size != field.cols)
-          print("Not enough values!\n")
+          print("Code length not correct please insert code that matches the hidden code length\n")
           return None
         buildVector(vector, chars) match
           case None => None
@@ -38,8 +42,7 @@ def getInputAndPrintLoop(field: Field, code: Code): Unit =
             val newHints = code.compareTo(newvector)
             print(code)
             print('\n')
-            Some(field.put(newvector, 0).placeHints(newHints, 0))
-      }
+            Some(field.put(newvector, loopCount).placeHints(newHints, loopCount))
 
   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Option[Vector[Stone]] =
@@ -53,10 +56,6 @@ def getInputAndPrintLoop(field: Field, code: Code): Unit =
 
       val newvector = vector.appended(stone)
       if (newvector.size < field.cols)
-      {
         buildVector(newvector, chars)
-      }
       else
-      {
         return Some(newvector)
-      }
