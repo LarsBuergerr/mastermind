@@ -43,7 +43,9 @@ case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
     (0 until rows).map(cells(_)).mkString(bar(cellWidth, colls), bar(cellWidth, colls), bar(cellWidth, colls))
   }
   
-  def put(stone: Vector[Stone], row: Int) = copy(matrix.replaceRow(row, stone))
+  def put(stone: Vector[Stone], row: Int) = copy(matrix.replaceRow(row, stone), hmatrix)
+
+  def placeHints(stone: Vector[HintStone], row: Int) = copy(matrix, hmatrix.replaceRow(row, stone))
 
   override def toString = mesh(3, rows, cols)
 

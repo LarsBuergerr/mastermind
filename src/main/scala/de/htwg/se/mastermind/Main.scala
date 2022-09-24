@@ -7,18 +7,19 @@ import scala.io.StdIn.readLine
 
   println("Welcome to Mastermind!")
   val field = new Field(8, 5, Stone.Empty, HintStone.Empty)
+  val code  = new Code(field.cols)
 
   println(field.mesh(3, 8, 5))
-  getInputAndPrintLoop(field)
+  getInputAndPrintLoop(field, code)
 
 
-def getInputAndPrintLoop(field: Field): Unit =
+def getInputAndPrintLoop(field: Field, code: Code): Unit =
   val input = readLine
   parseInput(input) match
     case None => field
     case Some(newfield) =>
       println(newfield.mesh(3, 8, 5))
-      getInputAndPrintLoop(newfield)
+      getInputAndPrintLoop(newfield, code)
 
   def parseInput(input: String): Option[Field] =
     val vector: Vector[Stone] = Vector()
@@ -33,35 +34,29 @@ def getInputAndPrintLoop(field: Field): Unit =
         buildVector(vector, chars) match
           case None => None
           case Some(newvector) =>
-            Some(field.put(newvector, 0))
-                
+
+            val newHints = code.compareTo(newvector)
+            print(code)
+            print('\n')
+            Some(field.put(newvector, 0).placeHints(newHints, 0))
       }
 
   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Option[Vector[Stone]] =
     val stone = chars(vector.size) match
-      case 'R'|'r' => Stone.Red
-      case 'G'|'g' => Stone.Green
-      case 'B'|'b' => Stone.Blue
-      case 'Y'|'y' => Stone.Yellow
-      case 'W'|'w' => Stone.White
-      case 'P'|'p' => Stone.Purple
+      case 'R'|'r'|'1' => Stone.Red
+      case 'G'|'g'|'2' => Stone.Green
+      case 'B'|'b'|'3' => Stone.Blue
+      case 'Y'|'y'|'4' => Stone.Yellow
+      case 'W'|'w'|'5' => Stone.White
+      case 'P'|'p'|'6' => Stone.Purple
 
       val newvector = vector.appended(stone)
-      if (newvector.size < field.cols){
+      if (newvector.size < field.cols)
+      {
         buildVector(newvector, chars)
       }
       else
       {
         return Some(newvector)
       }
-
-        
-
-
-      
-
-      
-
-
-
