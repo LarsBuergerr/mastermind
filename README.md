@@ -10,14 +10,6 @@
 [![Reddit](https://img.shields.io/reddit/subreddit-subscribers/ich_iel?color=green&style=social)](https://www.reddit.com/r/ich_iel/comments/aje7qh/ich_iel/)
 
 ---
-
-### Contributors ###
-
-- Simon Rauch
-- Lars Bürger
-
-## JOTD - Joke of the Day
-![Jokes Card](https://readme-jokes.vercel.app/api)
 # Contributors
 
 ![GitHub Contributors Image](https://contrib.rocks/image?repo=LarsBuergerr/mastermind)
