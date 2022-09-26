@@ -61,7 +61,7 @@ class CodeSpec extends AnyWordSpec{
   }
   "The Code ................................................. R | R | B | Y" should{
     val codeCompare5  = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
-    "have HintStones[W |  |  |  ] when compared with G | G | R | G" in {
+    "have HintStones[W |   |   |  ] when compared with G | G | R | G" in {
       (codeCompare5.compareTo(Vector(Stone.Green, Stone.Green, Stone.Red, Stone.Green)) 
       should be(Vector(HintStone.White, HintStone.Empty, HintStone.Empty, HintStone.Empty)))
     }

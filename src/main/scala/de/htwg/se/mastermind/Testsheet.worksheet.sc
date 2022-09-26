@@ -28,6 +28,15 @@ Vector.fill(4)(Stone.random)
 val code3 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Red, Stone.Yellow))
 val code1 = new Code(Vector(Stone.Red, Stone.Red, Stone.Yellow, Stone.Blue))   
 
+val sC = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
+val wC = new Code(Vector(Stone.Purple, Stone.Blue, Stone.Red, Stone.Red))
+
+val sC_equals = sC.compareToEqual(wC.code, 0, List())
+sC_equals.size
+val sC_present = sC.compareToPresent(wC.code, 0, 0, sC_equals, List())
+sC_present.size
+val sHints = sC.compareTo(wC.code)
+    
 val equalList = code1.compareToEqual(code3.code, (code1.size - 1), List())  
 val presentList = code1.compareToPresent(code3.code, 0, 0, equalList, List())
 

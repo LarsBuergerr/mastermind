@@ -31,50 +31,48 @@ case class Code(code: Vector[Stone]):
     */
   def compareTo(userInput: Vector[Stone]):Vector[HintStone] = {
     
-    if(this.code.size != userInput.size){                                       /* Shouldn't be possible but check anyway (Safety First)*/
+    /* Shouldn't be possible but check anyway (Safety First)*/
+    if(this.code.size != userInput.size){
       //@todo throw exception?
     }
     
-    var retVal: Vector[HintStone] = Vector()
+    val equalsList = compareToEqual(userInput, 0, List())
     
-    if(this.code.equals(userInput)){                                            /* Check if vectors are equal */
-      //@todo multiple return points a problem?
-      return Vector.fill(size)(HintStone.Black)
+    val presentList = compareToPresent(userInput, 0 , 0, equalsList, List())
+    
+    return buildVector(Vector(), this.size, equalsList.size, presentList.size)
+  }
+  
+  
+  def buildVector(returnVector: Vector[HintStone], vectorSize: Int, equalCount: Int, presentCount: Int): (Vector[HintStone]) = {
+  
+    if(equalCount != 0){
+      return buildVector(returnVector.appended(HintStone.Black), (vectorSize - 1), (equalCount - 1), presentCount)
     }
     
-    /* Count Variables */
-    //var equalCount = 0
-    //var presentCount = 0
+    if(presentCount != 0){
+      return buildVector(returnVector.appended(HintStone.White), (vectorSize - 1), equalCount, (presentCount - 1))
+    }
     
-    val equalsList = compareToEqual(userInput, (size -1), List())
-    
-    val presentList = compareToPresent(userInput, (size -1),0, equalsList, List())
-    
-    
-    /* Build return vector */
-    //@todo could be cleaner
-    val equalsVector = Vector.fill(equalsList.size)(HintStone.Black)
-    val presentVector = Vector.fill(presentList.size)(HintStone.White)
-    val stepVector = equalsVector.concat(presentVector)
-    val diffCount = size - equalsList.size - presentList.size
-    val emptyVec = Vector.fill(diffCount)(HintStone.Empty)
-    val endVector = stepVector.concat(emptyVec)
-    
-    return endVector
+    if(vectorSize > 0){
+      return buildVector(returnVector.appended(HintStone.Empty), (vectorSize - 1), equalCount, presentCount)
+    } else {
+      return returnVector
+    }
   }
   
   
   def compareToEqual(inputUser: Vector[Stone], currentPos: Int, equalsList: List[Int]): (List[Int]) = {
     
-    if(currentPos < 0){
+    if(currentPos >= size){
       return equalsList
     }
     
     if(this.code(currentPos).equals(inputUser(currentPos))){
-      return compareToEqual(inputUser, (currentPos - 1), equalsList.appended(currentPos))
+      return compareToEqual(inputUser, (currentPos + 1), equalsList.appended(currentPos))
     }
     else{
-      return compareToEqual(inputUser, (currentPos - 1), equalsList)
+      return compareToEqual(inputUser, (currentPos + 1), equalsList)
     }
   }
   
@@ -82,9 +80,6 @@ case class Code(code: Vector[Stone]):
   def compareToPresent(inputUser: Vector[Stone], currentPos: Int, secondPos: Int, equalsList: List[Int], presentList: List[Int]): (List[Int]) = {
     
     if(currentPos >= size){
-      print("returning presentList\n")
-      print(presentList)
-      println()
       return presentList
     }
     else
@@ -95,18 +90,14 @@ case class Code(code: Vector[Stone]):
       }
       else{
         if(!equalsList.contains(secondPos) && !presentList.contains(secondPos) && (secondPos != currentPos)){
-          printf("SecondPos = %d does not equal CurrentPos = %d\n", secondPos, currentPos)
           if(inputUser(currentPos).equals(this.code(secondPos))){
-            print("appended\n")
             return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList.appended(secondPos))
           }
         }
         if(secondPos >= size - 1) {
-          print("currentPos + 1\n")
           return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList)
         }
         else{
-          print("secondPos + 1\n")
           return compareToPresent(inputUser, currentPos, secondPos + 1, equalsList, presentList)
         } 
       }
