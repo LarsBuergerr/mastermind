@@ -25,11 +25,11 @@ stone.toString()
 for (i <- 1 to 5) yield r.nextString(1)
 Vector.fill(4)(Stone.random)
 
-val code1 = new Code(Vector(Stone.Red, Stone.Red, Stone.Green, Stone.Blue))                         
-val code3 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Red, Stone.Yellow))                      
+val code3 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Red, Stone.Yellow))
+val code1 = new Code(Vector(Stone.Red, Stone.Red, Stone.Yellow, Stone.Blue))   
 
-//val equalList = code1.compareToEqual(code3.code, (code1.size - 1), (code1.size -1), List())         
-//val presentList = code1.compareToPresent(code3.code, (code1.size - 1), equalList, List())           
+val equalList = code1.compareToEqual(code3.code, (code1.size - 1), List())  
+val presentList = code1.compareToPresent(code3.code, 0, 0, equalList, List())
 
 //equalList.size
 
