@@ -48,7 +48,7 @@ case class Code(code: Vector[Stone]):
     
     val equalsList = compareToEqual(userInput, (size -1), List())
     
-    val presentList = compareToPresent(userInput, (size -1), equalsList, List())
+    val presentList = compareToPresent(userInput, (size -1),0, equalsList, List())
     
     
     /* Build return vector */
@@ -71,31 +71,44 @@ case class Code(code: Vector[Stone]):
     }
     
     if(this.code(currentPos).equals(inputUser(currentPos))){
-      compareToEqual(inputUser, (currentPos - 1), equalsList.appended(currentPos))
+      return compareToEqual(inputUser, (currentPos - 1), equalsList.appended(currentPos))
     }
     else{
-      compareToEqual(inputUser, (currentPos - 1), equalsList)
+      return compareToEqual(inputUser, (currentPos - 1), equalsList)
     }
   }
   
   
-  def compareToPresent(inputUser: Vector[Stone], currentPos: Int, equalsList: List[Int], presentList: List[Int]): (List[Int]) = {
+  def compareToPresent(inputUser: Vector[Stone], currentPos: Int, secondPos: Int, equalsList: List[Int], presentList: List[Int]): (List[Int]) = {
     
-    if(currentPos < 0){
+    if(currentPos >= size){
+      print("returning presentList\n")
+      print(presentList)
+      println()
       return presentList
     }
-    
-    if(equalsList.contains(currentPos)){
-      compareToPresent(inputUser, (currentPos - 1), equalsList, presentList)
-    }
-    else{
-      for(i <- 0 to (size - 1)){
-        if(!equalsList.contains(i) && !presentList.contains(i) && (i != currentPos)){
-          if(inputUser(currentPos).equals(this.code(i))){
-            compareToPresent(inputUser, (currentPos - 1), equalsList, presentList.appended(i))
+    else
+    {
+  
+      if(equalsList.contains(currentPos)){
+        return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList)
+      }
+      else{
+        if(!equalsList.contains(secondPos) && !presentList.contains(secondPos) && (secondPos != currentPos)){
+          printf("SecondPos = %d does not equal CurrentPos = %d\n", secondPos, currentPos)
+          if(inputUser(currentPos).equals(this.code(secondPos))){
+            print("appended\n")
+            return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList.appended(secondPos))
           }
         }
+        if(secondPos >= size - 1) {
+          print("currentPos + 1\n")
+          return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList)
+        }
+        else{
+          print("secondPos + 1\n")
+          return compareToPresent(inputUser, currentPos, secondPos + 1, equalsList, presentList)
+        } 
       }
-      compareToPresent(inputUser, (currentPos - 1), equalsList, presentList)
     }
   }
