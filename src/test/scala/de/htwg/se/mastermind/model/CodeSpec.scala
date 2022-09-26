@@ -54,8 +54,15 @@ class CodeSpec extends AnyWordSpec{
   }
   "The Code ................................................. R | R | B | Y" should{
     val codeCompare4  = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
+    "have HintStones[W | W | W |  ] when compared with B | B | R | R" in {
+      (codeCompare4.compareTo(Vector(Stone.Blue, Stone.Blue, Stone.Red, Stone.Red)) 
+      should be(Vector(HintStone.White, HintStone.White, HintStone.White, HintStone.Empty)))
+    }
+  }
+  "The Code ................................................. R | R | B | Y" should{
+    val codeCompare5  = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
     "have HintStones[W |  |  |  ] when compared with G | G | R | G" in {
-      (codeCompare4.compareTo(Vector(Stone.Green, Stone.Green, Stone.Red, Stone.Green)) 
+      (codeCompare5.compareTo(Vector(Stone.Green, Stone.Green, Stone.Red, Stone.Green)) 
       should be(Vector(HintStone.White, HintStone.Empty, HintStone.Empty, HintStone.Empty)))
     }
   }

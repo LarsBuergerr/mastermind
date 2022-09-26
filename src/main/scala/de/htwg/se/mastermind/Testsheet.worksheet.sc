@@ -28,10 +28,10 @@ Vector.fill(4)(Stone.random)
 val code1 = new Code(Vector(Stone.Red, Stone.Red, Stone.Green, Stone.Blue))                         
 val code3 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Red, Stone.Yellow))                      
 
-val equalList = code1.compareToEqual(code3.code, (code1.size - 1), List())                          
-val presentList = code1.compareToPresent(code3.code, (code1.size - 1), equalList, List())           
+//val equalList = code1.compareToEqual(code3.code, (code1.size - 1), (code1.size -1), List())         
+//val presentList = code1.compareToPresent(code3.code, (code1.size - 1), equalList, List())           
 
-equalList.size
+//equalList.size
 
 //val presentList = code1.compareToPresent(code3.code, (code1.size - 1), List(), equalList)
 //presentList.size
@@ -42,6 +42,7 @@ val vec2 = vec1.updated(0, HintStone.Black)
 vec1.hashCode()
 val vec3 = vec2.updated(2, HintStone.Black)
 
+val testHint = code3.buildVector(Vector(), vec3.size, 3, 1)
 
 if(code1.equals(code3))
   println("Equals")
@@ -71,8 +72,9 @@ val solutionCode = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yello
 
 val wrongCode = new Code(Vector(Stone.Red, Stone.Blue, Stone.Purple, Stone.Red))                    
 val wrongCode2 = new Code(Vector(Stone.Green, Stone.Green, Stone.Red, Stone.Green))                 
-val wrongCode3 = new Code(Vector(Stone.Purple, Stone.Purple, Stone.Purple, Stone.Purple))           
-solutionCode.compareTo(wrongCode.code)
+val wrongCode3 = new Code(Vector(Stone.Purple, Stone.Purple, Stone.Purple, Stone.Purple))
+val wrongCode4 = new Code(Vector(Stone.Red, Stone.Red, Stone.Red, Stone.Blue))           
+solutionCode.compareTo(wrongCode4.code)
 
 //solutionCode.code.filter(solutionCode.code())
 solutionCode.code.drop(1)
