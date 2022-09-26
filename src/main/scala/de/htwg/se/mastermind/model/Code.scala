@@ -43,38 +43,59 @@ case class Code(code: Vector[Stone]):
     }
     
     /* Count Variables */
-    var equalCount = 0
-    var presentCount = 0
-    var equalsList: List[Int] = List()
-
-    /* Check code */
-    for(i <- 0 to (size-1)){
-      
-      /* Check on equals and save position in list */
-      if(this.code(i).equals(userInput(i)))
-      {
-        equalCount = equalCount + 1
-        equalsList = equalsList.appended(i)
-      }
-      else
-      {
-        /* Check if other match who were not equals already */
-        for(j <- 0 to (size-1)){    
-          if((i != j) && (!equalsList.contains(j)) && (this.code(i).equals(userInput(j)))){
-            presentCount = presentCount + 1
-          }
-        }
-      }
-    }
+    //var equalCount = 0
+    //var presentCount = 0
+    
+    val equalsList = compareToEqual(userInput, (size -1), List())
+    
+    val presentList = compareToPresent(userInput, (size -1), equalsList, List())
+    
     
     /* Build return vector */
     //@todo could be cleaner
-    val equalsVector = Vector.fill(equalCount)(HintStone.Black)
-    val presentVector = Vector.fill(presentCount)(HintStone.White)
+    val equalsVector = Vector.fill(equalsList.size)(HintStone.Black)
+    val presentVector = Vector.fill(presentList.size)(HintStone.White)
     val stepVector = equalsVector.concat(presentVector)
-    val diffCount = size - equalCount - presentCount
+    val diffCount = size - equalsList.size - presentList.size
     val emptyVec = Vector.fill(diffCount)(HintStone.Empty)
     val endVector = stepVector.concat(emptyVec)
     
     return endVector
+  }
+  
+  
+  def compareToEqual(inputUser: Vector[Stone], currentPos: Int, equalsList: List[Int]): (List[Int]) = {
+    
+    if(currentPos < 0){
+      return equalsList
+    }
+    
+    if(this.code(currentPos).equals(inputUser(currentPos))){
+      compareToEqual(inputUser, (currentPos - 1), equalsList.appended(currentPos))
+    }
+    else{
+      compareToEqual(inputUser, (currentPos - 1), equalsList)
+    }
+  }
+  
+  
+  def compareToPresent(inputUser: Vector[Stone], currentPos: Int, equalsList: List[Int], presentList: List[Int]): (List[Int]) = {
+    
+    if(currentPos < 0){
+      return presentList
+    }
+    
+    if(equalsList.contains(currentPos)){
+      compareToPresent(inputUser, (currentPos - 1), equalsList, presentList)
+    }
+    else{
+      for(i <- 0 to (size - 1)){
+        if(!equalsList.contains(i) && !presentList.contains(i) && (i != currentPos)){
+          if(inputUser(currentPos).equals(this.code(i))){
+            compareToPresent(inputUser, (currentPos - 1), equalsList, presentList.appended(i))
+          }
+        }
+      }
+      compareToPresent(inputUser, (currentPos - 1), equalsList, presentList)
+    }
   }

@@ -31,4 +31,32 @@ class CodeSpec extends AnyWordSpec{
       solutionCode.compareTo(wrongCode.code) should be(Vector(HintStone.Black, HintStone.White, HintStone.White, HintStone.Empty))
     }
   }
+  "The Code ................................................. R | R | R | R" should{
+    val codeCompare1  = new Code(Vector(Stone.Red, Stone.Red, Stone.Red, Stone.Red))
+    "have HintStones[B | B | B | B] when compared with R | R | R | R" in {
+      (codeCompare1.compareTo(Vector(Stone.Red, Stone.Red, Stone.Red, Stone.Red)) 
+      should be(Vector(HintStone.Black, HintStone.Black, HintStone.Black, HintStone.Black)))
+    }
+  }
+  "The Code ................................................. R | R | B | Y" should{
+    val codeCompare2  = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
+    "have HintStones[B | W |   |  ] when compared with R | G | R | P" in {
+      (codeCompare2.compareTo(Vector(Stone.Red, Stone.Green, Stone.Red, Stone.Purple)) 
+      should be(Vector(HintStone.Black, HintStone.White, HintStone.Empty, HintStone.Empty)))
+    }
+  }
+  "The Code ................................................. R | R | B | Y" should{
+    val codeCompare3  = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
+    "have HintStones[B | W | W |  ] when compared with R | G | R | B" in {
+      (codeCompare3.compareTo(Vector(Stone.Red, Stone.Green, Stone.Red, Stone.Blue)) 
+      should be(Vector(HintStone.Black, HintStone.White, HintStone.White, HintStone.Empty)))
+    }
+  }
+  "The Code ................................................. R | R | B | Y" should{
+    val codeCompare4  = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
+    "have HintStones[W |  |  |  ] when compared with G | G | R | G" in {
+      (codeCompare4.compareTo(Vector(Stone.Green, Stone.Green, Stone.Red, Stone.Green)) 
+      should be(Vector(HintStone.White, HintStone.Empty, HintStone.Empty, HintStone.Empty)))
+    }
+  }
 }

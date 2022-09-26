@@ -25,8 +25,16 @@ stone.toString()
 for (i <- 1 to 5) yield r.nextString(1)
 Vector.fill(4)(Stone.random)
 
-val code1 = new Code(4)
-val code3 = code1
+val code1 = new Code(Vector(Stone.Red, Stone.Red, Stone.Green, Stone.Blue))                         
+val code3 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Red, Stone.Yellow))                      
+
+val equalList = code1.compareToEqual(code3.code, (code1.size - 1), List())                          
+val presentList = code1.compareToPresent(code3.code, (code1.size - 1), equalList, List())           
+
+equalList.size
+
+//val presentList = code1.compareToPresent(code3.code, (code1.size - 1), List(), equalList)
+//presentList.size
 
 val vec1 = Vector.fill(4)(HintStone.Empty)
 vec1.hashCode()
@@ -34,9 +42,6 @@ val vec2 = vec1.updated(0, HintStone.Black)
 vec1.hashCode()
 val vec3 = vec2.updated(2, HintStone.Black)
 
-var vect1 = Vector(HintStone.Empty)
-vect1.appended(HintStone.Black)
-vect1.appended(HintStone.White)
 
 if(code1.equals(code3))
   println("Equals")
@@ -45,6 +50,10 @@ code1.size
 code1.toString()
 val code2 = new Code(5)
 
+val oneToFive = Vector(1, 2, 3, 4, 5)
+for (i <- oneToFive) yield i
+
+/* Test Vectors for code compare*/
 val codeComp1 = new Code(Vector(Stone.Red, Stone.Blue, Stone.Green))
 val codeComp2 = new Code(Vector(Stone.Red, Stone.Blue, Stone.Green))
 val codeComp3 = new Code(Vector(Stone.Red, Stone.Blue, Stone.Yellow))
@@ -54,36 +63,27 @@ val codeComp6 = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue))
 val codeComp7 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Purple))
 val codeComp8 = new Code(Vector(Stone.Red, Stone.Yellow, Stone.Red))
 
-//codeComp1.compare(codeComp2.code)
-//codeComp1.compare(codeComp3.code)
-
-var testVec = Vector(HintStone.Empty)
-var testCount = 0
-testVec.hashCode()
-
 codeComp1.code(0)
 
 
-var equalCount = 0
-var presentCount = 0
+/* Test area (Code 2 should only return two "White" hints) */
+val solutionCode = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))                 
 
-val solutionCode = new Code(Vector(Stone.Red, Stone.Red, Stone.Blue, Stone.Yellow))
-val wrongCode = new Code(Vector(Stone.Red, Stone.Blue, Stone.Purple, Stone.Red))
+val wrongCode = new Code(Vector(Stone.Red, Stone.Blue, Stone.Purple, Stone.Red))                    
+val wrongCode2 = new Code(Vector(Stone.Green, Stone.Green, Stone.Red, Stone.Green))                 
+val wrongCode3 = new Code(Vector(Stone.Purple, Stone.Purple, Stone.Purple, Stone.Purple))           
 solutionCode.compareTo(wrongCode.code)
 
+//solutionCode.code.filter(solutionCode.code())
+solutionCode.code.drop(1)
+
+/* Code compare test area */
 val solutionVector = solutionCode
 val compareVec2 = wrongCode
 
-val intersectVec = solutionVector.code.intersect(compareVec2.code)
-intersectVec.size
-
-/* Transfer Vector to Array */
-val compareArray = compareVec2.code.toArray
-
 var testList: List[Int] = List()
-//testList = testList.appended(1)
-testList
-testList.contains(1)
+var equalCount = 0
+var presentCount = 0
 
 for(i <- 0 to (solutionVector.size-1)){
   
@@ -115,9 +115,6 @@ val diffCount = solutionVector.size - equalCount - presentCount
 val emptyVec = Vector.fill(diffCount)(HintStone.Empty)
 val endVector = stepVector.concat(emptyVec)
 
-testVec
-testVec.hashCode()
-testCount
 
 solutionVector.compareTo(compareVec2.code)
 
