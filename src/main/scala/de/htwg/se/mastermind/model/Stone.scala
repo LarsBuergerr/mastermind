@@ -13,11 +13,13 @@ enum Stone(stringRepresentation: String):
   case Purple extends Stone("P")
   case Empty extends Stone(" ")
 
-/* Object declaration for random Stone function */
-//@todo it must not be allowed to generate a code with "Empty" code
+/* 
+ *Object declaration for random Stone function
+ * @IMPORTANT: size - 1 to avoid empty stones in random generated codes
+ */
 object Stone:
   private final val color = Stone.values
-  def random: Stone = color(Random.nextInt(color.size))
+  def random: Stone = color(Random.nextInt(color.size - 1))
   
 enum HintStone(stringRepresentation: String):
   override def toString(): String = stringRepresentation
