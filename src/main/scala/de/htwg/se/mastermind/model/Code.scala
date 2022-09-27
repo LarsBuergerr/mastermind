@@ -1,8 +1,13 @@
 /**
-  * Represents a generated code the player has to solve
+  * Code.scala
   */
-  
-package de.htwg.se.mastermind.model
+
+//********************************************************************** PACKAGE  
+package de.htwg.se.mastermind
+package model
+
+//********************************************************************** IMPORTS
+
 
 /**
   * Code that has to be solved in game

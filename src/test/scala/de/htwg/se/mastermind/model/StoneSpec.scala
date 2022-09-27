@@ -1,7 +1,15 @@
-package de.htwg.se.mastermind.model
+/**
+  * FILENAME.scala
+  */
 
+//********************************************************************** PACKAGE  
+package de.htwg.se.mastermind
+package model
+
+//********************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
+
 
 class StoneSpec extends AnyWordSpec{
   "A Game-Stone" should {

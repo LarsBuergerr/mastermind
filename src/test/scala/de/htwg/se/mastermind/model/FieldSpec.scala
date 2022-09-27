@@ -1,7 +1,15 @@
-package de.htwg.se.mastermind.model
+/**
+  * FieldSpec.scala
+  */
 
+//********************************************************************** PACKAGE  
+package de.htwg.se.mastermind
+package model
+
+//********************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
+
 
 class FieldSpec extends AnyWordSpec{
   "A default Field" should {//---------------------------------------------------------------------- Test default Values

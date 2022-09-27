@@ -1,8 +1,12 @@
 /**
-  * Represents a mastermind field
+  * Field.scala
   */
 
-package de.htwg.se.mastermind.model
+//********************************************************************** PACKAGE
+package de.htwg.se.mastermind
+package model
+
+//********************************************************************** IMPORTS
 
 
 /* Don't wanna use the stings all the time */
@@ -14,13 +18,16 @@ private val rbracket = "["
 private val lbracket = "]"
 private val eol = sys.props("line.separator")
 
+
 /**
-  * 
+  * A Mastermind field
   *
-  * @param matrix
-  * @param hmatrix
+  * @param matrix   Matrix with the actual player stones
+  * @param hmatrix  Matrix with the hint stones
   */
 case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
+  
+  
 
   def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone.Empty, hfilling: HintStone = HintStone.Empty) = {
     this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))

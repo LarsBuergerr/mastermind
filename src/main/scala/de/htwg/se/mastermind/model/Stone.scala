@@ -1,5 +1,12 @@
-package de.htwg.se.mastermind.model
+/**
+  * Stone.scala
+  */
 
+//********************************************************************** PACKAGE
+package de.htwg.se.mastermind
+package model
+
+//********************************************************************** IMPORTS
 import scala.util.Random
 
 /* Enum declaration for the mastermind stones */

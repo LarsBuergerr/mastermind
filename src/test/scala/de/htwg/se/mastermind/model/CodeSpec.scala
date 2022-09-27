@@ -1,7 +1,15 @@
-package de.htwg.se.mastermind.model
+/**
+  * CodeSpec.scala
+  */
 
+//********************************************************************** PACKAGE  
+package de.htwg.se.mastermind
+package model
+
+//********************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
+
 
 class CodeSpec extends AnyWordSpec{
   "A default Code for single player mode" should {
