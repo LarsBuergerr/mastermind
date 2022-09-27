@@ -18,7 +18,7 @@ def getInputAndPrintLoop(field: Field, code: Code, loopCount: Int): Unit =
   val input = readLine
   parseInput(input, loopCount) match
     case None =>
-      getInputAndPrintLoop(field, code, loopCount)
+      //end program
     case Some(newfield) =>
       println(newfield.mesh(3, 8, 5))
       val newLoopCount = loopCount + 1
