@@ -12,7 +12,9 @@ lazy val root = project
   )
 
 jacocoExcludes := Seq(
-  "mastermind.Main"
+  "mastermind.Main",
+  "Main.scala",
+  "/src/main/scala/de/htwg/se/mastermind/Main.scala"
 )
 
 jacocoReportSettings := JacocoReportSettings(
