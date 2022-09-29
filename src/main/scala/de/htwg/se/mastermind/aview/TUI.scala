@@ -7,32 +7,36 @@ import model.{Code, Field, Stone, HintStone}
 import scala.io.StdIn.readLine
 
 case class TUI(var controller: Controller) extends Observer:
+  val SUCCESS_VAL = 0
+  val loopCount = 0
+  val code = new Code(controller.field.cols)
+
   controller.add(this)
   println(controller.field.toString())
-  val code = new Code(controller.field.cols)
-  val loopCount = 0
-  val input = readLine(">> ")
-  this.run(input, loopCount)
 
   def this() =
     this(new Controller)
 
-  def run(input: String, loopCount: Int): Unit =
+
+  def run(loopCount: Int): Unit =
+    val newLoopCount = loopCount + 1
+    val input = readLine(">> ")
+    parseInput(input, loopCount) match {
+      case SUCCESS_VAL => {
+        run(newLoopCount)
+      }
+    }
+
+
+  def parseInput(input: String, loopCount: Int): Int =
     val emptyVector: Vector[Stone] = Vector()
-    
     val chars = input.toCharArray()
 
     val codeVector    = buildVector(emptyVector, chars)
     val hints         = code.compareTo(codeVector)
-    val newLoopCount  = loopCount + 1
-
     controller.placeGuessAndHints(codeVector, hints, loopCount)
+    return SUCCESS_VAL
 
-
-    val newInput = readLine(">> ")
-    run(newInput, newLoopCount)
-
-  
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] =
     val stone = chars(vector.size) match
       case 'R'|'r'|'1' => Stone.Red
