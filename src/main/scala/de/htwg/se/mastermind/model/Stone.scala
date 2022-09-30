@@ -30,10 +30,9 @@ enum Stone(stringRepresentation: String):
   * @Important: size - 1 to avoid empty stones in random generated codes
   */
 object Stone:
-  val color = Stone.values
   
   def random: Stone = {
-    color(Random.nextInt(color.size - 1))
+    Stone.values(Random.nextInt(Stone.values.size - 1))
   }
 
   
