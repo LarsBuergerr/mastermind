@@ -15,11 +15,17 @@ class StoneSpec extends AnyWordSpec{
   "A Stone object" should {
     val objStone1 = Stone
     val objStone2 = Stone
+    val colorAmount = 7
     "be only instanced one time (singleton pattern)" in {
       objStone1 should be(objStone2)
     }
     "have a data variable containing a array of all available colors" in {
       objStone1.color should be(objStone2.color)
+      objStone1.color.size should be(colorAmount)
+      Stone.color.size should be(colorAmount)
+      objStone1.color should contain theSameElementsAs(objStone2.color)
+      Stone.color should contain theSameElementsAs(Stone.color)
+      Stone should be(Stone)
     }
   }
   "A Game-Stone" should {
