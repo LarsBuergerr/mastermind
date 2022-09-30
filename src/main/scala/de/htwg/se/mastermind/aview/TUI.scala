@@ -30,13 +30,10 @@ case class TUI(var controller: Controller) extends Observer:
     parseInput(input, loopCount) match {
       case SUCCESS_VAL =>
         run(newLoopCount)
-
       case ERROR_VAL   =>
         run(loopCount)
-
       case EXIT_VAL    =>
         print("Exiting...\n")
-
       case WIN_VAL     =>
         print("You won. Thank you for playing the game\n")
     }
