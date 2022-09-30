@@ -13,11 +13,11 @@ import org.scalatest.matchers.should.Matchers._
 
 class StoneSpec extends AnyWordSpec{
   "A Stone object" should {
-    val objStone1 = Stone
-    val objStone2 = Stone
-    val colorAmount = 7
     "be only instanced one time (singleton pattern)" in {
-      objStone1 should be(objStone2)
+      Stone should be(Stone)
+    }
+    "have a function to generate random stones that are not Empty" in {
+      Stone.random should not be(Stone.Empty)
     }
   }
   "A Game-Stone" should {
