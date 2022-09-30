@@ -17,7 +17,9 @@ class StoneSpec extends AnyWordSpec{
       Stone should be(Stone)
     }
     "have a function to generate random stones that are not Empty" in {
-      Stone.random should not be(Stone.Empty)
+      for(i <- 1 to 1000){
+        Stone.random should not be(Stone.Empty)
+      }
     }
   }
   "A Game-Stone" should {

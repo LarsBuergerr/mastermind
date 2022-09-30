@@ -29,10 +29,11 @@ enum Stone(stringRepresentation: String):
   * Object declaration for random Stone function
   * @Important: size - 1 to avoid empty stones in random generated codes
   */
-object Stone:
+object Stone{
   def random: Stone = {
     Stone.values(Random.nextInt(Stone.values.size - 1))
   }
+}
 
   
 /**
