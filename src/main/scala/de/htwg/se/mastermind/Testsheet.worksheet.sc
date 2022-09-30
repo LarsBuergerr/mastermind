@@ -131,7 +131,12 @@ solutionVector.compareTo(compareVec2.code)
 
 codeComp1.code(0)
 
+val objStone1 = Stone
+val objStone2 = Stone
 
+objStone1 
+
+objStone1.color
 
     
 /*------------------------------------------------------------------------------*/
