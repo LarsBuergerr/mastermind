@@ -7,6 +7,7 @@ import model.{Code, Field, Stone, HintStone}
 import scala.io.StdIn.readLine
 
 case class TUI(var controller: Controller) extends Observer:
+  val WIN_VAL     = 2
   val EXIT_VAL    = 1
   val ERROR_VAL   = -1
   val SUCCESS_VAL = 0
@@ -22,6 +23,9 @@ case class TUI(var controller: Controller) extends Observer:
 
   def run(loopCount: Int): Unit =
     val newLoopCount = loopCount + 1
+    if(newLoopCount > controller.field.matrix.rows)
+      print("You lost. Thank you for playing the game\n")
+      return
     val input = readLine(">> ")
     parseInput(input, loopCount) match {
       case SUCCESS_VAL =>
@@ -32,6 +36,9 @@ case class TUI(var controller: Controller) extends Observer:
 
       case EXIT_VAL    =>
         print("Exiting...\n")
+
+      case WIN_VAL     =>
+        print("You won. Thank you for playing the game\n")
     }
 
 
@@ -59,6 +66,10 @@ case class TUI(var controller: Controller) extends Observer:
     val codeVector    = buildVector(emptyVector, chars)
     val hints         = code.compareTo(codeVector)
     controller.placeGuessAndHints(codeVector, hints, loopCount)
+
+    if hints.forall(p => p == HintStone.Black) then
+      return WIN_VAL
+
     return SUCCESS_VAL
 
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] =
