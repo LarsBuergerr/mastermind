@@ -136,8 +136,7 @@ val objStone2 = Stone
 
 objStone1 
 
-objStone1.color
-
+Stone.random
     
 /*------------------------------------------------------------------------------*/
 
