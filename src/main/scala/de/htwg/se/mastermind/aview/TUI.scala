@@ -1,12 +1,23 @@
+/**
+  * TUI.scala
+  */
+
+//********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package aview
 
+
+//********************************************************************** IMPORTS
 import controller.{Controller}
 import util.Observer
+import util.GameState
 import model.{Code, Field, Stone, HintStone}
 import scala.io.StdIn.readLine
 
+
+//******************************************************************** CLASS DEF
 case class TUI(var controller: Controller) extends Observer:
+  
   val WIN_VAL     = 2
   val LOOSE_VAL   = 3
   val EXIT_VAL    = 1
@@ -18,11 +29,11 @@ case class TUI(var controller: Controller) extends Observer:
   controller.add(this)
   println(controller.field.toString())
 
-  def this() =
+  def this() = {
     this(new Controller)
+  }
 
-
-  def run(loopCount: Int): Unit =
+  def run(loopCount: Int): Unit = {
     val newLoopCount = loopCount + 1
     val input = readLine(">> ")
     parseInput(input, loopCount) match {
@@ -37,9 +48,9 @@ case class TUI(var controller: Controller) extends Observer:
       case LOOSE_VAL   =>
         print("You lost!!!")
     }
+  }
 
-
-  def parseInput(input: String, loopCount: Int): Int =
+  def parseInput(input: String, loopCount: Int): Int = {
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
@@ -71,8 +82,9 @@ case class TUI(var controller: Controller) extends Observer:
       return LOOSE_VAL
     else
       return SUCCESS_VAL
-
-  def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] =
+  }
+      
+  def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
     val stone = chars(vector.size) match
       case 'R'|'r'|'1' => Stone.Red
       case 'G'|'g'|'2' => Stone.Green
@@ -86,10 +98,12 @@ case class TUI(var controller: Controller) extends Observer:
         buildVector(newvector, chars)
       else
         return newvector
-
-  def printHelp() =
-    println("Userinput example at Codelength 4: 'rgby' would indicate a Code with the Colors Red, Green, Blue, Yellow\n")
-
+  }
   
-  override def update: Unit = 
+  def printHelp() = {
+    println("Userinput example at Codelength 4: 'rgby' would indicate a Code with the Colors Red, Green, Blue, Yellow\n")
+  }
+  
+  override def update: Unit = {
     println(controller.update)
+  }
