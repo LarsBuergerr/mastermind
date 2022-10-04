@@ -18,6 +18,7 @@ class TUISpec extends AnyWordSpec {
         defaultTUI.EXIT_VAL    should be(1)
         defaultTUI.WIN_VAL     should be(2)
         defaultTUI.ERROR_VAL   should be(-1)
+        defaultTUI.LOOSE_VAL   should be(3)
 
     }
     "A default TUI should have a parseInput method that parses the input and returns an Int value" in {

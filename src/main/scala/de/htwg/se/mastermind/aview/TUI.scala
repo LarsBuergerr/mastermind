@@ -42,8 +42,6 @@ case class TUI(var controller: Controller) extends Observer:
   def parseInput(input: String, loopCount: Int): Int =
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
-    val codeVector    = buildVector(emptyVector, chars)
-    val hints         = code.compareTo(codeVector)
 
     if(chars.size == 0)
       print("No input!\n")
@@ -61,6 +59,9 @@ case class TUI(var controller: Controller) extends Observer:
     if(chars.size != controller.field.matrix.cols)
       print("Selected Code has the wrong length!\n")
       return ERROR_VAL
+
+    val codeVector    = buildVector(emptyVector, chars)
+    val hints         = code.compareTo(codeVector)
 
     controller.placeGuessAndHints(codeVector, hints, loopCount)
 
