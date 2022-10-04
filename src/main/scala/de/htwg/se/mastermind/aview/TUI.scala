@@ -10,14 +10,16 @@ package aview
 //********************************************************************** IMPORTS
 import controller.{Controller}
 import util.Observer
-import util.GameState
+import util._
 import model.{Code, Field, Stone, HintStone}
 import scala.io.StdIn.readLine
+import de.htwg.se.mastermind.util.MenuState.apply
 
 
 //******************************************************************** CLASS DEF
 case class TUI(var controller: Controller) extends Observer:
   
+  val MENU_VAL    = 4
   val WIN_VAL     = 2
   val LOOSE_VAL   = 3
   val EXIT_VAL    = 1
@@ -27,27 +29,38 @@ case class TUI(var controller: Controller) extends Observer:
   val code = new Code(controller.field.cols)
 
   controller.add(this)
-  println(controller.field.toString())
+  //@todo activate after debugging
+  //println(controller.field.toString())
 
   def this() = {
     this(new Controller)
   }
 
   def run(loopCount: Int): Unit = {
+    
+    if(loopCount.equals(0)){
+      GameState                                                                 // prints welcome 
+    }
+    
     val newLoopCount = loopCount + 1
     val input = readLine(">> ")
+    
     parseInput(input, loopCount) match {
-      case SUCCESS_VAL =>
-        run(newLoopCount)
-      case ERROR_VAL   =>
+      case MENU_VAL     =>
+        GameState.handle(MenuState())
         run(loopCount)
-      case EXIT_VAL    =>
-        print("Exiting...\n")
-      case WIN_VAL     =>
-        print("You won. Thank you for playing the game\n")
-      case LOOSE_VAL   =>
-        print("You lost!!!")
+      //case SUCCESS_VAL =>
+      //  run(newLoopCount)
+      //case ERROR_VAL   =>
+      //  run(loopCount)
+      //case EXIT_VAL    =>
+      //  print("Exiting...\n")
+      //case WIN_VAL     =>
+      //  print("You won. Thank you for playing the game\n")
+      //case LOOSE_VAL   =>
+      //  print("You lost!!!")
     }
+    
   }
 
   def parseInput(input: String, loopCount: Int): Int = {
@@ -65,6 +78,8 @@ case class TUI(var controller: Controller) extends Observer:
           return ERROR_VAL
         case 'q' | 'Q' =>
           return EXIT_VAL
+        case 'm' | 'M' =>
+          return MENU_VAL
       }
 
     if(chars.size != controller.field.matrix.cols)
