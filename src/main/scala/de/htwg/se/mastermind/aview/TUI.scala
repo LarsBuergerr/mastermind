@@ -8,6 +8,7 @@ import scala.io.StdIn.readLine
 
 case class TUI(var controller: Controller) extends Observer:
   val WIN_VAL     = 2
+  val LOOSE_VAL   = 3
   val EXIT_VAL    = 1
   val ERROR_VAL   = -1
   val SUCCESS_VAL = 0
@@ -23,9 +24,6 @@ case class TUI(var controller: Controller) extends Observer:
 
   def run(loopCount: Int): Unit =
     val newLoopCount = loopCount + 1
-    if(newLoopCount > controller.field.matrix.rows)
-      print("You lost. Thank you for playing the game\n")
-      return
     val input = readLine(">> ")
     parseInput(input, loopCount) match {
       case SUCCESS_VAL =>
@@ -36,12 +34,16 @@ case class TUI(var controller: Controller) extends Observer:
         print("Exiting...\n")
       case WIN_VAL     =>
         print("You won. Thank you for playing the game\n")
+      case LOOSE_VAL   =>
+        print("You lost!!!")
     }
 
 
   def parseInput(input: String, loopCount: Int): Int =
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
+    val codeVector    = buildVector(emptyVector, chars)
+    val hints         = code.compareTo(codeVector)
 
     if(chars.size == 0)
       print("No input!\n")
@@ -60,14 +62,14 @@ case class TUI(var controller: Controller) extends Observer:
       print("Selected Code has the wrong length!\n")
       return ERROR_VAL
 
-    val codeVector    = buildVector(emptyVector, chars)
-    val hints         = code.compareTo(codeVector)
     controller.placeGuessAndHints(codeVector, hints, loopCount)
 
     if hints.forall(p => p == HintStone.Black) then
       return WIN_VAL
-
-    return SUCCESS_VAL
+    else if loopCount == controller.field.matrix.rows - 1 then
+      return LOOSE_VAL
+    else
+      return SUCCESS_VAL
 
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] =
     val stone = chars(vector.size) match
@@ -83,7 +85,7 @@ case class TUI(var controller: Controller) extends Observer:
         buildVector(newvector, chars)
       else
         return newvector
-  
+
   def printHelp() =
     println("Userinput example at Codelength 4: 'rgby' would indicate a Code with the Colors Red, Green, Blue, Yellow\n")
 
