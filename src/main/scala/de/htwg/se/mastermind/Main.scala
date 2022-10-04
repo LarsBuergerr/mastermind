@@ -1,6 +1,6 @@
 package de.htwg.se.mastermind
 import aview.TUI
-import model.GameMode
+import util.GameMode
 
 @main def main: Unit = 
   print("Welcome to Mastermind\n\n")

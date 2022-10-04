@@ -1,8 +1,9 @@
 package de.htwg.se.mastermind
 
-package model
+package util
 
 import controller.Controller
+import model.{Field, Stone, HintStone}
 import scala.io.StdIn.readLine
 
 object GameMode {
