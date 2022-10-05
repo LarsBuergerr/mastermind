@@ -20,6 +20,7 @@ import de.htwg.se.mastermind.util.MenuState.apply
 case class TUI(var controller: Controller) extends Observer:
   
   val MENU_VAL    = 4
+  val PLAY_VAL    = 5
   val WIN_VAL     = 2
   val LOOSE_VAL   = 3
   val EXIT_VAL    = 1
@@ -27,6 +28,9 @@ case class TUI(var controller: Controller) extends Observer:
   val SUCCESS_VAL = 0
   val loopCount = 0
   val code = new Code(controller.field.cols)
+  
+  val gameState = GameState                                                     // prints welcome message
+  val mode = GameMode.selectMode
 
   controller.add(this)
   //@todo activate after debugging
@@ -36,19 +40,20 @@ case class TUI(var controller: Controller) extends Observer:
     this(new Controller)
   }
 
-  def run(loopCount: Int): Unit = {
+  def run(): Unit = {
+    inputLoop()
+  }
+  
+  def inputLoop(loopCount: Int = 0): Unit = {
     
-    if(loopCount.equals(0)){
-      GameState                                                                 // prints welcome 
-    }
-    
-    val newLoopCount = loopCount + 1
     val input = readLine(">> ")
     
     parseInput(input, loopCount) match {
       case MENU_VAL     =>
-        GameState.handle(MenuState())
-        run(loopCount)
+        gameState.menuState
+        inputLoop(loopCount)
+      case PLAY_VAL     =>
+        gameState.playState
       //case SUCCESS_VAL =>
       //  run(newLoopCount)
       //case ERROR_VAL   =>
@@ -60,7 +65,6 @@ case class TUI(var controller: Controller) extends Observer:
       //case LOOSE_VAL   =>
       //  print("You lost!!!")
     }
-    
   }
 
   def parseInput(input: String, loopCount: Int): Int = {
@@ -80,6 +84,8 @@ case class TUI(var controller: Controller) extends Observer:
           return EXIT_VAL
         case 'm' | 'M' =>
           return MENU_VAL
+        case 'p' | 'P' =>
+          return PLAY_VAL
       }
 
     if(chars.size != controller.field.matrix.cols)
@@ -98,6 +104,7 @@ case class TUI(var controller: Controller) extends Observer:
     else
       return SUCCESS_VAL
   }
+  
       
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
     val stone = chars(vector.size) match
@@ -114,6 +121,7 @@ case class TUI(var controller: Controller) extends Observer:
       else
         return newvector
   }
+  
   
   def printHelp() = {
     println("Userinput example at Codelength 4: 'rgby' would indicate a Code with the Colors Red, Green, Blue, Yellow\n")

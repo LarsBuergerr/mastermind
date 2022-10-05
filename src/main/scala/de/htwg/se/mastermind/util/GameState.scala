@@ -1,5 +1,4 @@
 package de.htwg.se.mastermind
-
 package util
 
 import scala.io.StdIn.readLine
@@ -23,8 +22,7 @@ object GameState{
       
       case play:    PlayState => state = playState
     }
-    
-    //state
+    state
   }
   
   def introState = {
@@ -47,6 +45,7 @@ object GameState{
   
   def playState = {
     println("Lets play a round, can you guess the code?")
+    Controller.field.toString
   }
   
 }
