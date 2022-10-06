@@ -1,5 +1,5 @@
 /**
-  * GameState.scala
+  * GameEvent.scala
   * Implements the STATE_PATTERN to keep track over current game state
   */
 
@@ -8,13 +8,14 @@ package de.htwg.se.mastermind
 package util
 
 
-trait GameState
+trait GameEvent
 
-case class MenuState() extends GameState
-case class PlayState() extends GameState
-case class InitState() extends GameState
+case class MenuState()        extends GameEvent
+case class PlayState()        extends GameEvent
+case class InitState()        extends GameEvent
+case class PlayerInputState() extends GameEvent
 
-case class EndState() extends GameState
+case class EndState()  extends GameEvent
 
 //object GameState{
 //  
