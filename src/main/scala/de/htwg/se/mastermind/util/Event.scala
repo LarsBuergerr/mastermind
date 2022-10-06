@@ -8,14 +8,14 @@ package de.htwg.se.mastermind
 package util
 
 
-trait GameEvent
+trait Event
 
-case class MenuState()        extends GameEvent
-case class PlayState()        extends GameEvent
-case class InitState()        extends GameEvent
-case class PlayerInputState() extends GameEvent
+case class MenuState()        extends Event
+case class PlayState()        extends Event
+case class InitState()        extends Event
+case class PlayerInputState() extends Event
 
-case class EndState()  extends GameEvent
+case class EndState()         extends Event
 
 //object GameState{
 //  
@@ -33,11 +33,6 @@ case class EndState()  extends GameEvent
 //    state
 //  }
 //  
-//  def introState = {
-//    println("----------------------------------------------------------------")
-//    println("------------------ Welcome to Mastermind -----------------------")
-//    println("----------------------------------------------------------------")
-//  }
 //  
 //  def menuState = {
 //    println("----------------------------------------------------------------")

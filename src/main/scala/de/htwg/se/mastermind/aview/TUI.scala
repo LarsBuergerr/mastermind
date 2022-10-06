@@ -13,8 +13,8 @@ import util.Observer
 import util._
 import model.{Code, Field, Stone, HintStone}
 import scala.io.StdIn.readLine
-import de.htwg.se.mastermind.util.MenuState.apply
-
+import model.GameState
+import util.Event
 
 //******************************************************************** CLASS DEF
 case class TUI(var controller: Controller) extends Observer:
@@ -28,10 +28,10 @@ case class TUI(var controller: Controller) extends Observer:
   val SUCCESS_VAL = 0
   val loopCount = 0
   val code = new Code(controller.field.cols)
-  
-  val gameState = GameState                                                     // prints welcome message
+
   val mode = GameMode.selectMode
 
+  
   controller.add(this)
   //@todo activate after debugging
   //println(controller.field.toString())
@@ -41,29 +41,25 @@ case class TUI(var controller: Controller) extends Observer:
   }
 
   def run(): Unit = {
+    controller.handle(InitState())
     inputLoop()
   }
   
   def inputLoop(loopCount: Int = 0): Unit = {
-    
+    val newLoopCount = loopCount + 1
     val input = readLine(">> ")
     
     parseInput(input, loopCount) match {
-      case MENU_VAL     =>
-        gameState.menuState
+      case SUCCESS_VAL =>
+        inputLoop(newLoopCount)
+      case ERROR_VAL   =>
         inputLoop(loopCount)
-      case PLAY_VAL     =>
-        gameState.playState
-      //case SUCCESS_VAL =>
-      //  run(newLoopCount)
-      //case ERROR_VAL   =>
-      //  run(loopCount)
-      //case EXIT_VAL    =>
-      //  print("Exiting...\n")
-      //case WIN_VAL     =>
-      //  print("You won. Thank you for playing the game\n")
-      //case LOOSE_VAL   =>
-      //  print("You lost!!!")
+      case EXIT_VAL    =>
+        print("Exiting...\n")
+      case WIN_VAL     =>
+        print("You won. Thank you for playing the game\n")
+      case LOOSE_VAL   =>
+        print("You lost!!!")
     }
   }
 
