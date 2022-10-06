@@ -4,5 +4,5 @@ import util.GameMode
 
 @main def main: Unit = 
   //print("Welcome to Mastermind\n\n")
-  val tui = new TUI()
+  val tui = new TUI(GameMode.selectMode)
   tui.run()

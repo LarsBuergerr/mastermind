@@ -5,11 +5,8 @@ import model.{Field, Stone, HintStone, State}
 import util.*
 
 class Controller(var field: Field) extends Observable:
+  
   val state = new State()
-
-  def this() =
-    this(new Field())
-
 
   def handle(event: Event)= {
     state.handle(event)

@@ -17,7 +17,7 @@ import model.GameState
 import util.Event
 
 //******************************************************************** CLASS DEF
-case class TUI(var controller: Controller) extends Observer:
+case class TUI(controller: Controller) extends Observer:
   
   val MENU_VAL    = 4
   val PLAY_VAL    = 5
@@ -35,10 +35,6 @@ case class TUI(var controller: Controller) extends Observer:
   controller.add(this)
   //@todo activate after debugging
   //println(controller.field.toString())
-
-  def this() = {
-    this(new Controller)
-  }
 
   def run(): Unit = {
     controller.handle(InitState())
