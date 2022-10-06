@@ -8,8 +8,13 @@ class Controller(var field: Field) extends Observable:
 
     def this() =
         this(new Field())
-        
+    
+				
+    def handle(event: Event): Unit = {
+			
+    }    
 
+		
     def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int): Unit =
         field = field.placeGuessAndHints(stone, hints, row)
         notifyObservers
