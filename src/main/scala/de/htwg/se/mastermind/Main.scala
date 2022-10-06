@@ -1,8 +1,11 @@
 package de.htwg.se.mastermind
 import aview.TUI
-import util.GameMode
+import controller.Controller
+import model.{Game}
+import util.{GameMode}
 
 @main def main: Unit = 
-  //print("Welcome to Mastermind\n\n")
-  val tui = new TUI(GameMode.selectMode)
+  val game = new Game(GameMode.selectMode)
+  val controller = new Controller(game)
+  val tui = new TUI(controller)
   tui.run()

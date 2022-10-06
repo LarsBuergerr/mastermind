@@ -17,12 +17,12 @@ object GameMode {
 
   var selectMode = parseInput()
 
-  def strategy_easy =   new Controller(new Field(12, 4, Stone.Empty, HintStone.Empty))
-  def strategy_medium = new Controller(new Field(10, 4, Stone.Empty, HintStone.Empty))
-  def strategy_hard =   new Controller(new Field(10, 5, Stone.Empty, HintStone.Empty))
-  def strategy_extrem = new Controller(new Field(8, 5, Stone.Empty, HintStone.Empty))
-
-  def parseInput(): Controller =
+  def strategy_easy =   new Field(12, 4, Stone.Empty, HintStone.Empty)
+  def strategy_medium = new Field(10, 4, Stone.Empty, HintStone.Empty)
+  def strategy_hard =   new Field(10, 5, Stone.Empty, HintStone.Empty)
+  def strategy_extrem = new Field(8, 5, Stone.Empty, HintStone.Empty)
+  
+  def parseInput(): Field = {
    
    val in = readLine("Choose gamemode (Easy, Medium [default] , Hard, Extrem): ")
 
@@ -33,5 +33,8 @@ object GameMode {
      case "Extrem" | "extrem"    => return strategy_extrem
      case _                      => return strategy_medium
    }
+  }
+  
+  override def toString(): String = "GameMode"
 }
 

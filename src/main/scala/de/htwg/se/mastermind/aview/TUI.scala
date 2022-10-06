@@ -27,17 +27,14 @@ case class TUI(controller: Controller) extends Observer:
   val ERROR_VAL   = -1
   val SUCCESS_VAL = 0
   val loopCount = 0
-  val code = new Code(controller.field.cols)
-
-  val mode = GameMode.selectMode
-
   
+  val code = new Code(controller.game.field.cols)
   controller.add(this)
   //@todo activate after debugging
   //println(controller.field.toString())
 
   def run(): Unit = {
-    controller.handle(InitState())
+    //controller.handle(InitState())
     inputLoop()
   }
   
@@ -80,7 +77,7 @@ case class TUI(controller: Controller) extends Observer:
           return PLAY_VAL
       }
 
-    if(chars.size != controller.field.matrix.cols)
+    if(chars.size != controller.game.field.matrix.cols)
       print("Selected Code has the wrong length!\n")
       return ERROR_VAL
 
@@ -91,7 +88,7 @@ case class TUI(controller: Controller) extends Observer:
 
     if hints.forall(p => p == HintStone.Black) then
       return WIN_VAL
-    else if loopCount == controller.field.matrix.rows - 1 then
+    else if loopCount == controller.game.field.matrix.rows - 1 then
       return LOOSE_VAL
     else
       return SUCCESS_VAL
@@ -108,7 +105,7 @@ case class TUI(controller: Controller) extends Observer:
       case 'P'|'p'|'6' => Stone.Purple
 
       val newvector = vector.appended(stone)
-      if (newvector.size < controller.field.cols)
+      if (newvector.size < controller.game.field.cols)
         buildVector(newvector, chars)
       else
         return newvector

@@ -4,7 +4,9 @@ package model
 import util._
 
 case class State() extends Stateable:
-  
+
+  gamestate = Some(Init(this))  
+
   override def handle(event: Event): Option[GameState] =
   
     event match{
