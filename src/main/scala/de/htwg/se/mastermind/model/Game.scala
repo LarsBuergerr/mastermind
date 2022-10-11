@@ -23,12 +23,13 @@ case class Game(var field: Field, var state: State[Event] = Init()){
   private var currentTurn: Int = 0
   private val maxTurn: Int = field.matrix.rows
 
-  def handle(event: Event) = {
+  def request(event: Event) = {
     println("<<<debug>>>: handler called")
     event match{
       case init: InitState => state = Init()
       case menu: MenuState => state = Menu()
       case play: PlayState => state = Play()
+      case quit: QuitState => state = Quit()
     }
     state.handle()
   }

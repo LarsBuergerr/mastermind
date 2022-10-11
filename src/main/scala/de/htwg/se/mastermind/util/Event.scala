@@ -16,3 +16,4 @@ case class InitState()        extends Event
 case class PlayerInputState() extends Event
 
 case class EndState()         extends Event
+case class QuitState()        extends Event
