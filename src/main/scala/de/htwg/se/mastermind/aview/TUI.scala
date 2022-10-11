@@ -34,9 +34,7 @@ case class TUI(controller: Controller) extends Observer:
 
   def run(): Unit = {
     controller.handle(InitState())
-    println(controller.game.state.toString())
-    //println(x)
-    //println(controller.game.state.gamestate)
+    println("<<<debug>>> " + controller.game.state.toString())
     inputLoop()
   }
   
@@ -57,8 +55,7 @@ case class TUI(controller: Controller) extends Observer:
         print("You lost!!!")
       case MENU_VAL    =>
         controller.handle(MenuState())
-        println(controller.game.state.isInstanceOf[Menu])
-        println(controller.game.state.toString())
+        println("<<<debug>>>: " + controller.game.state.toString())
         inputLoop(newLoopCount)
     }
   }

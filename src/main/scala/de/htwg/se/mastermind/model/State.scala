@@ -2,7 +2,7 @@ package de.htwg.se.mastermind
 package model
 
 import util._
-import scala.annotation.meta.field.apply
+import util.TUIElements
 
 trait State[T] {
   def handle(): Unit
@@ -10,13 +10,23 @@ trait State[T] {
   
 class Init extends State[Event] {
   override def handle(): Unit = {
-    val row = field.rows
-    println("Welcome to Mastermind")
+    val eol            = sys.props("line.separator")
+    val line           = "----------------------------------------------------------------" + eol  
+    val welcomeMessage = "------------------ Welcome to Mastermind -----------------------" + eol
+    printf(eol + line + welcomeMessage + line)
   }
+  
+  override def toString(): String = "State: Init"
 }
 
 class Menu extends State[Event] {
-  override def handle(): Unit = println("Menu:")
+  override def handle(): Unit = {
+    val eol            = sys.props("line.separator")
+    val line           = "--- Menu: ------------------------------------------------------" + eol  
+    printf(line)
+  }
+  
+  override def toString(): String = "State: Menu"
 }
 //object StateContext extends State{
 //
