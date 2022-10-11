@@ -25,28 +25,26 @@ case class TUI(controller: Controller) extends Observer:
   val EXIT_VAL    = 1
   val ERROR_VAL   = -1
   val SUCCESS_VAL = 0
-  val loopCount = 0
   
   val code = new Code(controller.game.field.cols)
   controller.add(this)
-  //@todo activate after debugging
-  //println(controller.field.toString())
 
   def run(): Unit = {
     controller.handle(InitState())
-    println("<<<debug>>> " + controller.game.state.toString())
+    println("Remaining Turns: " + controller.game.getRemainingTurns())
+    debugPrint_currentState() //@todo: remove after testing
     inputLoop()
   }
   
-  def inputLoop(loopCount: Int = 0): Unit = {
-    val newLoopCount = loopCount + 1
+  def inputLoop(): Unit = {
     val input = readLine(">> ")
     
-    parseInput(input, loopCount) match {
+    parseInput(input) match {
       case SUCCESS_VAL =>
-        inputLoop(newLoopCount)
+        println("Remaining Turns: " + controller.game.getRemainingTurns())
+        inputLoop()
       case ERROR_VAL   =>
-        inputLoop(loopCount)
+        inputLoop()
       case EXIT_VAL    =>
         print("Exiting...\n")
       case WIN_VAL     =>
@@ -55,12 +53,17 @@ case class TUI(controller: Controller) extends Observer:
         print("You lost!!!")
       case MENU_VAL    =>
         controller.handle(MenuState())
-        println("<<<debug>>>: " + controller.game.state.toString())
-        inputLoop(newLoopCount)
+        debugPrint_currentState() //@todo: remove after testing
+        inputLoop()
+      case PLAY_VAL    =>
+        controller.handle(PlayState())
+        debugPrint_currentState() //@todo: remove after testing
+        println(controller.game.field.toString())
+        inputLoop()
     }
   }
 
-  def parseInput(input: String, loopCount: Int): Int = {
+  def parseInput(input: String): Int = {
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
@@ -88,11 +91,11 @@ case class TUI(controller: Controller) extends Observer:
     val codeVector    = buildVector(emptyVector, chars)
     val hints         = code.compareTo(codeVector)
 
-    controller.placeGuessAndHints(codeVector, hints, loopCount)
+    controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
 
     if hints.forall(p => p == HintStone.Black) then
       return WIN_VAL
-    else if loopCount == controller.game.field.matrix.rows - 1 then
+    else if controller.game.getRemainingTurns().equals(0) then
       return LOOSE_VAL
     else
       return SUCCESS_VAL
@@ -122,4 +125,8 @@ case class TUI(controller: Controller) extends Observer:
   
   override def update: Unit = {
     println(controller.update)
+  }
+  
+  def debugPrint_currentState() = {
+    println("<<<debug>>>: " + controller.game.state.toString())
   }
