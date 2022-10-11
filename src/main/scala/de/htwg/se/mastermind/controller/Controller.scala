@@ -6,8 +6,8 @@ import util.*
 
 class Controller(var game: Game) extends Observable:
 
-  def handle(event: Event)= {
-    //game.handle(event)
+  def handle(event: Event) = {
+    game.handle(event)
   }
 
   def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int): Unit =

@@ -1,7 +1,7 @@
 package de.htwg.se.mastermind
 import aview.TUI
 import controller.Controller
-import model.{Game}
+import model.{Game, State, Init}
 import util.{GameMode}
 
 @main def main: Unit = 

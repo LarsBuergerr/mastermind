@@ -11,9 +11,8 @@ package aview
 import controller.{Controller}
 import util.Observer
 import util._
-import model.{Code, Field, Stone, HintStone}
+import model.{Code, Field, Stone, HintStone, State, Menu}
 import scala.io.StdIn.readLine
-import model.GameState
 import util.Event
 
 //******************************************************************** CLASS DEF
@@ -34,7 +33,10 @@ case class TUI(controller: Controller) extends Observer:
   //println(controller.field.toString())
 
   def run(): Unit = {
-    //controller.handle(InitState())
+    controller.handle(InitState())
+    println(controller.game.state.toString())
+    //println(x)
+    //println(controller.game.state.gamestate)
     inputLoop()
   }
   
@@ -53,6 +55,11 @@ case class TUI(controller: Controller) extends Observer:
         print("You won. Thank you for playing the game\n")
       case LOOSE_VAL   =>
         print("You lost!!!")
+      case MENU_VAL    =>
+        controller.handle(MenuState())
+        println(controller.game.state.isInstanceOf[Menu])
+        println(controller.game.state.toString())
+        inputLoop(newLoopCount)
     }
   }
 
