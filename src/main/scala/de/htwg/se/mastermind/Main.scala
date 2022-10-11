@@ -1,4 +1,12 @@
+/**
+  * Main.scala
+  */
+
+//********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
+
+
+//********************************************************************** IMPORTS
 import aview.TUI
 import controller.Controller
 import model.{Game, State, Init}

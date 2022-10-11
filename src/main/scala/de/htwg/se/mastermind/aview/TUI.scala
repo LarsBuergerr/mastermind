@@ -101,7 +101,7 @@ case class TUI(controller: Controller) extends Observer:
       return SUCCESS_VAL
   }
   
-      
+  //@todo: move declaration cause not TUI "only"   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
     val stone = chars(vector.size) match
       case 'R'|'r'|'1' => Stone.Red

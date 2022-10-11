@@ -1,8 +1,23 @@
+/**
+  * Game.scala
+  */
+
+//********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
 
+
+//********************************************************************** IMPORTS
 import util._
 
+
+//******************************************************************** CLASS DEF
+/**
+  * Represents a game instance with it's current state and game field
+  *
+  * @param field  mastermind game field
+  * @param state  state in which the game is currently
+  */
 case class Game(var field: Field, var state: State[Event] = Init()){
   
   private var currentTurn: Int = 0
