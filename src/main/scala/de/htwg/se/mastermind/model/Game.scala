@@ -18,20 +18,25 @@ import util._
   * @param field  mastermind game field
   * @param state  state in which the game is currently
   */
-case class Game(var field: Field, var state: State[Event] = Init()){
+case class Game(var field: Field, var state: State = Init()){
   
   private var currentTurn: Int = 0
   private val maxTurn: Int = field.matrix.rows
 
-  def request(event: Event) = {
+  def request(event: Event): State = {
     println("<<<debug>>>: handler called")
     event match{
-      case init: InitState => state = Init()
-      case menu: MenuState => state = Menu()
-      case play: PlayState => state = Play()
-      case quit: QuitState => state = Quit()
+      case init: InitState        => state = Init()
+      case menu: MenuState        => state = Menu()
+      case play: PlayState        => state = Play()
+      case quit: QuitState        => state = Quit()
+      case help: HelpState        => state = Help()
+      
+      case pInp: PlayerInputState => state = PlayerInput()
+      case pLos: PlayerLoseState  => state = PlayerLose()
+      case pWin: PlayerWinState   => state = PlayerWin()
     }
-    state.handle()
+    return state.handle()
   }
   
   override def toString(): String = field.toString

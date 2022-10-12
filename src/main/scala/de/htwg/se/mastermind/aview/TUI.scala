@@ -11,7 +11,7 @@ package aview
 import controller.{Controller}
 import util.Observer
 import util._
-import model.{Code, Field, Stone, HintStone, State, Menu, Quit}
+import model._
 import scala.io.StdIn.readLine
 import util.Event
 
@@ -22,7 +22,6 @@ case class TUI(controller: Controller) extends Observer:
   val PLAY_VAL    = 5
   val WIN_VAL     = 2
   val LOOSE_VAL   = 3
-  val EXIT_VAL    = 1
   val ERROR_VAL   = -1
   val SUCCESS_VAL = 0
   
@@ -40,69 +39,63 @@ case class TUI(controller: Controller) extends Observer:
     val input = readLine(">> ")
     
     parseInput(input) match {
-      //case SUCCESS_VAL =>
-      //  println("Remaining Turns: " + controller.game.getRemainingTurns())
-      //  inputLoop()
-      //case ERROR_VAL   =>
-      //  inputLoop()
-      //case EXIT_VAL    =>
-      //  print("Exiting...\n")
-      //case WIN_VAL     =>
-      //  print("You won. Thank you for playing the game\n")
-      //case LOOSE_VAL   =>
-      //  print("You lost!!!")
-      //case MENU_VAL    =>
-      //  controller.request(MenuState())
+      case pInp: PlayerInput  =>
+        println("Remaining Turns: " + controller.game.getRemainingTurns())
+        inputLoop()
+      case pWin: PlayerWin    =>
+        print("--- You won. Thank you for playing the game\n")
+      case pLos: PlayerLose   =>
+        print("--- You lost!!! Anyway thanks for playing the game\n")
+      case help: Help   =>
+        inputLoop()
+      case menu: Menu    =>
+        //debugPrint_currentState() //@todo: remove after testing
+        inputLoop()
+      case play: Play    =>
       //  debugPrint_currentState() //@todo: remove after testing
-      //  inputLoop()
-      //case PLAY_VAL    =>
-      //  controller.request(PlayState())
-      //  debugPrint_currentState() //@todo: remove after testing
-      //  println(controller.game.field.toString())
-      //  inputLoop()
-      case Some(Quit)  =>
-        print("Exiting...\n")
+        println(controller.game.field.toString())
+        inputLoop()
+      case quit: Quit  =>
+        print("--- See you later alligator...\n")
+
     }
   }
 
-  def parseInput(input: String): Option[State[Event]] = {
+  def parseInput(input: String): State = {
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
-    //if(chars.size == 0)
-    //  print("No input!\n")
-    //  return ERROR_VAL
+    if(chars.size.equals(0))
+      print("No input!\n")
+      return controller.request(QuitState())                                    //@todo what to to instead?
 
-    if(chars.size == 1)
+    if(chars.size.equals(1))
       chars(0) match {
-        //case 'h' | 'H' =>
-        //  printHelp()
-        //  return ERROR_VAL
+        case 'h' | 'H' =>
+          return controller.request(HelpState())
         case 'q' | 'Q' =>
           return controller.request(QuitState())
-        //case 'm' | 'M'  =>
-        //  return MENU_VAL
-        //case 'p' | 'P' =>
-        //  return PLAY_VAL
+        case 'm' | 'M'  =>
+          return controller.request(MenuState())
+        case 'p' | 'P' =>
+          return controller.request(PlayState())
       }
-    else
-      return controller.request(QuitState())
 
-    //if(chars.size != controller.game.field.matrix.cols)
-    //  print("Selected Code has the wrong length!\n")
-    //  return ERROR_VAL
-//
-    //val codeVector    = buildVector(emptyVector, chars)
-    //val hints         = code.compareTo(codeVector)
-//
-    //controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
-//
-    //if hints.forall(p => p == HintStone.Black) then
-    //  return WIN_VAL
-    //else if controller.game.getRemainingTurns().equals(0) then
-    //  return LOOSE_VAL
-    //else
-    //  return SUCCESS_VAL
+    if(chars.size != controller.game.field.matrix.cols)
+      print("Selected Code has the wrong length!\n")
+      return controller.request(QuitState())                                    //@todo what to to instead?
+      
+    val codeVector    = buildVector(emptyVector, chars)
+    val hints         = code.compareTo(codeVector)
+
+    controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
+
+    if hints.forall(p => p == HintStone.Black) then
+      return controller.request(PlayerWinState())
+    else if controller.game.getRemainingTurns().equals(0) then
+      return controller.request(PlayerLoseState())
+    else
+      return controller.request(PlayerInputState())
   }
   
   //@todo: move declaration cause not TUI "only"   
@@ -120,11 +113,6 @@ case class TUI(controller: Controller) extends Observer:
         buildVector(newvector, chars)
       else
         return newvector
-  }
-  
-  
-  def printHelp() = {
-    println("Userinput example at Codelength 4: 'rgby' would indicate a Code with the Colors Red, Green, Blue, Yellow\n")
   }
   
   override def update: Unit = {
