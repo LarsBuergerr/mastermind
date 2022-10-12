@@ -10,10 +10,10 @@ import util.GameMode
 
 class TUISpec extends AnyWordSpec {
     "A default TUI should have a default controller" in {
-        val defaultTUI = new TUI(new Controller(new Game(GameMode.strategy_medium)))
-
-        defaultTUI.controller.game.field.cols should be(4)
-        defaultTUI.controller.game.field.rows should be(6)
+        //val defaultTUI = new TUI(new Controller(new Game(GameMode.strategy_medium)))
+//
+        //defaultTUI.controller.game.field.cols should be(4)
+        //defaultTUI.controller.game.field.rows should be(6)
 
         //defaultTUI.loopCount should be(0)
         //defaultTUI.SUCCESS_VAL should be(0)
@@ -24,10 +24,10 @@ class TUISpec extends AnyWordSpec {
 
     }
     "A default TUI should have a parseInput method that parses the input and returns an Int value" in {
-        val defaultTUI = new TUI(new Controller(new Game(GameMode.strategy_medium)))
-
-        defaultTUI.controller.game.field.matrix.m(0).forall(p => p == Stone.Empty) should be(true)
-        defaultTUI.controller.game.field.matrix.m(0).forall(p => p == Stone.Red) should be(false)
+        //val defaultTUI = new TUI(new Controller(new Game(GameMode.strategy_medium)))
+//
+        //defaultTUI.controller.game.field.matrix.m(0).forall(p => p == Stone.Empty) should be(true)
+        //defaultTUI.controller.game.field.matrix.m(0).forall(p => p == Stone.Red) should be(false)
 //
         ////defaultTUI.parseInput("rrrr", 0)
         ////defaultTUI.controller.field.matrix.m(0).forall(p => p == Stone.Red) should be(true)
