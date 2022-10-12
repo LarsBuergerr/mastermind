@@ -18,20 +18,13 @@ import util.Event
 //******************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
   
-  val MENU_VAL    = 4
-  val PLAY_VAL    = 5
-  val WIN_VAL     = 2
-  val LOOSE_VAL   = 3
-  val ERROR_VAL   = -1
-  val SUCCESS_VAL = 0
-  
   val code = new Code(controller.game.field.cols)
   controller.add(this)
 
   def run(): Unit = {
     controller.request(InitState())
     println("Remaining Turns: " + controller.game.getRemainingTurns())
-    debugPrint_currentState() //@todo: remove after testing
+    //debugPrint_currentState()                                                 //@todo: remove after testing
     inputLoop()
   }
   
@@ -49,10 +42,10 @@ case class TUI(controller: Controller) extends Observer:
       case help: Help   =>
         inputLoop()
       case menu: Menu    =>
-        //debugPrint_currentState() //@todo: remove after testing
+        //debugPrint_currentState()                                             //@todo: remove after testing
         inputLoop()
       case play: Play    =>
-      //  debugPrint_currentState() //@todo: remove after testing
+        //debugPrint_currentState()                                             //@todo: remove after testing
         println(controller.game.field.toString())
         inputLoop()
       case quit: Quit  =>

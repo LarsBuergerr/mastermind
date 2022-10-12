@@ -1,9 +1,18 @@
+/**
+  * State.scala
+  * Implements the STATE_PATTERN to keep track over current game state
+  */
+
+//********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
 
-import util._
-import util.TUIElements
 
+//********************************************************************** IMPORTS
+import util._
+
+
+//******************************************************************** CLASS DEF
 val horizontalLine = "----------------------------------------------------------------" + eol
 val welcomeMessage = "------------------ Welcome to Mastermind -----------------------" + eol
 
@@ -19,7 +28,6 @@ class Init extends State {
     printf(eol + horizontalLine + welcomeMessage + horizontalLine)
     return this
   }
-  
   override def toString(): String = "State: Init"
 }
 
@@ -30,25 +38,21 @@ class Menu extends State {
     printf(line)
     return this
   }
-  
   override def toString(): String = "State: Menu"
 }
 
 
 class Play extends State {
-  
   override def handle(): State = {
     val line      = "--- Play: ------------------------------------------------------" + eol
     printf(line)
     return this
   }
-  
   override def toString(): String = "State: Play"
 }
 
 
 class Help extends State {
-  
   override def handle(): State = {
     val line      = "--- Help: [Input] : Function-----------------------------------" + eol
     val lineMenu  = "---       m | M   : starts the menu" + eol
@@ -56,7 +60,6 @@ class Help extends State {
     printf(line + lineMenu + linePlay + horizontalLine)
     return this    
   }
-  
   override def toString(): String = "State: Help"
 }
 
@@ -67,40 +70,33 @@ class Quit extends State {
     printf(line)
     return this
   }
-
   override def toString(): String = "State: Quit"
 }
 
 
 class PlayerInput extends State {
-  
   override def handle(): State = {
     return this
   }
-  
   override def toString(): String = "State: PlayerInput"
 }
 
 
 class PlayerLose extends State {
-  
   override def handle(): State = {
     val line      = "--- You lost ---------------------------------------------------" + eol
     printf(line)
     return this
   }
-  
   override def toString(): String = "State: PlayerLose"
 }
 
 
 class PlayerWin extends State {
-  
   override def handle(): State = {
     val line      = "--- You won ----------------------------------------------------" + eol
     printf(line)
     return this
   }
-    
   override def toString(): String = "State: PlayerWin"
 }

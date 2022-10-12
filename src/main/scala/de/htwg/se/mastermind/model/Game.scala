@@ -24,7 +24,7 @@ case class Game(var field: Field, var state: State = Init()){
   private val maxTurn: Int = field.matrix.rows
 
   def request(event: Event): State = {
-    println("<<<debug>>>: handler called")
+    //println("<<<debug>>>: handler called")                                    //@todo remove after debugging
     event match{
       case init: InitState        => state = Init()
       case menu: MenuState        => state = Menu()
