@@ -1,78 +1,98 @@
+/**
+  * TUI.scala
+  */
+
+//********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package aview
 
+
+//********************************************************************** IMPORTS
 import controller.{Controller}
 import util.Observer
-import model.{Code, Field, Stone, HintStone}
+import util._
+import model._
 import scala.io.StdIn.readLine
+import util.Event
 
-case class TUI(var controller: Controller) extends Observer:
-  val WIN_VAL     = 2
-  val LOOSE_VAL   = 3
-  val EXIT_VAL    = 1
-  val ERROR_VAL   = -1
-  val SUCCESS_VAL = 0
-  val loopCount = 0
-  val code = new Code(controller.field.cols)
-
+//******************************************************************** CLASS DEF
+case class TUI(controller: Controller) extends Observer:
+  
+  val code = new Code(controller.game.field.cols)
   controller.add(this)
-  println(controller.field.toString())
 
-  def this() =
-    this(new Controller)
-
-
-  def run(loopCount: Int): Unit =
-    val newLoopCount = loopCount + 1
+  def run(): Unit = {
+    controller.request(InitState())
+    println("Remaining Turns: " + controller.game.getRemainingTurns())
+    //debugPrint_currentState()                                                 //@todo: remove after testing
+    inputLoop()
+  }
+  
+  def inputLoop(): Unit = {
     val input = readLine(">> ")
-    parseInput(input, loopCount) match {
-      case SUCCESS_VAL =>
-        run(newLoopCount)
-      case ERROR_VAL   =>
-        run(loopCount)
-      case EXIT_VAL    =>
-        print("Exiting...\n")
-      case WIN_VAL     =>
-        print("You won. Thank you for playing the game\n")
-      case LOOSE_VAL   =>
-        print("You lost!!!")
+    
+    parseInput(input) match {
+      case pInp: PlayerInput  =>
+        println("Remaining Turns: " + controller.game.getRemainingTurns())
+        inputLoop()
+      case pWin: PlayerWin    =>
+        print("--- You won. Thank you for playing the game\n")
+      case pLos: PlayerLose   =>
+        print("--- You lost!!! Anyway thanks for playing the game\n")
+      case help: Help   =>
+        inputLoop()
+      case menu: Menu    =>
+        //debugPrint_currentState()                                             //@todo: remove after testing
+        inputLoop()
+      case play: Play    =>
+        //debugPrint_currentState()                                             //@todo: remove after testing
+        println(controller.game.field.toString())
+        inputLoop()
+      case quit: Quit  =>
+        print("--- See you later alligator...\n")
+
     }
+  }
 
-
-  def parseInput(input: String, loopCount: Int): Int =
+  def parseInput(input: String): State = {
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
-    if(chars.size == 0)
+    if(chars.size.equals(0))
       print("No input!\n")
-      return ERROR_VAL
+      return controller.request(QuitState())                                    //@todo what to to instead?
 
-    if(chars.size == 1)
+    if(chars.size.equals(1))
       chars(0) match {
         case 'h' | 'H' =>
-          printHelp()
-          return ERROR_VAL
+          return controller.request(HelpState())
         case 'q' | 'Q' =>
-          return EXIT_VAL
+          return controller.request(QuitState())
+        case 'm' | 'M'  =>
+          return controller.request(MenuState())
+        case 'p' | 'P' =>
+          return controller.request(PlayState())
       }
 
-    if(chars.size != controller.field.matrix.cols)
+    if(chars.size != controller.game.field.matrix.cols)
       print("Selected Code has the wrong length!\n")
-      return ERROR_VAL
-
+      return controller.request(QuitState())                                    //@todo what to to instead?
+      
     val codeVector    = buildVector(emptyVector, chars)
     val hints         = code.compareTo(codeVector)
 
-    controller.placeGuessAndHints(codeVector, hints, loopCount)
+    controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
 
     if hints.forall(p => p == HintStone.Black) then
-      return WIN_VAL
-    else if loopCount == controller.field.matrix.rows - 1 then
-      return LOOSE_VAL
+      return controller.request(PlayerWinState())
+    else if controller.game.getRemainingTurns().equals(0) then
+      return controller.request(PlayerLoseState())
     else
-      return SUCCESS_VAL
-
-  def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] =
+      return controller.request(PlayerInputState())
+  }
+  
+  //@todo: move declaration cause not TUI "only"   
+  def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
     val stone = chars(vector.size) match
       case 'R'|'r'|'1' => Stone.Red
       case 'G'|'g'|'2' => Stone.Green
@@ -82,14 +102,16 @@ case class TUI(var controller: Controller) extends Observer:
       case 'P'|'p'|'6' => Stone.Purple
 
       val newvector = vector.appended(stone)
-      if (newvector.size < controller.field.cols)
+      if (newvector.size < controller.game.field.cols)
         buildVector(newvector, chars)
       else
         return newvector
-
-  def printHelp() =
-    println("Userinput example at Codelength 4: 'rgby' would indicate a Code with the Colors Red, Green, Blue, Yellow\n")
-
+  }
   
-  override def update: Unit = 
+  override def update: Unit = {
     println(controller.update)
+  }
+  
+  def debugPrint_currentState() = {
+    println("<<<debug>>>: " + controller.game.state.toString())
+  }

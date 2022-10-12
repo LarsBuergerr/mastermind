@@ -1,9 +1,19 @@
+/**
+  * Main.scala
+  */
+
+//********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
+
+
+//********************************************************************** IMPORTS
 import aview.TUI
-import util.GameMode
+import controller.Controller
+import model.{Game, State, Init}
+import util.{GameMode}
 
 @main def main: Unit = 
-  print("Welcome to Mastermind\n\n")
-  val mode = GameMode.selectMode
-  val tui = new TUI(mode)
-  tui.run(0)
+  val game = new Game(GameMode.selectMode)
+  val controller = new Controller(game)
+  val tui = new TUI(controller)
+  tui.run()
