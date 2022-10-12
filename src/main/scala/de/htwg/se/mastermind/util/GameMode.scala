@@ -13,7 +13,7 @@ import model.{Field, Stone, HintStone}
 import scala.io.StdIn.readLine
 
 
-object GameMode {
+object GameMode{
 
   var selectMode = parseInput()
 
