@@ -24,37 +24,51 @@ case class TUI(controller: Controller) extends Observer:
   def run(): Unit = {
     controller.request(InitState())
     println("Remaining Turns: " + controller.game.getRemainingTurns())
-    //debugPrint_currentState()                                                 //@todo: remove after testing
     inputLoop()
   }
   
+  //@todo Boolean return type?
   def inputLoop(): Unit = {
+    
     val input = readLine(">> ")
     
-    parseInput(input) match {
-      case pInp: PlayerInput  =>
-        println("Remaining Turns: " + controller.game.getRemainingTurns())
-        inputLoop()
-      case pWin: PlayerWin    =>
-        print("--- You won. Thank you for playing the game\n")
-      case pLos: PlayerLose   =>
-        print("--- You lost!!! Anyway thanks for playing the game\n")
-      case help: Help   =>
-        inputLoop()
-      case menu: Menu    =>
-        //debugPrint_currentState()                                             //@todo: remove after testing
-        inputLoop()
-      case play: Play    =>
-        //debugPrint_currentState()                                             //@todo: remove after testing
-        println(controller.game.field.toString())
-        inputLoop()
-      case quit: Quit  =>
-        print("--- See you later alligator...\n")
-
-    }
+    controller.handleRequest(UserInputRequest(input))
+    
+    //if(controller.game.state.isInstanceOf[Init]) {
+    //  println("That worked!")
+    //  controller.handleRequest(SingleCharRequest(input))
+    //} else  {
+    //  println("That didn't work!")
+    //}
+    
+    
+    //controller.handleRequest(MenuInput(input))
+    //parseInput(input) match {
+    //  case pInp: PlayerInput  =>
+    //    println("Remaining Turns: " + controller.game.getRemainingTurns())
+    //    inputLoop()
+    //  case pWin: PlayerWin    =>
+    //    print("--- You won. Thank you for playing the game\n")
+    //  case pLos: PlayerLose   =>
+    //    print("--- You lost!!! Anyway thanks for playing the game\n")
+    //  case help: Help   =>
+    //    inputLoop()
+    //  case menu: Menu    =>
+    //    //debugPrint_currentState()                                             //@todo: remove after testing
+    //    inputLoop()
+    //  case play: Play    =>
+    //    //debugPrint_currentState()                                             //@todo: remove after testing
+    //    println(controller.game.field.toString())
+    //    inputLoop()
+    //  case quit: Quit  =>
+    //    print("--- See you later alligator...\n")
+//
+    //}
   }
 
+  
   def parseInput(input: String): State = {
+    
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
@@ -90,6 +104,7 @@ case class TUI(controller: Controller) extends Observer:
     else
       return controller.request(PlayerInputState())
   }
+  
   
   //@todo: move declaration cause not TUI "only"   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {

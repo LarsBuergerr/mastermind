@@ -15,8 +15,13 @@ import util.*
 //******************************************************************** CLASS DEF
 class Controller(var game: Game) extends Observable:
 
+  // Pass on the game state to the view and the event to game
   def request(event: Event): State = {
     game.request(event)
+  }
+  
+  def handleRequest(request: Request): Response = {
+    game.handleRequest(request)
   }
 
   def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int): Unit =

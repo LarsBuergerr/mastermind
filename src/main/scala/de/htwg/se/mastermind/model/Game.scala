@@ -21,8 +21,30 @@ import util._
 case class Game(var field: Field, var state: State = Init()){
   
   private var currentTurn: Int = 0
+  
   private val maxTurn: Int = field.matrix.rows
+  
+  // Defines the Chain of Responsibility (Pattern)
+  val chain: RequestHandler.Type = {
+    RequestHandler.singleCharInput orElse RequestHandler.illegal
+  }
+  
+  /**
+    * Calls the responsible chain
+    *
+    * @param request
+    * @return
+    */
+  def handleRequest(request: Request): Response = {
+    chain(request)
+  }
 
+  /**
+    * Handles the current state of the game (State Pattern)
+    *
+    * @param event  event to be handled
+    * @return       new state of the game
+    */
   def request(event: Event): State = {
     //println("<<<debug>>>: handler called")                                    //@todo remove after debugging
     event match{
@@ -47,5 +69,26 @@ case class Game(var field: Field, var state: State = Init()){
   def setTurn(): Int = {
     currentTurn = currentTurn + 1
     return currentTurn
+  }
+  
+  
+  object RequestHandler {
+    
+    type Type = PartialFunction[Request, Response]
+    
+    val singleCharInput: RequestHandler.Type = {
+      case req@UserInputRequest(userinput) => {
+        println("Hello World, whats up?")
+        Response(req, handled = true)
+      }
+    }
+    
+    
+    val illegal: RequestHandler.Type = {
+      case req@IllegalRequest(userinput) => {
+        println("Oh no, you did something illegal!")
+        Response(req, handled = false)
+      }
+    }
   }
 }
