@@ -20,7 +20,7 @@ class Controller(var game: Game) extends Observable:
     game.request(event)
   }
   
-  def handleRequest(request: Request): Unit = {
+  def handleRequest(request: Request): Event = {
     game.handleRequest(request)
   }
 

@@ -24,7 +24,8 @@ case class Game(var field: Field, var state: State = Init()){
   
   private val maxTurn: Int = field.matrix.rows
   
-  type PartialFunctionRule = PartialFunction[String, Int]
+  //Partial function gets string and returns a event
+  type PartialFunctionRule = PartialFunction[String, Event]
   
   // Defines the Chain of Responsibility (Pattern)
   val chainSCR: PartialFunctionRule = {
@@ -38,14 +39,16 @@ case class Game(var field: Field, var state: State = Init()){
     * @param request
     * @return
     */
-  def handleRequest(request: Request): Unit = {
+  def handleRequest(request: Request): Event = {
     request match {
       case SingleCharRequest(userinput) => {
         println("SingleCharRequest: " + userinput)                              //@todo remove after debugging
-        println(chainSCR.applyOrElse(userinput, RequestHandlerSCR.DefaultInputRule))
+        chainSCR.applyOrElse(userinput, RequestHandlerSCR.DefaultInputRule)
       }
       case MultiCharRequest(userinput) => {
-        println("MultiCharRequest: " + userinput)                               //@todo remove after debugging
+        //println("MultiCharRequest: " + userinput)                               //@todo remove after debugging
+        println("Oh no, this shouldn't happen!")
+        QuitState()
       }
     }
   }
@@ -86,16 +89,17 @@ case class Game(var field: Field, var state: State = Init()){
   object RequestHandlerSCR {
     
     //defines the general rule for the chain
-    def singleCharRule(f: String => Boolean, result: Int): PartialFunctionRule = {
+    def singleCharRule(f: String => Boolean, result: Event): PartialFunctionRule = {
       case s if f(s) => result
     }
     
     //defines the concrete rules
-    val HelpInputRule: PartialFunctionRule = singleCharRule(_ == "h", 1)
-    val MenuInputRule: PartialFunctionRule = singleCharRule(_ == "m", 2)
-    //val IllegalInputRule: PartialFunctionRule = singleCharRule(_ == "i", true)
+    val HelpInputRule: PartialFunctionRule = singleCharRule(_ == "h", HelpState())
+    val MenuInputRule: PartialFunctionRule = singleCharRule(_ == "m", MenuState())
+    val PlayInputRule: PartialFunctionRule = singleCharRule(_ == "p", PlayState())
+    val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitState())
     
     //defines the default rule
-    def DefaultInputRule(userinput: String): Int = -1
+    def DefaultInputRule(userinput: String): Event = QuitState()
   }
 }

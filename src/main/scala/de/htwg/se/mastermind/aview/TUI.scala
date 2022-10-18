@@ -27,7 +27,7 @@ case class TUI(controller: Controller) extends Observer:
     inputLoop()
   }
   
-  //@todo Boolean return type?
+  //@todo Boolean return type for testing?
   def inputLoop(): Unit = {
     
     val input = readLine(">> ")
@@ -77,22 +77,13 @@ case class TUI(controller: Controller) extends Observer:
       return controller.request(QuitState())                                    //@todo what to to instead?
 
     if(chars.size.equals(1)){
-      controller.handleRequest(SingleCharRequest(input))
+      //Handles single char user input (first with CoR, then with State Pattern)
+      val currentRequest = controller.handleRequest(SingleCharRequest(input))
+      return controller.request(currentRequest)
     }
     else {
       controller.handleRequest(MultiCharRequest(input))
     }
-      //chars(0) match {
-      //  case 'h' | 'H' =>
-      //    return controller.request(HelpState())
-      //  case 'q' | 'Q' =>
-      //    return controller.request(QuitState())
-      //  case 'm' | 'M'  =>
-      //    return controller.request(MenuState())
-      //  case 'p' | 'P' =>
-      //    return controller.request(PlayState())
-      //}
-    //}
 
     if(chars.size != controller.game.field.matrix.cols)
       print("Selected Code has the wrong length!\n")
