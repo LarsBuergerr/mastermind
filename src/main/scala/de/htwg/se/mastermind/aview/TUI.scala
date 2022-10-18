@@ -72,22 +72,35 @@ case class TUI(controller: Controller) extends Observer:
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
-    if(chars.size.equals(0))
-      print("No input!\n")
-      return controller.request(QuitState())                                    //@todo what to to instead?
-
-    if(chars.size.equals(1)){
-      //Handles single char user input (first with CoR, then with State Pattern)
-      val currentRequest = controller.handleRequest(SingleCharRequest(input))
-      return controller.request(currentRequest)
+    chars.size match {
+      case 0 => {
+        val currentRequest = controller.handleRequest(SingleCharRequest(" "))
+        return controller.request(currentRequest)
+      }
+      
+      case 1 => {
+        //Handles single char user input (first with CoR, then with State Pattern)
+        val currentRequest = controller.handleRequest(SingleCharRequest(input))
+        return controller.request(currentRequest)
+      }
     }
-    else {
-      controller.handleRequest(MultiCharRequest(input))
-    }
+    //if(chars.size.equals(0))
+    //  //print("No input!\n")
+    //  //Stay in current state
+    //  return controller.request(QuitState())                                    //@todo what to to instead?
+//
+    //if(chars.size.equals(1)){
+    //  //Handles single char user input (first with CoR, then with State Pattern)
+    //  val currentRequest = controller.handleRequest(SingleCharRequest(input))
+    //  return controller.request(currentRequest)
+    //}
+    //else {
+    //  controller.handleRequest(MultiCharRequest(input))
+    //}
 
     if(chars.size != controller.game.field.matrix.cols)
       print("Selected Code has the wrong length!\n")
-      return controller.request(QuitState())                                    //@todo what to to instead?
+      return controller.request(QuitStateEvent())                                    //@todo what to to instead?
       
     val codeVector    = buildVector(emptyVector, chars)
     val hints         = code.compareTo(codeVector)

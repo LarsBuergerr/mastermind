@@ -30,7 +30,9 @@ case class Game(var field: Field, var state: State = Init()){
   // Defines the Chain of Responsibility (Pattern)
   val chainSCR: PartialFunctionRule = {
     RequestHandlerSCR.HelpInputRule orElse 
-    RequestHandlerSCR.MenuInputRule
+    RequestHandlerSCR.MenuInputRule orElse
+    RequestHandlerSCR.PlayInputRule orElse
+    RequestHandlerSCR.QuitInputRule
   }
   
   /**
@@ -48,7 +50,7 @@ case class Game(var field: Field, var state: State = Init()){
       case MultiCharRequest(userinput) => {
         //println("MultiCharRequest: " + userinput)                               //@todo remove after debugging
         println("Oh no, this shouldn't happen!")
-        QuitState()
+        QuitStateEvent()
       }
     }
   }
@@ -63,14 +65,14 @@ case class Game(var field: Field, var state: State = Init()){
     //println("<<<debug>>>: handler called")                                    //@todo remove after debugging
     event match{
       case init: InitState        => state = Init()
-      case menu: MenuState        => state = Menu()
+      case menu: MenuStateEvent   => state = Menu()
       case play: PlayState        => state = Play()
-      case quit: QuitState        => state = Quit()
-      case help: HelpState        => state = Help()
+      case quit: QuitStateEvent   => state = Quit()
+      case help: HelpStateEvent   => state = Help()
       
       case pInp: PlayerInputState => state = PlayerInput()
       case pLos: PlayerLoseState  => state = PlayerLose()
-      case pWin: PlayerWinState   => state = PlayerWin()
+      case pWin: PlayerWinState   => state = PlayerWin() 
     }
     return state.handle()
   }
@@ -85,6 +87,15 @@ case class Game(var field: Field, var state: State = Init()){
     return currentTurn
   }
   
+  def getCurrentStateEvent(): Event = {
+    state match {
+      case init:Init        => HelpStateEvent()
+      case menu:Menu        => MenuStateEvent()
+      case play:Play        => PlayState()
+      case quit:Quit        => QuitStateEvent()
+      case help:Help        => HelpStateEvent()
+    }
+  }
   
   object RequestHandlerSCR {
     
@@ -94,12 +105,15 @@ case class Game(var field: Field, var state: State = Init()){
     }
     
     //defines the concrete rules
-    val HelpInputRule: PartialFunctionRule = singleCharRule(_ == "h", HelpState())
-    val MenuInputRule: PartialFunctionRule = singleCharRule(_ == "m", MenuState())
+    val HelpInputRule: PartialFunctionRule = singleCharRule(_ == "h", HelpStateEvent())
+    val MenuInputRule: PartialFunctionRule = singleCharRule(_ == "m", MenuStateEvent())
     val PlayInputRule: PartialFunctionRule = singleCharRule(_ == "p", PlayState())
-    val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitState())
+    val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
     
     //defines the default rule
-    def DefaultInputRule(userinput: String): Event = QuitState()
+    def DefaultInputRule(userinput: String): Event = {
+      println("Error: Invalid input [will be ignored]")
+      getCurrentStateEvent()
+    }
   }
 }
