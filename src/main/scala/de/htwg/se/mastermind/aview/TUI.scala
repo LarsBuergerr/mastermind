@@ -32,7 +32,7 @@ case class TUI(controller: Controller) extends Observer:
     
     val input = readLine(">> ")
     
-    controller.handleRequest(UserInputRequest(input))
+    //controller.handleRequest(UserInputRequest(input))
     
     //if(controller.game.state.isInstanceOf[Init]) {
     //  println("That worked!")
@@ -43,27 +43,27 @@ case class TUI(controller: Controller) extends Observer:
     
     
     //controller.handleRequest(MenuInput(input))
-    //parseInput(input) match {
-    //  case pInp: PlayerInput  =>
-    //    println("Remaining Turns: " + controller.game.getRemainingTurns())
-    //    inputLoop()
-    //  case pWin: PlayerWin    =>
-    //    print("--- You won. Thank you for playing the game\n")
-    //  case pLos: PlayerLose   =>
-    //    print("--- You lost!!! Anyway thanks for playing the game\n")
-    //  case help: Help   =>
-    //    inputLoop()
-    //  case menu: Menu    =>
-    //    //debugPrint_currentState()                                             //@todo: remove after testing
-    //    inputLoop()
-    //  case play: Play    =>
-    //    //debugPrint_currentState()                                             //@todo: remove after testing
-    //    println(controller.game.field.toString())
-    //    inputLoop()
-    //  case quit: Quit  =>
-    //    print("--- See you later alligator...\n")
-//
-    //}
+    parseInput(input) match {
+      case pInp: PlayerInput  =>
+        println("Remaining Turns: " + controller.game.getRemainingTurns())
+        inputLoop()
+      case pWin: PlayerWin    =>
+        print("--- You won. Thank you for playing the game\n")
+      case pLos: PlayerLose   =>
+        print("--- You lost!!! Anyway thanks for playing the game\n")
+      case help: Help   =>
+        inputLoop()
+      case menu: Menu    =>
+        //debugPrint_currentState()                                             //@todo: remove after testing
+        inputLoop()
+      case play: Play    =>
+        //debugPrint_currentState()                                             //@todo: remove after testing
+        println(controller.game.field.toString())
+        inputLoop()
+      case quit: Quit  =>
+        print("--- See you later alligator...\n")
+
+    }
   }
 
   
@@ -76,17 +76,23 @@ case class TUI(controller: Controller) extends Observer:
       print("No input!\n")
       return controller.request(QuitState())                                    //@todo what to to instead?
 
-    if(chars.size.equals(1))
-      chars(0) match {
-        case 'h' | 'H' =>
-          return controller.request(HelpState())
-        case 'q' | 'Q' =>
-          return controller.request(QuitState())
-        case 'm' | 'M'  =>
-          return controller.request(MenuState())
-        case 'p' | 'P' =>
-          return controller.request(PlayState())
-      }
+    if(chars.size.equals(1)){
+      controller.handleRequest(SingleCharRequest(input))
+    }
+    else {
+      controller.handleRequest(MultiCharRequest(input))
+    }
+      //chars(0) match {
+      //  case 'h' | 'H' =>
+      //    return controller.request(HelpState())
+      //  case 'q' | 'Q' =>
+      //    return controller.request(QuitState())
+      //  case 'm' | 'M'  =>
+      //    return controller.request(MenuState())
+      //  case 'p' | 'P' =>
+      //    return controller.request(PlayState())
+      //}
+    //}
 
     if(chars.size != controller.game.field.matrix.cols)
       print("Selected Code has the wrong length!\n")
