@@ -18,13 +18,6 @@ sealed abstract class Request
 case class SingleCharRequest(userinput: String) extends Request
 case class  MultiCharRequest(userinput: String) extends Request
 
-//case class MenuInput(userinput: String)         extends Request
-//case class PlayInput(userinput: String)         extends Request
-//case class HelpInput(userinput: String)         extends Request
-//case class QuitInput(userinput: String)         extends Request
-//case class EndInput(userinput: String)          extends Request
-//case class IllegalRequest(userinput: String)    extends Request
-
 /**
  *
  */

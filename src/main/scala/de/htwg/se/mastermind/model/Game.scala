@@ -44,7 +44,7 @@ case class Game(var field: Field, var state: State = Init()){
   def handleRequest(request: Request): Event = {
     request match {
       case SingleCharRequest(userinput) => {
-        println("SingleCharRequest: " + userinput)                              //@todo remove after debugging
+        //println("SingleCharRequest: " + userinput)                              //@todo remove after debugging
         chainSCR.applyOrElse(userinput, RequestHandlerSCR.DefaultInputRule)
       }
       case MultiCharRequest(userinput) => {
@@ -112,7 +112,24 @@ case class Game(var field: Field, var state: State = Init()){
     
     //defines the default rule
     def DefaultInputRule(userinput: String): Event = {
-      println("Error: Invalid input [will be ignored]")
+      println(">>> Error: Invalid input [will be ignored]")
+      getCurrentStateEvent()
+    }
+  }
+  
+  object RequestHandlerMCR {
+    
+    //defines the general rule for the chain
+    def multiCharRule(f: String => Boolean, result: Event): PartialFunctionRule = {
+      case s if f(s) => result
+    }
+    
+    //defines the concrete rules
+    //val HelpInputRule: PartialFunctionRule = multiCharRule(_.size.equals(), HelpStateEvent())
+    
+    //defines the default rule
+    def DefaultInputRule(userinput: String): Event = {
+      println(">>> Error: Invalid input [will be ignored]")
       getCurrentStateEvent()
     }
   }

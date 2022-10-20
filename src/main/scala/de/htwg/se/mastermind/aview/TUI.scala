@@ -83,6 +83,12 @@ case class TUI(controller: Controller) extends Observer:
         val currentRequest = controller.handleRequest(SingleCharRequest(input))
         return controller.request(currentRequest)
       }
+      
+      case _ => {
+        //Handles multi char user input (first with CoR, then with State Pattern)
+        val currentRequest = controller.handleRequest(MultiCharRequest(input))
+        return controller.request(currentRequest)
+      }
     }
     //if(chars.size.equals(0))
     //  //print("No input!\n")
