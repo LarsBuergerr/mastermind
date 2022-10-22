@@ -2,7 +2,7 @@ name: Scala Codecov
 
 on:
   push:
-    branches: [ master, develop, 05-Architecture, 06-ContinuousDeployment]
+    branches: [ master, develop, 05-Architecture, 06-ContinuousDeployment, 07-DesignPattern]
   pull_request:
     branches: [ master, develop ]
 

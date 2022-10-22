@@ -1,8 +1,8 @@
 import de.htwg.se.mastermind.model._
-import scala.util.Success
-import scala.util.Try
-import scala.util.Failure
-import scala.io.StdIn.readLine
+//import scala.util.Success
+//import scala.util.Try
+//import scala.util.Failure
+//import scala.io.StdIn.readLine
 
 val x = 5 + 1
 val y = RandomNumberGenerator()

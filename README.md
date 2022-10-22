@@ -3,9 +3,9 @@
 ---
 
 ![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/codecov.yml/badge.svg)
-[![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/06-ContinuousDeployment/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/develop)
+[![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/07-DesignPattern/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/develop)
 ![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/coveralls.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/LarsBuergerr/mastermind/badge.svg?branch=06-ContinuousDeployment)](https://coveralls.io/github/LarsBuergerr/mastermind?branch=06-ContinuousDeployment)
+[![Coverage Status](https://coveralls.io/repos/github/LarsBuergerr/mastermind/badge.svg?branch=07-DesignPattern)](https://coveralls.io/github/LarsBuergerr/mastermind?branch=07-DesignPattern)
 
 ![RepoSize](https://img.shields.io/github/repo-size/LarsBuergerr/mastermind)
 [![License](https://img.shields.io/github/license/LarsBuergerr/mastermind?color=green)](https://cdn130.picsart.com/272563229032201.jpg?r1024x1024)
