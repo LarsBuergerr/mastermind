@@ -18,7 +18,6 @@ import util.Event
 //******************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
   
-  val code = new Code(controller.game.field.cols)
   controller.add(this)
 
   def run(): Unit = {
@@ -32,36 +31,22 @@ case class TUI(controller: Controller) extends Observer:
     
     val input = readLine(">> ")
     
-    //controller.handleRequest(UserInputRequest(input))
-    
-    //if(controller.game.state.isInstanceOf[Init]) {
-    //  println("That worked!")
-    //  controller.handleRequest(SingleCharRequest(input))
-    //} else  {
-    //  println("That didn't work!")
-    //}
-    
-    
-    //controller.handleRequest(MenuInput(input))
     parseInput(input) match {
       case pInp: PlayerInput  =>
         println("Remaining Turns: " + controller.game.getRemainingTurns())
         inputLoop()
       case pWin: PlayerWin    =>
-        print("--- You won. Thank you for playing the game\n")
       case pLos: PlayerLose   =>
         print("--- You lost!!! Anyway thanks for playing the game\n")
-      case help: Help   =>
+      case help: Help         =>
         inputLoop()
-      case menu: Menu    =>
-        //debugPrint_currentState()                                             //@todo: remove after testing
+      case menu: Menu         =>
         inputLoop()
-      case play: Play    =>
-        //debugPrint_currentState()                                             //@todo: remove after testing
+      case play: Play         =>
         println(controller.game.field.toString())
         inputLoop()
       case quit: Quit  =>
-        print("--- See you later alligator...\n")
+        print("--- Thanks for playing the game\n")
 
     }
   }
@@ -77,48 +62,28 @@ case class TUI(controller: Controller) extends Observer:
         val currentRequest = controller.handleRequest(SingleCharRequest(" "))
         return controller.request(currentRequest)
       }
-      
-      case 1 => {
-        //Handles single char user input (first with CoR, then with State Pattern)
+      case 1 => { //SingleChar user input (first with CoR, then with State Pat.)
         val currentRequest = controller.handleRequest(SingleCharRequest(input))
         return controller.request(currentRequest)
       }
-      
-      case _ => {
-        //Handles multi char user input (first with CoR, then with State Pattern)
+      case _ => { //MultiChar user input (first with CoR, then with State Pat.)
         val currentRequest = controller.handleRequest(MultiCharRequest(input))
-        return controller.request(currentRequest)
+        
+        if(currentRequest != PlayerAnalyseEvent()){
+          return controller.request(currentRequest)
+        } else {
+          val codeVector    = buildVector(emptyVector, chars)
+          val hints         = controller.game.code.compareTo(codeVector)
+          controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
+          if hints.forall(p => p == HintStone.Black) then
+            return controller.request(PlayerWinState())
+          else if controller.game.getRemainingTurns().equals(0) then
+            return controller.request(PlayerLoseState())
+          else
+            return controller.request(PlayerInputState())
+        }
       }
     }
-    //if(chars.size.equals(0))
-    //  //print("No input!\n")
-    //  //Stay in current state
-    //  return controller.request(QuitState())                                    //@todo what to to instead?
-//
-    //if(chars.size.equals(1)){
-    //  //Handles single char user input (first with CoR, then with State Pattern)
-    //  val currentRequest = controller.handleRequest(SingleCharRequest(input))
-    //  return controller.request(currentRequest)
-    //}
-    //else {
-    //  controller.handleRequest(MultiCharRequest(input))
-    //}
-
-    if(chars.size != controller.game.field.matrix.cols)
-      print("Selected Code has the wrong length!\n")
-      return controller.request(QuitStateEvent())                                    //@todo what to to instead?
-      
-    val codeVector    = buildVector(emptyVector, chars)
-    val hints         = code.compareTo(codeVector)
-
-    controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
-
-    if hints.forall(p => p == HintStone.Black) then
-      return controller.request(PlayerWinState())
-    else if controller.game.getRemainingTurns().equals(0) then
-      return controller.request(PlayerLoseState())
-    else
-      return controller.request(PlayerInputState())
   }
   
   
@@ -131,6 +96,8 @@ case class TUI(controller: Controller) extends Observer:
       case 'Y'|'y'|'4' => Stone.Yellow
       case 'W'|'w'|'5' => Stone.White
       case 'P'|'p'|'6' => Stone.Purple
+      
+      //@todo add error handling when input is not valid
 
       val newvector = vector.appended(stone)
       if (newvector.size < controller.game.field.cols)
@@ -141,8 +108,4 @@ case class TUI(controller: Controller) extends Observer:
   
   override def update: Unit = {
     println(controller.update)
-  }
-  
-  def debugPrint_currentState() = {
-    println("<<<debug>>>: " + controller.game.state.toString())
   }

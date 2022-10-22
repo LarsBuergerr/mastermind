@@ -14,7 +14,6 @@ import util._
 
 //******************************************************************** CLASS DEF
 val horizontalLine = "----------------------------------------------------------------" + eol
-val welcomeMessage = "------------------ Welcome to Mastermind -----------------------" + eol
 
 trait State {
   def handle(): State
@@ -54,10 +53,11 @@ class Play extends State {
 
 class Help extends State {
   override def handle(): State = {
-    val line      = "--- Help: [Input] : Function-----------------------------------" + eol
-    val lineMenu  = "---       m | M   : starts the menu" + eol
-    val linePlay  = "---       q | Q   : quits the game" + eol
-    printf(line + lineMenu + linePlay + horizontalLine)
+    val line      = "--- Help: [Input] : Function ----------------------------------" + eol
+    val lineMenu  = "---       [m | M] : starts the menu" + eol
+    val linePlay  = "---       [p | P] : starts the game" + eol
+    val lineEnd   = "---       [q | Q] : quits the game" + eol
+    printf(line + lineMenu + linePlay + lineEnd + horizontalLine)
     return this    
   }
   override def toString(): String = "State: Help"
@@ -79,6 +79,14 @@ class PlayerInput extends State {
     return this
   }
   override def toString(): String = "State: PlayerInput"
+}
+
+
+class PlayerAnalyseState() extends State {
+  override def handle(): State = {
+    return this
+  }
+  override def toString(): String = "State: PlayerAnalysis"
 }
 
 

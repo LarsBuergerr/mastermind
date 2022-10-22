@@ -13,12 +13,12 @@ package util
 sealed abstract class Request
 
 /**
-  * 
+  * Defines the possible requests.
   */
 case class SingleCharRequest(userinput: String) extends Request
 case class  MultiCharRequest(userinput: String) extends Request
 
 /**
- *
+ * 
  */
 case class Response(req: Request, handled: Boolean)
