@@ -100,3 +100,12 @@ class PlayerWin extends State {
   }
   override def toString(): String = "State: PlayerWin"
 }
+
+class PlayerAnalyze extends State {
+  override def handle(): State = {
+    val line      = "--- Player analyzes ---------------------------------------------" + eol
+    printf(line)
+    return this
+  }
+  override def toString(): String = "State: PlayerAnalyzes"
+}
