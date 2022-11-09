@@ -86,7 +86,6 @@ case class Game(var field: Field, var state: State = Init()){
   }
   
   
-  //@todo: move declaration cause not TUI "only"   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
     val stone = chars(vector.size) match
       case 'R'|'r'|'1' => Stone.Red
@@ -116,6 +115,7 @@ case class Game(var field: Field, var state: State = Init()){
       case play:Play        => PlayStateEvent()
       case quit:Quit        => QuitStateEvent()
       case help:Help        => HelpStateEvent()
+      case pInp:PlayerInput => PlayerInputStateEvent()
     }
   }
   
