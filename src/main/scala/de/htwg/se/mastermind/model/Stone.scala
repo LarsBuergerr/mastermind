@@ -72,8 +72,7 @@ object Stone {
       case 5 => "P"
       case _ => " "
     })
-  }
-  
+  } 
 }
 
   

@@ -42,10 +42,8 @@ case class Code(code: Vector[Stone]):
     }
     
     val equalsList = compareToEqual(userInput, 0, List())
-    print("EqualsList: " + equalsList + "\n")
     
     val presentList = compareToPresent(userInput, 0 , 0, equalsList, List())
-    print("PresentList: " + presentList + "\n")
     
     return buildVector(Vector(), this.size, equalsList.size, presentList.size)
   }
@@ -85,8 +83,7 @@ case class Code(code: Vector[Stone]):
   
   
   def compareToPresent(inputUser: Vector[Stone], currentPos: Int, secondPos: Int, equalsList: List[Int], presentList: List[Int]): (List[Int]) = {
-    print("InputUser: " + inputUser + "\n")
-    //print("InputUser[0] = " + inputUser)
+
     if(currentPos >= size){
       return presentList
     }

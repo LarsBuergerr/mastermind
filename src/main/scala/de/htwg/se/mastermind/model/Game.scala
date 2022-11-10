@@ -11,7 +11,7 @@ package model
 import util._
 
 
-//******************************************************************** CLASS DEF
+//********************************************************************** CLASS DEF
 /**
   * Represents a game instance with it's current state and game field
   *
@@ -90,10 +90,10 @@ case class Game(var field: Field, var state: State = Init()){
     val stone = chars(vector.size) match
       case 'R'|'r'|'1' => Stone("R")
       case 'G'|'g'|'2' => Stone("G")
-      //case 'B'|'b'|'3' => Stone.Blue
-      //case 'Y'|'y'|'4' => Stone.Yellow
-      //case 'W'|'w'|'5' => Stone.White
-      //case 'P'|'p'|'6' => Stone.Purple
+      case 'B'|'b'|'3' => Stone("B")
+      case 'Y'|'y'|'4' => Stone("Y")
+      case 'W'|'w'|'5' => Stone("W")
+      case 'P'|'p'|'6' => Stone("P")
 
       val newvector = vector.appended(stone)
       if (newvector.size < field.cols)

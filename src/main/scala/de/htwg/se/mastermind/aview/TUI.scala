@@ -15,7 +15,7 @@ import model._
 import scala.io.StdIn.readLine
 import util.Event
 
-//******************************************************************** CLASS DEF
+//********************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
   
   val code = new Code(controller.game.field.cols)
@@ -74,9 +74,7 @@ case class TUI(controller: Controller) extends Observer:
         val currentRequest = controller.handleRequest(MultiCharRequest(input))
         if(currentRequest.isInstanceOf[PlayerAnalyzeEvent])
           val codeVector    = controller.game.buildVector(emptyVector, chars)
-          print("Code: " + codeVector.toString() + "\n")
           val hints         = code.compareTo(codeVector)
-          print("Hints: " + hints.toString() + "\n")
           controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
           if hints.forall(p => p == HintStone.Black) then
             return controller.request(PlayerWinStateEvent())

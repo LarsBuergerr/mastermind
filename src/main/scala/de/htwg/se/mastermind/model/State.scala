@@ -14,7 +14,6 @@ import util._
 
 //******************************************************************** CLASS DEF
 val horizontalLine = "----------------------------------------------------------------" + eol
-val welcomeMessage = "------------------ Welcome to Mastermind -----------------------" + eol
 
 trait State {
   def handle(): State
@@ -58,7 +57,16 @@ class Help extends State {
     val linePlay  = "---       [p    ] : starts the menu" + eol
     val lineMenu  = "---       [m    ] : starts the game" + eol
     val lineQuit  = "---       [q    ] : quits the game" + eol
-    printf(line + linePlay + lineMenu + lineQuit + horizontalLine)
+    val lineHelp  = "---       [h    ] : shows this help" + eol
+    val lineGame  = "---               : Select Stone ------------------------------" + eol
+    val redLine   = "---       [R/r/1] : red" + eol 
+    val greenLine = "---       [G/g/2] : green" + eol
+    val blueLine  = "---       [B/b/3] : blue" + eol
+    val yellowLine= "---       [Y/y/4] : yellow" + eol
+    val whiteLine = "---       [W/w/5] : white" + eol
+    val purpleLine= "---       [P/p/6] : purple" + eol
+    val lineInput = "---       [Enter] : Enters input" + eol
+    printf(line + linePlay + lineMenu + lineQuit + lineHelp + lineGame + redLine + greenLine + blueLine + yellowLine + whiteLine + purpleLine + lineInput + horizontalLine)
     return this    
   }
   override def toString(): String = "State: Help"
