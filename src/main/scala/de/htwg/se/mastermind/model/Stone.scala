@@ -1,5 +1,6 @@
 /**
   * Stone.scala
+  * Implements the Factory Pattern to create different stones
   */
 
 //********************************************************************** PACKAGE
@@ -9,30 +10,70 @@ package model
 //********************************************************************** IMPORTS
 import scala.util.Random
 
-/**
-  * Enum declaration for the mastermind game stones
-  *
-  * @param stringRepresentation
-  */
-enum Stone(stringRepresentation: String):
+trait Stone {
+  val stringRepresentation: String
   override def toString(): String = stringRepresentation
-  case Red extends Stone("R")
-  case Green extends Stone("G")
-  case Blue extends Stone("B")
-  case Yellow extends Stone("Y")
-  case White extends Stone("W")
-  case Purple extends Stone("P")
-  case Empty extends Stone(" ")
+}
 
-  
-/**
-  * Object declaration for random Stone function
-  * @Important: size - 1 to avoid empty stones in random generated codes
-  */
-object Stone{
-  def random: Stone = {
-    Stone.values(Random.nextInt(Stone.values.size - 1))
+private class Red extends Stone {
+  val stringRepresentation = "R"
+  override def toString(): String = stringRepresentation
+}
+
+private class Green extends Stone {
+  val stringRepresentation = "G"
+  override def toString(): String = stringRepresentation
+}
+
+private class Blue extends Stone {
+  val stringRepresentation = "B"
+  override def toString(): String = stringRepresentation
+}
+
+private class Yellow extends Stone {
+  val stringRepresentation = "Y"
+  override def toString(): String = stringRepresentation
+}
+
+private class White extends Stone {
+  val stringRepresentation = "W"
+  override def toString(): String = stringRepresentation
+}
+
+private class Purple extends Stone {
+  val stringRepresentation = "P"
+  override def toString(): String = stringRepresentation
+}
+
+private class Empty extends Stone {
+  val stringRepresentation = " "
+  override def toString(): String = stringRepresentation
+}
+
+object Stone {
+  def apply(stringRepresentation: String): Stone = stringRepresentation match {
+    case "R" => new Red
+    case "G" => new Green
+    case "B" => new Blue
+    case "Y" => new Yellow
+    case "W" => new White
+    case "P" => new Purple
+    case " " => new Empty
+    case _   => new Empty
   }
+  
+  def random: Stone = {
+    Stone.apply(Random.nextInt(6) match {
+      case 0 => "R"
+      case 1 => "G"
+      case 2 => "B"
+      case 3 => "Y"
+      case 4 => "W"
+      case 5 => "P"
+      case _ => " "
+    })
+  }
+  
 }
 
   

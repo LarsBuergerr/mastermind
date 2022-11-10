@@ -42,6 +42,7 @@ case class TUI(controller: Controller) extends Observer:
       case help: Help         =>
         inputLoop()
       case menu: Menu         =>
+        print("Code:" + code.toString() + "\n")
         inputLoop()
       case play: Play         =>
         println(controller.game.field.toString())
@@ -73,7 +74,9 @@ case class TUI(controller: Controller) extends Observer:
         val currentRequest = controller.handleRequest(MultiCharRequest(input))
         if(currentRequest.isInstanceOf[PlayerAnalyzeEvent])
           val codeVector    = controller.game.buildVector(emptyVector, chars)
+          print("Code: " + codeVector.toString() + "\n")
           val hints         = code.compareTo(codeVector)
+          print("Hints: " + hints.toString() + "\n")
           controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
           if hints.forall(p => p == HintStone.Black) then
             return controller.request(PlayerWinStateEvent())

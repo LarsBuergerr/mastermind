@@ -42,8 +42,10 @@ case class Code(code: Vector[Stone]):
     }
     
     val equalsList = compareToEqual(userInput, 0, List())
+    print("EqualsList: " + equalsList + "\n")
     
     val presentList = compareToPresent(userInput, 0 , 0, equalsList, List())
+    print("PresentList: " + presentList + "\n")
     
     return buildVector(Vector(), this.size, equalsList.size, presentList.size)
   }
@@ -73,7 +75,7 @@ case class Code(code: Vector[Stone]):
       return equalsList
     }
     
-    if(this.code(currentPos).equals(inputUser(currentPos))){
+    if(this.code(currentPos).stringRepresentation.equals(inputUser(currentPos).stringRepresentation)){
       return compareToEqual(inputUser, (currentPos + 1), equalsList.appended(currentPos))
     }
     else{
@@ -83,19 +85,19 @@ case class Code(code: Vector[Stone]):
   
   
   def compareToPresent(inputUser: Vector[Stone], currentPos: Int, secondPos: Int, equalsList: List[Int], presentList: List[Int]): (List[Int]) = {
-    
+    print("InputUser: " + inputUser + "\n")
+    //print("InputUser[0] = " + inputUser)
     if(currentPos >= size){
       return presentList
     }
     else
     {
-  
       if(equalsList.contains(currentPos)){
-        return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList)
+        return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList) 
       }
       else{
         if(!equalsList.contains(secondPos) && !presentList.contains(secondPos) && (secondPos != currentPos)){
-          if(inputUser(currentPos).equals(this.code(secondPos))){
+          if(inputUser(currentPos).stringRepresentation.equals(this.code(secondPos).stringRepresentation)){
             return compareToPresent(inputUser, (currentPos + 1), 0, equalsList, presentList.appended(secondPos))
           }
         }
