@@ -36,9 +36,9 @@ case class TUI(controller: Controller) extends Observer:
         println("Remaining Turns: " + controller.game.getRemainingTurns())
         inputLoop()
       case pWin: PlayerWin    =>
-        print("--- You won. Thank you for playing the game\n")
+        print("--- Thank you for playing the game\n")
       case pLos: PlayerLose   =>
-        print("--- You lost!!! Anyway thanks for playing the game\n")
+        print("--- Thank you for playing the game and see you soon\n")
       case help: Help         =>
         inputLoop()
       case menu: Menu         =>
