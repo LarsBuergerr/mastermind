@@ -74,6 +74,8 @@ case class TUI(controller: Controller) extends Observer:
         val currentRequest = controller.handleRequest(MultiCharRequest(input))
         if(currentRequest.isInstanceOf[PlayerAnalyzeEvent])
           val codeVector    = controller.game.buildVector(emptyVector, chars)
+          if(controller.game.checkVector(codeVector))
+            return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
           val hints         = code.compareTo(codeVector)
           controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
           if hints.forall(p => p == HintStone.Black) then
