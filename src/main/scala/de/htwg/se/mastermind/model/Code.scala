@@ -6,7 +6,10 @@
 package de.htwg.se.mastermind
 package model
 
+
 //********************************************************************** IMPORTS
+import scala.util.{Try,Success,Failure}
+
 
 
 /**
@@ -45,7 +48,7 @@ case class Code(code: Vector[Stone]):
     
     val presentList = compareToPresent(userInput, 0 , 0, equalsList, List())
     
-    return buildVector(Vector(), this.size, equalsList.size, presentList.size)
+    buildVector(Vector(), this.size, equalsList.size, presentList.size)
   }
   
   

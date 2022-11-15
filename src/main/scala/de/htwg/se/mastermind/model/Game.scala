@@ -102,7 +102,6 @@ case class Game(var field: Field, var state: State = Init()){
       case 'Y'|'y'|'4'  => Stone("Y")
       case 'W'|'w'|'5'  => Stone("W")
       case 'P'|'p'|'6'  => Stone("P")
-      case _            => Stone(" ")
 
       val newvector = vector.appended(stone)
       if (newvector.size < field.cols)
@@ -111,13 +110,6 @@ case class Game(var field: Field, var state: State = Init()){
         return newvector
   }
   
-  def checkVector(vector: Vector[Stone]): Boolean = {
-    for (stone <- vector) {
-      if (stone.stringRepresentation == " ")
-        return true
-    }
-    return false
-  }
   
   /**
     * Return the event that is needed to trigger the current state and 
