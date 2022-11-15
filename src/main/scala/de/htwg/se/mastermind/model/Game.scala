@@ -11,7 +11,7 @@ package model
 import util._
 
 
-//******************************************************************** CLASS DEF
+//********************************************************************** CLASS DEF
 /**
   * Represents a game instance with it's current state and game field
   *
@@ -24,18 +24,37 @@ case class Game(var field: Field, var state: State = Init()){
   
   private val maxTurn: Int = field.matrix.rows
   
-  val code = new Code(field.cols)
-  
   //Partial function gets string and returns a event
   type PartialFunctionRule = PartialFunction[String, Event]
   
-  
-  // Defines the Chain of Responsibility (Pattern) for SingleCharRequest
+  // Defines the Chain of Responsibility (Pattern)
   val chainSCR: PartialFunctionRule = {
     RequestHandlerSCR.HelpInputRule orElse 
     RequestHandlerSCR.MenuInputRule orElse
     RequestHandlerSCR.PlayInputRule orElse
     RequestHandlerSCR.QuitInputRule
+  }
+  
+  /**
+    * Calls the responsible chain
+    *
+    * @param request
+    * @return
+    */
+  def handleRequest(request: Request): Event = {
+    request match {
+      case SingleCharRequest(userinput) => {
+        //println("SingleCharRequest: " + userinput)                              //@todo remove after debugging
+        chainSCR.applyOrElse(userinput, RequestHandlerSCR.DefaultInputRule)
+      }
+      case MultiCharRequest(userinput) => {
+        //println("MultiCharRequest: " + userinput)                               //@todo remove after debugging
+        if(userinput.size != field.matrix.cols)
+          return RequestHandlerSCR.DefaultInputRule(userinput)
+        else
+          return PlayerAnalyzeEvent()
+      }
+    }
   }
 
   
@@ -72,18 +91,17 @@ case class Game(var field: Field, var state: State = Init()){
     * @return       new state of the game
     */
   def request(event: Event): State = {
-    //println("<<<debug>>>: handler called")                                    //@todo remove after debugging
     event match{
-      case init: InitState          => state = Init()
-      case menu: MenuStateEvent     => state = Menu()
-      case play: PlayState          => state = Play()
-      case quit: QuitStateEvent     => state = Quit()
-      case help: HelpStateEvent     => state = Help()
+      case init: InitStateEvent         => state = Init()
+      case menu: MenuStateEvent         => state = Menu()
+      case play: PlayStateEvent         => state = Play()
+      case quit: QuitStateEvent         => state = Quit()
+      case help: HelpStateEvent         => state = Help()
       
-      case pInp: PlayerInputState   => state = PlayerInput()
-      case pAna: PlayerAnalyseEvent => state = PlayerAnalyseState()
-      case pLos: PlayerLoseState    => state = PlayerLose()
-      case pWin: PlayerWinState     => state = PlayerWin() 
+      case pInp: PlayerInputStateEvent  => state = PlayerInput()
+      case pLos: PlayerLoseStateEvent   => state = PlayerLose()
+      case pWin: PlayerWinStateEvent    => state = PlayerWin()
+      case pAna: PlayerAnalyzeEvent     => state = PlayerAnalyze() 
     }
     return state.handle()
   }
@@ -91,26 +109,55 @@ case class Game(var field: Field, var state: State = Init()){
   override def toString(): String = field.toString
   
   def getMaxTurns() = maxTurn
+  
   def getRemainingTurns() = maxTurn - currentTurn
+  
   def getCurrentTurn() = currentTurn
+  
   def setTurn(): Int = {
     currentTurn = currentTurn + 1
     return currentTurn
   }
   
+  
+  def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
+    val stone = chars(vector.size) match
+      case 'R'|'r'|'1'  => Stone("R")
+      case 'G'|'g'|'2'  => Stone("G")
+      case 'B'|'b'|'3'  => Stone("B")
+      case 'Y'|'y'|'4'  => Stone("Y")
+      case 'W'|'w'|'5'  => Stone("W")
+      case 'P'|'p'|'6'  => Stone("P")
+      case _            => Stone(" ")
+
+      val newvector = vector.appended(stone)
+      if (newvector.size < field.cols)
+        buildVector(newvector, chars)
+      else
+        return newvector
+  }
+  
+  def checkVector(vector: Vector[Stone]): Boolean = {
+    for (stone <- vector) {
+      if (stone.stringRepresentation == " ")
+        return true
+    }
+    return false
+  }
+  
   /**
-    * Returns the event needed to go to the current state again
-    *
-    * @return event to go to the current state
+    * Return the event that is needed to trigger the current state and 
+    * can be used to stay in the current state
+    * @return event that triggers the current state
     */
   def getCurrentStateEvent(): Event = {
     state match {
       case init:Init        => HelpStateEvent()
       case menu:Menu        => MenuStateEvent()
-      case play:Play        => PlayState()
-      case pInp:PlayerInput => PlayerInputState()
+      case play:Play        => PlayStateEvent()
       case quit:Quit        => QuitStateEvent()
       case help:Help        => HelpStateEvent()
+      case pInp:PlayerInput => PlayerInputStateEvent()
     }
   }
   
@@ -125,7 +172,7 @@ case class Game(var field: Field, var state: State = Init()){
     //defines the concrete rules
     val HelpInputRule: PartialFunctionRule = singleCharRule(_ == "h", HelpStateEvent())
     val MenuInputRule: PartialFunctionRule = singleCharRule(_ == "m", MenuStateEvent())
-    val PlayInputRule: PartialFunctionRule = singleCharRule(_ == "p", PlayState())
+    val PlayInputRule: PartialFunctionRule = singleCharRule(_ == "p", PlayStateEvent())
     val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
     
     //defines the default rule

@@ -10,15 +10,15 @@ package util
 
 trait Event
 
-case class MenuStateEvent()     extends Event
-case class PlayState()          extends Event
-case class InitState()          extends Event
+case class MenuStateEvent()         extends Event
+case class PlayStateEvent()         extends Event
+case class InitStateEvent()         extends Event
 
-case class PlayerInputState()   extends Event
-case class PlayerAnalyseEvent() extends Event
-case class PlayerWinState()     extends Event
-case class PlayerLoseState()    extends Event
+case class PlayerInputStateEvent()  extends Event
+case class PlayerWinStateEvent()    extends Event
+case class PlayerLoseStateEvent()   extends Event
+case class PlayerAnalyzeEvent()     extends Event
 
-case class HelpStateEvent()     extends Event
-case class EndState()           extends Event
-case class QuitStateEvent()     extends Event
+case class HelpStateEvent()         extends Event
+case class EndStateEvent()          extends Event
+case class QuitStateEvent()         extends Event

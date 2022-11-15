@@ -17,10 +17,10 @@ object GameMode{
 
   var selectMode = parseInput()
 
-  def strategy_easy =   new Field(12, 4, Stone.Empty, HintStone.Empty)
-  def strategy_medium = new Field(10, 4, Stone.Empty, HintStone.Empty)
-  def strategy_hard =   new Field(10, 5, Stone.Empty, HintStone.Empty)
-  def strategy_extrem = new Field(8, 5, Stone.Empty, HintStone.Empty)
+  def strategy_easy =   new Field(12, 4, Stone(" "), HintStone.Empty)
+  def strategy_medium = new Field(10, 4, Stone(" "), HintStone.Empty)
+  def strategy_hard =   new Field(10, 5, Stone(" "), HintStone.Empty)
+  def strategy_extrem = new Field(8, 5,  Stone(" "), HintStone.Empty)
   
   def parseInput(): Field = {
    
