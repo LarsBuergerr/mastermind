@@ -18,6 +18,7 @@ import util.Event
 //********************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
   
+  val code = new Code(controller.game.field.cols)
   controller.add(this)
 
   def run(): Unit = {
