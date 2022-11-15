@@ -69,7 +69,18 @@ case class TUI(controller: Controller) extends Observer:
       case 1 => {
         //Handles single char user input (first with CoR, then with State Pattern)
         val currentRequest = controller.handleRequest(SingleCharRequest(input))
-        return controller.request(currentRequest)
+       
+        currentRequest match {
+          case undo: UndoStateEvent  => {
+            controller.undo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case redo: RedoStateEvent  => {
+            controller.redo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case _ => return controller.request(currentRequest)
+        }
       }
       
       case _ => {

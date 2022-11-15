@@ -31,7 +31,9 @@ case class Game(var field: Field, var state: State = Init()){
     RequestHandlerSCR.HelpInputRule orElse 
     RequestHandlerSCR.MenuInputRule orElse
     RequestHandlerSCR.PlayInputRule orElse
-    RequestHandlerSCR.QuitInputRule
+    RequestHandlerSCR.QuitInputRule orElse
+    RequestHandlerSCR.UndoInputRule orElse
+    RequestHandlerSCR.RedoInputRule
   }
   
   /**
@@ -67,7 +69,8 @@ case class Game(var field: Field, var state: State = Init()){
       case pInp: PlayerInputStateEvent  => state = PlayerInput()
       case pLos: PlayerLoseStateEvent   => state = PlayerLose()
       case pWin: PlayerWinStateEvent    => state = PlayerWin()
-      case pAna: PlayerAnalyzeEvent     => state = PlayerAnalyze() 
+      case pAna: PlayerAnalyzeEvent     => state = PlayerAnalyze()
+       
     }
     return state.handle()
   }
@@ -82,6 +85,11 @@ case class Game(var field: Field, var state: State = Init()){
   
   def setTurn(): Int = {
     currentTurn = currentTurn + 1
+    return currentTurn
+  }
+  
+  def undoTurn(): Int = {
+    currentTurn = currentTurn - 1
     return currentTurn
   }
   
@@ -140,6 +148,8 @@ case class Game(var field: Field, var state: State = Init()){
     val MenuInputRule: PartialFunctionRule = singleCharRule(_ == "m", MenuStateEvent())
     val PlayInputRule: PartialFunctionRule = singleCharRule(_ == "p", PlayStateEvent())
     val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
+    val UndoInputRule: PartialFunctionRule = singleCharRule(_ == "u", UndoStateEvent())
+    val RedoInputRule: PartialFunctionRule = singleCharRule(_ == "r", RedoStateEvent())
     
     //defines the default rule
     def DefaultInputRule(userinput: String): Event = {
