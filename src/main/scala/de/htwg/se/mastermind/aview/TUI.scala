@@ -18,17 +18,17 @@ import util.Event
 //********************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
   
-  val code = new Code(controller.game.field.cols)
   controller.add(this)
 
   def run(): Unit = {
     controller.request(InitStateEvent())
     println("Remaining Turns: " + controller.game.getRemainingTurns())
-    //debugPrint_currentState()                                                 //@todo: remove after testing
     inputLoop()
   }
   
+  //@todo Boolean return type for testing?
   def inputLoop(): Unit = {
+    
     val input = readLine(">> ")
     
     parseInput(input) match {
@@ -52,7 +52,9 @@ case class TUI(controller: Controller) extends Observer:
     }
   }
 
+  
   def parseInput(input: String): State = {
+    
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
@@ -93,8 +95,4 @@ case class TUI(controller: Controller) extends Observer:
   
   override def update: Unit = {
     println(controller.update)
-  }
-  
-  def debugPrint_currentState() = {
-    println("<<<debug>>>: " + controller.game.state.toString())
   }

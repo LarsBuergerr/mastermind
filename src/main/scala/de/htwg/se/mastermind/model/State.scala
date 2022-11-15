@@ -91,6 +91,14 @@ class PlayerInput extends State {
 }
 
 
+class PlayerAnalyseState() extends State {
+  override def handle(): State = {
+    return this
+  }
+  override def toString(): String = "State: PlayerAnalysis"
+}
+
+
 class PlayerLose extends State {
   override def handle(): State = {
     val line      = "--- You lost ---------------------------------------------------" + eol

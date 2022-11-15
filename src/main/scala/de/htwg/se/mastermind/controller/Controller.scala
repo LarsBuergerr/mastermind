@@ -15,6 +15,7 @@ import util.*
 //******************************************************************** CLASS DEF
 class Controller(var game: Game) extends Observable:
 
+  // Pass on the game state to the view and the event to game
   def request(event: Event): State = {
     game.request(event)
   }
