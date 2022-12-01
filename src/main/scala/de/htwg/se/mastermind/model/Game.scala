@@ -21,7 +21,6 @@ import util._
 case class Game(var field: Field, var state: State = Init()){
   
   private var currentTurn: Int = 0
-  
   private val maxTurn: Int = field.matrix.rows
   
   //Partial function gets string and returns a event
@@ -32,7 +31,9 @@ case class Game(var field: Field, var state: State = Init()){
     RequestHandlerSCR.HelpInputRule orElse 
     RequestHandlerSCR.MenuInputRule orElse
     RequestHandlerSCR.PlayInputRule orElse
-    RequestHandlerSCR.QuitInputRule
+    RequestHandlerSCR.QuitInputRule orElse
+    RequestHandlerSCR.UndoInputRule orElse
+    RequestHandlerSCR.RedoInputRule
   }
   
   /**
@@ -57,39 +58,6 @@ case class Game(var field: Field, var state: State = Init()){
     }
   }
 
-  
-  // Defines the Chain of Responsibility (Pattern) for MultiCharRequests
-  val chainMCR: PartialFunctionRule = {
-    RequestHandlerMCR.DefaultInputRule
-  }
-  
-  
-  /**
-    * Calls the responsible chain (either for Single or MultiCharRequests).
-    *
-    * @param request  request object to handle
-    * @return         event object that will be passed to the state model
-    */
-  def handleRequest(request: Request): Event = {
-    request match {
-      case SingleCharRequest(userinput) => {
-        //println("SingleCharRequest: " + userinput)                            //@todo remove after debugging
-        chainSCR.applyOrElse(userinput, RequestHandlerSCR.DefaultInputRule)
-      }
-      case MultiCharRequest(userinput) => {
-        //println("MultiCharRequest: " + userinput)                             //@todo remove after debugging
-        chainMCR.applyOrElse(userinput, RequestHandlerMCR.ErrorInputRule)
-      }
-    }
-  }
-
-  
-  /**
-    * Handles the current state of the game (State Pattern)
-    *
-    * @param event  event to be handled
-    * @return       new state of the game
-    */
   def request(event: Event): State = {
     event match{
       case init: InitStateEvent         => state = Init()
@@ -101,7 +69,8 @@ case class Game(var field: Field, var state: State = Init()){
       case pInp: PlayerInputStateEvent  => state = PlayerInput()
       case pLos: PlayerLoseStateEvent   => state = PlayerLose()
       case pWin: PlayerWinStateEvent    => state = PlayerWin()
-      case pAna: PlayerAnalyzeEvent     => state = PlayerAnalyze() 
+      case pAna: PlayerAnalyzeEvent     => state = PlayerAnalyze()
+       
     }
     return state.handle()
   }
@@ -119,6 +88,11 @@ case class Game(var field: Field, var state: State = Init()){
     return currentTurn
   }
   
+  def undoTurn(): Int = {
+    currentTurn = currentTurn - 1
+    return currentTurn
+  }
+  
   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
     val stone = chars(vector.size) match
@@ -128,7 +102,6 @@ case class Game(var field: Field, var state: State = Init()){
       case 'Y'|'y'|'4'  => Stone("Y")
       case 'W'|'w'|'5'  => Stone("W")
       case 'P'|'p'|'6'  => Stone("P")
-      case _            => Stone(" ")
 
       val newvector = vector.appended(stone)
       if (newvector.size < field.cols)
@@ -137,13 +110,6 @@ case class Game(var field: Field, var state: State = Init()){
         return newvector
   }
   
-  def checkVector(vector: Vector[Stone]): Boolean = {
-    for (stone <- vector) {
-      if (stone.stringRepresentation == " ")
-        return true
-    }
-    return false
-  }
   
   /**
     * Return the event that is needed to trigger the current state and 
@@ -174,27 +140,11 @@ case class Game(var field: Field, var state: State = Init()){
     val MenuInputRule: PartialFunctionRule = singleCharRule(_ == "m", MenuStateEvent())
     val PlayInputRule: PartialFunctionRule = singleCharRule(_ == "p", PlayStateEvent())
     val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
+    val UndoInputRule: PartialFunctionRule = singleCharRule(_ == "u", UndoStateEvent())
+    val RedoInputRule: PartialFunctionRule = singleCharRule(_ == "r", RedoStateEvent())
     
     //defines the default rule
     def DefaultInputRule(userinput: String): Event = {
-      println(">>> Error: Invalid input [will be ignored]")
-      getCurrentStateEvent()
-    }
-  }
-  
-  
-  object RequestHandlerMCR {
-    
-    //defines the general rule for the chain
-    def multiCharRule(f: String => Boolean, result: Event): PartialFunctionRule = {
-      case s if f(s) => result
-    }
-    
-    //defines the concrete rules
-    val DefaultInputRule: PartialFunctionRule = multiCharRule(_.size.equals(field.matrix.cols), PlayerAnalyseEvent())
-    
-    //defines the error rule
-    def ErrorInputRule(userinput: String): Event = {
       println(">>> Error: Invalid input [will be ignored]")
       getCurrentStateEvent()
     }

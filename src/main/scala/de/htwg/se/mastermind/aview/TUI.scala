@@ -13,11 +13,12 @@ import util.Observer
 import util._
 import model._
 import scala.io.StdIn.readLine
-import util.Event
+import scala.util.{Try, Success, Failure}
 
 //********************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
   
+  val code = new Code(controller.game.field.cols)
   controller.add(this)
 
   def run(): Unit = {
@@ -59,25 +60,33 @@ case class TUI(controller: Controller) extends Observer:
     val chars = input.toCharArray()
 
     chars.size match {
-      case 0 => {
-        // Handles no user input -> stay in current state
+      case 0 => {// Handles no user input -> stay in current state
         val currentRequest = controller.handleRequest(SingleCharRequest(" "))
         return controller.request(currentRequest)
       }
-      
-      case 1 => {
-        //Handles single char user input (first with CoR, then with State Pattern)
+      case 1 => { //Handles single char user input (first with CoR, then with State Pattern)
         val currentRequest = controller.handleRequest(SingleCharRequest(input))
-        return controller.request(currentRequest)
+        currentRequest match {
+          case undo: UndoStateEvent  => {
+            controller.undo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case redo: RedoStateEvent  => {
+            controller.redo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case _ => return controller.request(currentRequest)
+        }
+        
       }
-      
-      case _ => {
-        //Handles multi char user input (first with CoR, then with State Pattern)
+      case _ => { //Handles multi char user input
         val currentRequest = controller.handleRequest(MultiCharRequest(input))
         if(currentRequest.isInstanceOf[PlayerAnalyzeEvent])
-          val codeVector    = controller.game.buildVector(emptyVector, chars)
-          if(controller.game.checkVector(codeVector))
-            return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
+          var codeVector = Vector[Stone]()
+          Try (controller.game.buildVector(emptyVector, chars)) match {
+            case Success(vector) => codeVector = vector.asInstanceOf[Vector[Stone]]
+            case Failure(e)      => return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
+          }
           val hints         = code.compareTo(codeVector)
           controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
           if hints.forall(p => p == HintStone.Black) then
@@ -86,8 +95,7 @@ case class TUI(controller: Controller) extends Observer:
             return controller.request(PlayerLoseStateEvent())
           else
             return controller.request(PlayerInputStateEvent())
-        else
-          //Invalid input -> stay in current state
+        else  //Invalid input -> stay in current state
           return controller.request(currentRequest)
       }
     }

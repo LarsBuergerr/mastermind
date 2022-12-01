@@ -22,3 +22,6 @@ case class PlayerAnalyzeEvent()     extends Event
 case class HelpStateEvent()         extends Event
 case class EndStateEvent()          extends Event
 case class QuitStateEvent()         extends Event
+
+case class UndoStateEvent()         extends Event
+case class RedoStateEvent()         extends Event

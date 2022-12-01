@@ -15,6 +15,8 @@ import util.*
 //******************************************************************** CLASS DEF
 class Controller(var game: Game) extends Observable:
 
+
+  val invoker = new Invoker
   // Pass on the game state to the view and the event to game
   def request(event: Event): State = {
     game.request(event)
@@ -24,10 +26,26 @@ class Controller(var game: Game) extends Observable:
     game.handleRequest(request)
   }
 
-  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int): Unit =
-    game.field = game.field.placeGuessAndHints(stone, hints, row)
-    game.setTurn()
+
+  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int): Field =
+    game.field = invoker.doStep(PlaceCommand(game, stone, hints, row))
+
+    //game.field = game.field.placeGuessAndHints(stone, hints, row)
+    //game.setTurn()
     notifyObservers
+    //game.field
+    game.field
+
+  def redo =
+    game.field = invoker.redoStep.getOrElse(game.field)
+    //game.setTurn()
+    notifyObservers
+
+  def undo =
+    game.field = invoker.undoStep.getOrElse(game.field)
+    //game.undoTurn()
+    notifyObservers
+
 
   def update: String = {
     game.toString()
