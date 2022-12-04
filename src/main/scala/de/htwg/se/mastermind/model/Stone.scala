@@ -87,8 +87,8 @@ trait HStone {
   override def toString(): String = stringRepresentation
 }
 
-private class HBlack extends HStone {
-  val stringRepresentation = "B"
+private class HRed extends HStone {
+  val stringRepresentation = "R"
   override def toString(): String = stringRepresentation
 }
 
@@ -98,16 +98,16 @@ private class HWhite extends HStone {
 }
 
 private class HEmpty extends HStone {
-  val stringRepresentation = " "
+  val stringRepresentation = "E"
   override def toString(): String = stringRepresentation
 }
 
 
 object HintStone {
   def apply(stringRepresentation: String): HStone = stringRepresentation match {
-    case "B" => new HBlack
+    case "R" => new HRed
     case "W" => new HWhite
-    case " " => new HEmpty
+    case "E" => new HEmpty
     case _   => new HEmpty
   }
 }

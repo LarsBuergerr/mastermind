@@ -55,7 +55,7 @@ case class Code(code: Vector[Stone]):
   def buildVector(returnVector: Vector[HStone], vectorSize: Int, equalCount: Int, presentCount: Int): (Vector[HStone]) = {
   
     if(equalCount != 0){
-      return buildVector(returnVector.appended(HintStone("B")), (vectorSize - 1), (equalCount - 1), presentCount)
+      return buildVector(returnVector.appended(HintStone("R")), (vectorSize - 1), (equalCount - 1), presentCount)
     }
     
     if(presentCount != 0){

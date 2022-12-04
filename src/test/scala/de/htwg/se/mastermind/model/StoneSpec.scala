@@ -37,7 +37,7 @@ class StoneSpec extends AnyWordSpec{
     "have a String representation of its color [Initial letter]" in {
       HintStone.Black.toString() should be("B")
       HintStone.White.toString() should be("W")
-      HintStone.Empty.toString() should be(" ")
+      HintStone.Empty.toString() should be("E")
     }  
   }
 }

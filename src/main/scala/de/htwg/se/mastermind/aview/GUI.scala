@@ -90,7 +90,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                     this.setOnMouseClicked(e => {
                         val hints = controller.game.getCode().compareTo(currentStoneVector)
                         val tmp = currentStoneVector
-                        currentStoneVector = Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G"))
+                        currentStoneVector = Vector(Stone("E"), Stone("E"), Stone("E"), Stone("E"))
                         controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
                     })  
                 }
@@ -134,7 +134,6 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
         else 
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + controller.game.field.matrix.cell(y, x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
-        // label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, smooth = true, preserveRatio = true)))
         
         // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
         // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))
@@ -156,12 +155,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         label.setMaxSize(circle_size, circle_size)
 
 
-        controller.game.field.hmatrix.cell(y, x).stringRepresentation match { //why tf do i have to change x and y here?
-            case " " => label.setStyle("-fx-background-color: #000000")
-            case "B" => label.setStyle("-fx-background-color: pink")
-            case "W" => label.setStyle("-fx-background-color: red")
-        }
-        //label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, smooth = true, preserveRatio = true)))
+        label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_" + controller.game.field.hmatrix.cell(y, x).stringRepresentation + ".png").toExternalForm(), image_size, image_size, true, true)))
         
         // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
         // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))

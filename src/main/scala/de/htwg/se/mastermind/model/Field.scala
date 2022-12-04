@@ -29,7 +29,7 @@ case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HStone]):
   
   
 
-  def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone("E"), hfilling: HStone = HintStone(" ")) = {
+  def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone("E"), hfilling: HStone = HintStone("E")) = {
     this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))
   }
   
