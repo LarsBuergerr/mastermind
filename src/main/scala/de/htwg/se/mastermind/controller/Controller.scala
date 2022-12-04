@@ -8,7 +8,7 @@ package controller
 
 
 //********************************************************************** IMPORTS
-import model.{Field, Stone, HintStone, State, Game}
+import model.{Field, Stone, HStone, HintStone, State, Game}
 import util.*
 
 
@@ -29,7 +29,7 @@ class Controller(var game: Game) extends Observable:
   }
 
 
-  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int): Field =
+  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HStone], row: Int): Field =
     game.field = invoker.doStep(PlaceCommand(game, stone, hints, row))
 
     //game.field = game.field.placeGuessAndHints(stone, hints, row)

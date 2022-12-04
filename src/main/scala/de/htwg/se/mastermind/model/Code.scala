@@ -37,7 +37,7 @@ case class Code(code: Vector[Stone]):
     * @param userInput  UserInput as Stone Vector
     * @return HintStone Vector (All black: code are equal)
     */
-  def compareTo(userInput: Vector[Stone]):Vector[HintStone] = {
+  def compareTo(userInput: Vector[Stone]):Vector[HStone] = {
     
     /* Shouldn't be possible but check anyway (Safety First)*/
     if(this.code.size != userInput.size){
@@ -52,18 +52,18 @@ case class Code(code: Vector[Stone]):
   }
   
   
-  def buildVector(returnVector: Vector[HintStone], vectorSize: Int, equalCount: Int, presentCount: Int): (Vector[HintStone]) = {
+  def buildVector(returnVector: Vector[HStone], vectorSize: Int, equalCount: Int, presentCount: Int): (Vector[HStone]) = {
   
     if(equalCount != 0){
-      return buildVector(returnVector.appended(HintStone.Black), (vectorSize - 1), (equalCount - 1), presentCount)
+      return buildVector(returnVector.appended(HintStone("B")), (vectorSize - 1), (equalCount - 1), presentCount)
     }
     
     if(presentCount != 0){
-      return buildVector(returnVector.appended(HintStone.White), (vectorSize - 1), equalCount, (presentCount - 1))
+      return buildVector(returnVector.appended(HintStone("W")), (vectorSize - 1), equalCount, (presentCount - 1))
     }
     
     if(vectorSize > 0){
-      return buildVector(returnVector.appended(HintStone.Empty), (vectorSize - 1), equalCount, presentCount)
+      return buildVector(returnVector.appended(HintStone("E")), (vectorSize - 1), equalCount, presentCount)
     } else {
       return returnVector
     }

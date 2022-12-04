@@ -25,11 +25,11 @@ private val eol = sys.props("line.separator")
   * @param matrix   Matrix with the actual player stones
   * @param hmatrix  Matrix with the hint stones
   */
-case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
+case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HStone]):
   
   
 
-  def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone(" "), hfilling: HintStone = HintStone.Empty) = {
+  def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone("E"), hfilling: HStone = HintStone(" ")) = {
     this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))
   }
   
@@ -50,7 +50,7 @@ case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
     (0 until rows).map(cells(_)).mkString(bar(cellWidth, colls), bar(cellWidth, colls), bar(cellWidth, colls))
   }
 
-  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int) = copy(matrix.replaceRow(row, stone), hmatrix.replaceRow(row, hints))
+  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HStone], row: Int) = copy(matrix.replaceRow(row, stone), hmatrix.replaceRow(row, hints))
 
   override def toString = mesh(3, rows, cols)
 

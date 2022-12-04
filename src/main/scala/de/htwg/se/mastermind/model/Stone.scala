@@ -46,7 +46,7 @@ private class Purple extends Stone {
 }
 
 private class Empty extends Stone {
-  val stringRepresentation = " "
+  val stringRepresentation = "E"
   override def toString(): String = stringRepresentation
 }
 
@@ -58,7 +58,7 @@ object Stone {
     case "Y" => new Yellow
     case "W" => new White
     case "P" => new Purple
-    case " " => new Empty
+    case "E" => new Empty
     case _   => new Empty
   }
   
@@ -70,7 +70,7 @@ object Stone {
       case 3 => "Y"
       case 4 => "W"
       case 5 => "P"
-      case _ => " "
+      case _ => "E"
     })
   } 
 }
@@ -81,8 +81,33 @@ object Stone {
   *
   * @param stringRepresentation
   */  
-enum HintStone(stringRepresentation: String):
+
+trait HStone {
+  val stringRepresentation: String
   override def toString(): String = stringRepresentation
-  case Black extends HintStone("B")
-  case White extends HintStone("W")
-  case Empty extends HintStone(" ")
+}
+
+private class HBlack extends HStone {
+  val stringRepresentation = "B"
+  override def toString(): String = stringRepresentation
+}
+
+private class HWhite extends HStone {
+  val stringRepresentation = "W"
+  override def toString(): String = stringRepresentation
+}
+
+private class HEmpty extends HStone {
+  val stringRepresentation = " "
+  override def toString(): String = stringRepresentation
+}
+
+
+object HintStone {
+  def apply(stringRepresentation: String): HStone = stringRepresentation match {
+    case "B" => new HBlack
+    case "W" => new HWhite
+    case " " => new HEmpty
+    case _   => new HEmpty
+  }
+}
