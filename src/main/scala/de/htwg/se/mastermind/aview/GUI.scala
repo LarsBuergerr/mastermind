@@ -29,6 +29,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     controller.add(this)
 
     var currentStoneVector: Vector[Stone] = Vector(Stone(" "), Stone(" "), Stone(" "), Stone(" "))
+    val currentSelectedColor: String = "R"
+
     override def start() = {
         stage = new JFXApp3.PrimaryStage {
             icons += new Image(getClass.getResource("/logo.png").toExternalForm, 100, 100, true, true)
@@ -77,6 +79,13 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 border.add(stone_matrix, 0, 1)
                 border.add(hint_stone_matrix, 1, 1)
 
+                val button = new Button("CheckCode") {
+                    this.setOnMouseClicked(e => {
+                        val hints = controller.game.getCode().compareTo(currentStoneVector)
+                        controller.placeGuessAndHints(currentStoneVector, hints, controller.game.getCurrentTurn())
+                    })
+                        
+                }
                 root = border
             }
           
@@ -93,8 +102,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         val image_size = circle_size - 5
 
         this.setOnMouseClicked(e => {
-                if(controller.game.getCurrentTurn() == y)
-                    currentStoneVector.appended(Stone.random)
+                if(controller.game.getCurrentTurn() == y) then
+                    currentStoneVector = currentStoneVector.updated(x, Stone(currentSelectedColor))
+                    update
             }
         )
         this.setMinSize(circle_size, circle_size)
@@ -105,15 +115,22 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         label.setMinSize(circle_size, circle_size)
         label.setMaxSize(circle_size, circle_size)
 
-        controller.game.field.matrix.cell(x, y).stringRepresentation match {
-            case " " => label.setStyle("-fx-background-color: #000000")
-            case "R" => label.setStyle("-fx-background-color: #FF0000")
-            case "G" => label.setStyle("-fx-background-color: #00FF00")
-            case "B" => label.setStyle("-fx-background-color: #0000FF")
-            case "Y" => label.setStyle("-fx-background-color: #FFFF00")
-            case "P" => label.setStyle("-fx-background-color: #FF00FF")
-            case "C" => label.setStyle("-fx-background-color: #00FFFF")
-            case _ => label.setStyle("-fx-background-color: green")
+
+        if y == controller.game.getCurrentTurn() then
+            currentStoneVector(x).stringRepresentation match {
+                case "R" => label.setStyle("-fx-background-color: red")
+                case _ => label.setStyle("-fx-background-color: green")
+            }
+        else 
+            controller.game.field.matrix.cell(x, y).stringRepresentation match {
+                case " " => label.setStyle("-fx-background-color: #000000")
+                case "R" => label.setStyle("-fx-background-color: #FF0000")
+                case "G" => label.setStyle("-fx-background-color: #00FF00")
+                case "B" => label.setStyle("-fx-background-color: #0000FF")
+                case "Y" => label.setStyle("-fx-background-color: #FFFF00")
+                case "P" => label.setStyle("-fx-background-color: #FF00FF")
+                case "C" => label.setStyle("-fx-background-color: #00FFFF")
+                case _ => label.setStyle("-fx-background-color: green")
         }
         label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, smooth = true, preserveRatio = true)))
         
@@ -122,5 +139,41 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         // label.setOnMouseClicked(e => label.setGraphic(new ImageView(new Image("test.gif", image_size, image_size, true, true))))
 
         this.getChildren().add(label)
+    }
+
+    class Hints(x: Int, y: Int) extends StackPane {
+        val circle_size = 80
+        val image_size = circle_size - 5
+
+        this.setMinSize(circle_size, circle_size)
+        this.setPrefSize(circle_size, circle_size)
+        this.setMaxSize(circle_size, circle_size)
+        val label = new Label("")
+        label.setPrefSize(circle_size, circle_size)
+        label.setMinSize(circle_size, circle_size)
+        label.setMaxSize(circle_size, circle_size)
+
+
+            controller.game.field.matrix.cell(x, y).stringRepresentation match {
+                case " " => label.setStyle("-fx-background-color: #000000")
+                case "R" => label.setStyle("-fx-background-color: #FF0000")
+                case "G" => label.setStyle("-fx-background-color: #00FF00")
+                case "B" => label.setStyle("-fx-background-color: #0000FF")
+                case "Y" => label.setStyle("-fx-background-color: #FFFF00")
+                case "P" => label.setStyle("-fx-background-color: #FF00FF")
+                case "C" => label.setStyle("-fx-background-color: #00FFFF")
+                case _ => label.setStyle("-fx-background-color: green")
+        }
+        label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, smooth = true, preserveRatio = true)))
+        
+        // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
+        // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))
+        // label.setOnMouseClicked(e => label.setGraphic(new ImageView(new Image("test.gif", image_size, image_size, true, true))))
+
+        this.getChildren().add(label)
+    }
+    
+    override def stopApp(): Unit = {
+        controller.request(QuitStateEvent())
     }
 }

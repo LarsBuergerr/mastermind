@@ -17,8 +17,7 @@ import scala.util.{Try, Success, Failure}
 
 //********************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
-  
-  val code = new Code(controller.game.field.cols)
+
   controller.add(this)
 
   def run(): Unit = {
@@ -43,7 +42,7 @@ case class TUI(controller: Controller) extends Observer:
       case help: Help         =>
         inputLoop()
       case menu: Menu         =>
-        print("Code:" + code.toString() + "\n")
+        print("Code:" + controller.game.getCode().toString() + "\n")
         inputLoop()
       case play: Play         =>
         println(controller.game.field.toString())
@@ -87,7 +86,7 @@ case class TUI(controller: Controller) extends Observer:
             case Success(vector) => codeVector = vector.asInstanceOf[Vector[Stone]]
             case Failure(e)      => return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
           }
-          val hints         = code.compareTo(codeVector)
+          val hints         = controller.game.getCode().compareTo(codeVector)
           controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
           if hints.forall(p => p == HintStone.Black) then
             return controller.request(PlayerWinStateEvent())
@@ -102,5 +101,6 @@ case class TUI(controller: Controller) extends Observer:
   }
   
   override def update: Unit = {
-    println(controller.update)
+    println("Tada")
+    //println(controller.update)
   }

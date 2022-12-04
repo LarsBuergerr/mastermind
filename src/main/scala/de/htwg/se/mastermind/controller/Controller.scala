@@ -19,7 +19,9 @@ class Controller(var game: Game) extends Observable:
   val invoker = new Invoker
   // Pass on the game state to the view and the event to game
   def request(event: Event): State = {
-    game.request(event)
+    var currState = game.request(event)
+    //notifyObservers
+    currState
   }
   
   def handleRequest(request: Request): Event = {
