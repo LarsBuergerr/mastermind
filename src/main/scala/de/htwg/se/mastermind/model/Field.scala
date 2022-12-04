@@ -49,7 +49,7 @@ case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HintStone]):
   {
     (0 until rows).map(cells(_)).mkString(bar(cellWidth, colls), bar(cellWidth, colls), bar(cellWidth, colls))
   }
-  
+
   def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int) = copy(matrix.replaceRow(row, stone), hmatrix.replaceRow(row, hints))
 
   override def toString = mesh(3, rows, cols)

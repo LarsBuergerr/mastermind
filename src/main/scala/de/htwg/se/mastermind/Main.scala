@@ -18,26 +18,25 @@ import de.htwg.se.mastermind.util.GameMode
 
 //******************************************************************** CLASS DEF
 
-object starter {
+object starter extends Thread {
   
   val game = Game(GameMode.strategy_medium)
   val controller = Controller(game)
   
-  def runGUI = {
-    GUI().start()
-  }
-  
-  def runTUI = {
-    TUI(controller).run()
-  }
+  @main override def start(): Unit = 
+    val tui = TUI(controller)
+    val gui = GUI(controller)
+    
+    val threadGui = new Thread {
+      override def run(): Unit = {
+        gui.main(Array[String]())
+      }
+    }
+    threadGui.start()
+    tui.run()
 }
 
-object MainTUI extends App {
-  starter.runTUI
-}
-
-object MainGUI extends JFXApp3 {
-  override def start() =
-    starter.runGUI
-}
+// object MainTUI extends App {
+//   starter.runTUI
+// }
 
