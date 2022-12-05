@@ -13,6 +13,7 @@ import model.Game
 import util.GameMode._
 import scalafx.application.JFXApp3
 import de.htwg.se.mastermind.util.GameMode
+import scalafx.application.Platform
 
 
 
@@ -33,7 +34,9 @@ object starter extends Thread {
         gui.main(Array[String]())
       }
     }
+    threadGui.setDaemon(true) //Does this help anything?
     threadGui.start()
+    //Platform.runLater(gui.main(Array[String]()))
     tui.run()
 }
 
