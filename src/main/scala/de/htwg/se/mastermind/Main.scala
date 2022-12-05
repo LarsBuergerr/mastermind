@@ -20,7 +20,8 @@ import de.htwg.se.mastermind.util.GameMode
 
 object starter extends Thread {
   
-  val game = Game(GameMode.strategy_medium)
+  val gamemode = GameMode.selectMode
+  val game = Game(gamemode)
   val controller = Controller(game)
   
   @main override def start(): Unit = 

@@ -31,22 +31,18 @@ import scalafx.scene.paint.Color
 class GUI(controller: Controller) extends JFXApp3 with Observer {
     controller.add(this)
 
-    var currentStoneVector: Vector[Stone] = Vector(Stone("E"), Stone("E"), Stone("E"), Stone("E"))
+    var currentStoneVector: Vector[Stone] = Vector.from[Stone](Array.fill[Stone](controller.game.field.matrix.cols)(Stone("E")))
     var browseColors = 0
     val selectableColors = Vector("G", "R", "B", "Y", "P", "W")
-    
-    
+
 
     override def start() = {
         stage = new JFXApp3.PrimaryStage {
             icons += new Image(getClass.getResource("/logo.png").toExternalForm, 100, 100, true, true)
             resizable = false
             title.value = "Mastermind"
-            
-            //var backgroundColor = new BackgroundFill(Color.Black, CornerRadii.Empty, Insets.Empty)
-            //var background = new Background(backgroundColor)
 
-            scene = new Scene(1000, 800) {
+            scene = new Scene(1000, 1200) {
                 this.setOnScroll(e => {
                     if (e.getDeltaY < 0) {
                         browseColors = (browseColors + 1) % selectableColors.length
@@ -57,8 +53,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 
                 val border = new GridPane()
                 val stone_matrix = new GridPane()
-                val img = new ImageView(new Image(getClass.getResource("/mastermind_logo.png").toExternalForm, 640, 640, true, true))
+                val img = new ImageView(new Image(getClass.getResource("/mastermind_logo.png").toExternalForm(), 750, 100, true, true))
 
+                //get total witdh of gridpane
                 val hint_stone_matrix = new GridPane()
                 hint_stone_matrix.setMaxWidth(300)
                 hint_stone_matrix.setMaxHeight(300)
@@ -68,8 +65,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 hint_stone_matrix.setPadding(Insets(10, 10, 10, 10))
                 hint_stone_matrix.setStyle("-fx-background-color: #202225; -fx-background-radius: 10;")
 
-                for (i <- 0 to 3) {
-                    for (j <- 0 to 3) {
+                for (i <- 0 to controller.game.field.matrix.cols-1) {
+                    for (j <- 0 to controller.game.field.matrix.rows-1) {
                         val stone = controller.game.field.cells(j, i)
                         val entry = new Hints(i, j)
                         hint_stone_matrix.add(entry, i, j)
@@ -84,8 +81,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 stone_matrix.setPadding(Insets(10, 10, 10, 10))
                 stone_matrix.setStyle("-fx-background-color: #202225; -fx-background-radius: 10;")
 
-                for (i <- 0 to 3) {
-                    for (j <- 0 to 3) {
+                for (i <- 0 to controller.game.field.hmatrix.cols-1) {
+                    for (j <- 0 to controller.game.field.hmatrix.rows-1) {
                         val stone = controller.game.field.cells(j, i)
                         val entry = new Entry(i, j)
                         stone_matrix.add(entry, i, j)
@@ -110,8 +107,12 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                             print("Checking code and placing hints")
                             val hints = controller.game.getCode().compareTo(currentStoneVector)
                             val tmp = currentStoneVector
-                            currentStoneVector = Vector(Stone("E"), Stone("E"), Stone("E"), Stone("E"))
+                            for (i <- 0 until controller.game.field.matrix.cols) {
+                                currentStoneVector = currentStoneVector.updated(i, Stone("E"))
+                            }
+                            print(currentStoneVector)
                             controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+                            //check if game is over
                         }
                     })  
                 }
@@ -130,10 +131,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     }
 
     override def update = {
-        println(currentStoneVector)
-        println(controller.game.getCode())
         print(controller.game.field)
-        print(browseColors)
+        print(controller.game.getCurrentStateEvent())
+        print(controller.game.getCode())
         start()
     }
 
