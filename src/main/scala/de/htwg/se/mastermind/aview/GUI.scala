@@ -57,7 +57,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 
                 val border = new GridPane()
                 val stone_matrix = new GridPane()
-                val img = new ImageView(new Image(getClass.getResource("/mastermind_logo.jpg").toExternalForm, 640, 640, true, true))
+                val img = new ImageView(new Image(getClass.getResource("/mastermind_logo.png").toExternalForm, 640, 640, true, true))
 
                 val hint_stone_matrix = new GridPane()
                 hint_stone_matrix.setMaxWidth(300)
