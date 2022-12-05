@@ -66,7 +66,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 hint_stone_matrix.setHgap(10)
                 hint_stone_matrix.setVgap(10)
                 hint_stone_matrix.setPadding(Insets(10, 10, 10, 10))
-                hint_stone_matrix.setStyle("-fx-background-color: #68696c; -fx-background-radius: 10;")
+                hint_stone_matrix.setStyle("-fx-background-color: #202225; -fx-background-radius: 10;")
 
                 for (i <- 0 to 3) {
                     for (j <- 0 to 3) {
@@ -82,7 +82,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 stone_matrix.setHgap(10)
                 stone_matrix.setVgap(10)
                 stone_matrix.setPadding(Insets(10, 10, 10, 10))
-                stone_matrix.setStyle("-fx-background-color: #68696c; -fx-background-radius: 10;")
+                stone_matrix.setStyle("-fx-background-color: #202225; -fx-background-radius: 10;")
 
                 for (i <- 0 to 3) {
                     for (j <- 0 to 3) {
@@ -163,11 +163,12 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
 
 
         if y == controller.game.getCurrentTurn() then
-            //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
-            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
+            //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
             //label.setEffect(glow)
         else if y == (controller.game.getCurrentTurn() + 1) then
-            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
+            //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
         else 
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + controller.game.field.matrix.cell(y, x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
         
@@ -182,11 +183,11 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         val circle_size = 80
         val image_size = circle_size - 5
         
-        val reflection = new Reflection()
-        reflection.setBottomOpacity(0.0)
-        reflection.setTopOpacity(0.5)
-        reflection.setFraction(0.5)
-        reflection.setTopOffset(-1.0)
+        //val reflection = new Reflection()
+        //reflection.setBottomOpacity(0.0)
+        //reflection.setTopOpacity(0.5)
+        //reflection.setFraction(0.5)
+        //reflection.setTopOffset(-1.0)
         
 
         this.setMinSize(circle_size, circle_size)
@@ -199,7 +200,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
 
 
         label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_" + controller.game.field.hmatrix.cell(y, x).stringRepresentation + ".png").toExternalForm(), image_size, image_size, true, true)))
-        label.setEffect(reflection)
+        //label.setEffect(reflection)
         // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
         // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))
         // label.setOnMouseClicked(e => label.setGraphic(new ImageView(new Image("test.gif", image_size, image_size, true, true))))
