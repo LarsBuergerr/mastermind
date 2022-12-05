@@ -42,7 +42,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 this.setOnScroll(e => {
                     if (e.getDeltaY < 0) {
                         browseColors = (browseColors + 1) % selectableColors.length
-                        update
+                        this.setCursor(new ImageCursor(new Image(getClass.getResource("/coursers/courser_" + selectableColors(browseColors) + ".png").toExternalForm, 300, 300, true, true)))
                     }
                 })
                 this.setCursor(new ImageCursor(new Image(getClass.getResource("/coursers/courser_" + selectableColors(browseColors) + ".png").toExternalForm, 300, 300, true, true)))
@@ -88,12 +88,17 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
 
                 val button = new Button("CheckCode") {
                     this.setOnMouseClicked(e => {
-                        val hints = controller.game.getCode().compareTo(currentStoneVector)
-                        val tmp = currentStoneVector
-                        currentStoneVector = Vector(Stone("E"), Stone("E"), Stone("E"), Stone("E"))
-                        controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+                        //check if currentstonevector has no empty stones
+                        val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
+                        if (check.length == 0) {
+                            print("Checking code and placing hints")
+                            val hints = controller.game.getCode().compareTo(currentStoneVector)
+                            val tmp = currentStoneVector
+                            currentStoneVector = Vector(Stone("E"), Stone("E"), Stone("E"), Stone("E"))
+                            controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+                        }
                     })  
-                }
+                } 
 
                 border.add(button, 0, 2, 1, 1)
                 root = border
@@ -118,7 +123,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         this.setOnMouseClicked(e => {
                 if(controller.game.getCurrentTurn() == y) then
                     currentStoneVector = currentStoneVector.updated(x, Stone(selectableColors(browseColors)))
-                    update
+                    label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + selectableColors(browseColors) + ".png").toExternalForm, image_size, image_size, true, true)))
             }
         )
         this.setMinSize(circle_size, circle_size)
