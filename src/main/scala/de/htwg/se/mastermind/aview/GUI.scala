@@ -39,7 +39,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
 
     override def start() = {
         stage = new JFXApp3.PrimaryStage {
-            icons += new Image(getClass.getResource("/logo.png").toExternalForm, 100, 100, true, true)
+            icons += new Image(getClass.getResource("/logo.png").toExternalForm())
             resizable = false
             title.value = "Mastermind"
             
@@ -111,81 +111,81 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             border.add(img, 0, 0, 2, 1)
             border.add(stone_matrix, 0, 1)
             border.add(hint_stone_matrix, 1, 1)
-            val button = new Button("CheckCode") {
-                this.setOnMouseClicked(e => {
-                    //check if currentstonevector has no empty stones
-                    val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
-                    if (check.length == 0) {
-                        print("Checking code and placing hints")
-                        val hints = controller.game.getCode().compareTo(currentStoneVector)
-                        val tmp = currentStoneVector
-                        for (i <- 0 until controller.game.field.matrix.cols) {
-                            currentStoneVector = currentStoneVector.updated(i, Stone("E"))
-                        }
-                        print(currentStoneVector)
-                        controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
-                        //check if game is over
-                    }
-                })  
-            }
-            
-            val buttonStyle_default = s"""
-                    -fx-background-color: 
-                        #202225,
-                        linear-gradient(#38424b 0%, #1f2429 20%, #202225 100%),
-                        linear-gradient(#20262b, #202225),
-                        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
-                    -fx-background-radius: 5,4,3,5;
-                    -fx-background-insets: 0,1,2,0;
-                    -fx-text-fill: black;
-                    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-                    -fx-text-fill: linear-gradient(red, blue);
-                    -fx-font-size: 20px;
-                    -fx-padding: 10 20 10 20;
-                """
-            
-            val buttonStyle_hover = s"""
-                    -fx-background-color: 
-                        #202225,
-                        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-                        linear-gradient(#20262b, #191d22),
-                        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
-                    -fx-background-radius: 5,4,3,5;
-                    -fx-background-insets: 0,1,2,0;
-                    -fx-text-fill: black;
-                    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
-                    -fx-text-fill: linear-gradient(red, blue);
-                    -fx-font-size: 20px;
-                    -fx-padding: 10 20 10 20;
-            """
+            //val button = new Button("CheckCode") {
+            //    this.setOnMouseClicked(e => {
+            //        //check if currentstonevector has no empty stones
+            //        val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
+            //        if (check.length == 0) {
+            //            print("Checking code and placing hints")
+            //            val hints = controller.game.getCode().compareTo(currentStoneVector)
+            //            val tmp = currentStoneVector
+            //            for (i <- 0 until controller.game.field.matrix.cols) {
+            //                currentStoneVector = currentStoneVector.updated(i, Stone("E"))
+            //            }
+            //            print(currentStoneVector)
+            //            controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+            //            //check if game is over
+            //        }
+            //    })  
+            //}
+            //
+            //val buttonStyle_default = s"""
+            //        -fx-background-color: 
+            //            #202225,
+            //            linear-gradient(#38424b 0%, #1f2429 20%, #202225 100%),
+            //            linear-gradient(#20262b, #202225),
+            //            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+            //        -fx-background-radius: 5,4,3,5;
+            //        -fx-background-insets: 0,1,2,0;
+            //        -fx-text-fill: black;
+            //        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+            //        -fx-text-fill: linear-gradient(red, blue);
+            //        -fx-font-size: 20px;
+            //        -fx-padding: 10 20 10 20;
+            //    """
+            //
+            //val buttonStyle_hover = s"""
+            //        -fx-background-color: 
+            //            #202225,
+            //            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            //            linear-gradient(#20262b, #191d22),
+            //            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+            //        -fx-background-radius: 5,4,3,5;
+            //        -fx-background-insets: 0,1,2,0;
+            //        -fx-text-fill: black;
+            //        -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+            //        -fx-text-fill: linear-gradient(red, blue);
+            //        -fx-font-size: 20px;
+            //        -fx-padding: 10 20 10 20;
+            //"""
             
             //#dark-blue Text {
             //        -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
             //    }
             /* Using css for styling as example */
             //button.setStyle("-fx-background-color: #202225 ; -fx-text-fill: white; -padding: 10px;")
-            button.style = buttonStyle_default
+            //button.style = buttonStyle_default
             //button.setOnMouseEntered(e => {
             //    button.style = buttonStyle_hover
             //})
             //button.setPadding(Insets(10, 10, 10, 10))
             //#p1 {background-color: #ff0000;}
             
-            border.setStyle("-fx-background-color: #2f3136;") 
-            border.add(button, 0, 2, 1, 1)
+            border.setStyle("-fx-background-color: #2f3136;")
+            
+            val checkButton = new WasEinButton("Check Code") 
+            border.add(checkButton.button, 0, 2, 1, 1)
         
             val labelCurrentTurn = new Label("Turns left: " + controller.game.getRemainingTurns())
             
             //Default Label Style
             val labelStyle_default = s"""
-                    -fx-text-fill: linear-gradient(red, #0000FF);
+                    -fx-text-fill: linear-gradient(#da1e28, #2625ff);
                     -fx-font-size: 30px;
                     -fx-font-weight: bold;
                     -fx-padding: 2 4 2 4;
-                    -fx-border-color: #202225;
-                    -fx-border-width: 4px;
-                    -fx-border-style: solid;
-                    -fx-border-radius: 5px;
+                    -fx-background-color: #202225;
+                    -fx-background-radius: 10px;
                 """
             labelCurrentTurn.style = labelStyle_default
             border.add(labelCurrentTurn, 1, 2, 1, 1)
@@ -193,7 +193,77 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             root = border
             }
         }
-
+    
+    class WasEinButton(text: String) extends Button {
+        val buttonStyle_default = s"""
+                -fx-background-color: 
+                    #202225,
+                    linear-gradient(#20262b, #191d22),
+                    radial-gradient(center 50% 0%, radius 80%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+                -fx-background-radius: 5,4,3,5;
+                -fx-background-insets: 0,1,2,0;
+                -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+                -fx-text-fill: linear-gradient(#da1e28, #2625ff);
+                -fx-font-size: 20px;
+                -fx-padding: 10 20 10 20;
+            """
+        
+        val buttonStyle_hover = s"""
+                -fx-background-color: 
+                    #202225,
+                    linear-gradient(#20262b, #191d22),
+                    radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+                -fx-background-radius: 5,4,3,5;
+                -fx-background-insets: 0,1,2,0;
+                -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+                -fx-text-fill: linear-gradient(#da1e28, #2625ff);
+                -fx-font-size: 20px;
+                -fx-padding: 10 20 10 20;
+            """
+        
+        val buttonStyle_click = s"""
+                -fx-background-color: 
+                    #202225,
+                    linear-gradient(#20262b, #191d22),
+                    radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+                -fx-background-radius: 5,4,3,5;
+                -fx-background-insets: 0,1,2,0;
+                -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+                -fx-text-fill: linear-gradient(#da1e28, #2625ff);
+                -fx-font-size: 20px;
+                -fx-padding: 10 20 10 20;
+            """    
+            
+        val button = new Button(text) {
+            this.setOnMouseClicked(e => {
+                this.setStyle(buttonStyle_click)
+                //check if currentstonevector has no empty stones
+                val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
+                if (check.length == 0) {
+                    print("Checking code and placing hints")
+                    val hints = controller.game.getCode().compareTo(currentStoneVector)
+                    val tmp = currentStoneVector
+                    for (i <- 0 until controller.game.field.matrix.cols) {
+                        currentStoneVector = currentStoneVector.updated(i, Stone("E"))
+                    }
+                    print(currentStoneVector)
+                    controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+                    //check if game is over
+                }
+            })
+            
+            this.setOnMouseEntered(e => {
+                this.setStyle(buttonStyle_hover)
+            })
+            
+            this.setOnMouseExited(e => {
+                this.setStyle(buttonStyle_default)
+            })  
+        }
+            
+        button.setStyle(buttonStyle_default)
+        
+    }
 
     class Entry(x: Int, y: Int) extends StackPane {
         val circle_size = 60
