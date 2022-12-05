@@ -19,11 +19,14 @@ import javafx.scene.layout.GridPane
 import scalafx.scene.shape.Circle
 import javafx.scene.paint.ImagePattern
 import scalafx.scene.effect.DropShadow
+import scalafx.scene.effect.Glow
+import scalafx.scene.effect.Reflection
 
 import controller.Controller
 import util.*
 import util.Observable
 import model.Stone
+import scalafx.scene.paint.Color
 
 class GUI(controller: Controller) extends JFXApp3 with Observer {
     controller.add(this)
@@ -31,14 +34,19 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     var currentStoneVector: Vector[Stone] = Vector(Stone("E"), Stone("E"), Stone("E"), Stone("E"))
     var browseColors = 0
     val selectableColors = Vector("G", "R", "B", "Y", "P", "W")
+    
+    
 
     override def start() = {
         stage = new JFXApp3.PrimaryStage {
             icons += new Image(getClass.getResource("/logo.png").toExternalForm, 100, 100, true, true)
             resizable = false
             title.value = "Mastermind"
+            
+            //var backgroundColor = new BackgroundFill(Color.Black, CornerRadii.Empty, Insets.Empty)
+            //var background = new Background(backgroundColor)
 
-            scene = new Scene(1000, 1000) {
+            scene = new Scene(1000, 800) {
                 this.setOnScroll(e => {
                     if (e.getDeltaY < 0) {
                         browseColors = (browseColors + 1) % selectableColors.length
@@ -55,6 +63,10 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 hint_stone_matrix.setMaxWidth(300)
                 hint_stone_matrix.setMaxHeight(300)
                 hint_stone_matrix.setAlignment(CENTER)
+                hint_stone_matrix.setHgap(10)
+                hint_stone_matrix.setVgap(10)
+                hint_stone_matrix.setPadding(Insets(10, 10, 10, 10))
+                hint_stone_matrix.setStyle("-fx-background-color: #68696c; -fx-background-radius: 10;")
 
                 for (i <- 0 to 3) {
                     for (j <- 0 to 3) {
@@ -67,6 +79,10 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 stone_matrix.setMaxWidth(300)
                 stone_matrix.setMaxHeight(300)
                 stone_matrix.setAlignment(CENTER)
+                stone_matrix.setHgap(10)
+                stone_matrix.setVgap(10)
+                stone_matrix.setPadding(Insets(10, 10, 10, 10))
+                stone_matrix.setStyle("-fx-background-color: #68696c; -fx-background-radius: 10;")
 
                 for (i <- 0 to 3) {
                     for (j <- 0 to 3) {
@@ -98,12 +114,18 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                             controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
                         }
                     })  
-                } 
+                }
+                
+                /* Using css for styling as example */
+                button.setStyle("-fx-background-color: #ff00ff ; -fx-text-fill: white;")
+                
+                //#p1 {background-color: #ff0000;}
+                
+                border.setStyle("-fx-background-color: #2f3136;") 
 
                 border.add(button, 0, 2, 1, 1)
                 root = border
             }
-          
         }
     }
 
@@ -119,6 +141,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     class Entry(x: Int, y: Int) extends StackPane {
         val circle_size = 80
         val image_size = circle_size - 5
+        
+        //var glow = new Glow()
+        //glow.setLevel(0.5)
 
         this.setOnMouseClicked(e => {
                 if(controller.game.getCurrentTurn() == y) then
@@ -126,6 +151,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                     label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + selectableColors(browseColors) + ".png").toExternalForm, image_size, image_size, true, true)))
             }
         )
+
+        
         this.setMinSize(circle_size, circle_size)
         this.setPrefSize(circle_size, circle_size)
         this.setMaxSize(circle_size, circle_size)
@@ -136,7 +163,11 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
 
 
         if y == controller.game.getCurrentTurn() then
+            //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
+            //label.setEffect(glow)
+        else if y == (controller.game.getCurrentTurn() + 1) then
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
         else 
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + controller.game.field.matrix.cell(y, x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
         
@@ -150,6 +181,13 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     class Hints(x: Int, y: Int) extends StackPane {
         val circle_size = 80
         val image_size = circle_size - 5
+        
+        val reflection = new Reflection()
+        reflection.setBottomOpacity(0.0)
+        reflection.setTopOpacity(0.5)
+        reflection.setFraction(0.5)
+        reflection.setTopOffset(-1.0)
+        
 
         this.setMinSize(circle_size, circle_size)
         this.setPrefSize(circle_size, circle_size)
@@ -161,7 +199,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
 
 
         label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_" + controller.game.field.hmatrix.cell(y, x).stringRepresentation + ".png").toExternalForm(), image_size, image_size, true, true)))
-        
+        label.setEffect(reflection)
         // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
         // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))
         // label.setOnMouseClicked(e => label.setGraphic(new ImageView(new Image("test.gif", image_size, image_size, true, true))))
