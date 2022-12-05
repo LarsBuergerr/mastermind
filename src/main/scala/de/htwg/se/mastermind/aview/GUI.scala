@@ -163,7 +163,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
 
 
         if y == controller.game.getCurrentTurn() then
-            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_animation.gif").toExternalForm(), image_size, image_size, true, true)))
             //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
             //label.setEffect(glow)
         else if y == (controller.game.getCurrentTurn() + 1) then
