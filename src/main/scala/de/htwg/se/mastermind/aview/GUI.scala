@@ -83,6 +83,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             hint_stone_matrix.setVgap(10)
             hint_stone_matrix.setPadding(Insets(10, 10, 10, 10))
             hint_stone_matrix.setStyle("-fx-background-color: #202225; -fx-background-radius: 10;")
+            
+            //@TODO: Realize as FOREACH loop
             for (i <- 0 to controller.game.field.matrix.cols-1) {
                 for (j <- 0 to controller.game.field.matrix.rows-1) {
                     val stone = controller.game.field.cells(j, i)
@@ -90,6 +92,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                     hint_stone_matrix.add(entry, i, j)
                 }
             }
+            
             stone_matrix.setMaxWidth(300)
             stone_matrix.setMaxHeight(300)
             stone_matrix.setAlignment(CENTER)
@@ -97,6 +100,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             stone_matrix.setVgap(10)
             stone_matrix.setPadding(Insets(10, 10, 10, 10))
             stone_matrix.setStyle("-fx-background-color: #202225; -fx-background-radius: 10;")
+            
+            //@TODO: Realize as FOREACH loop
             for (i <- 0 to controller.game.field.hmatrix.cols-1) {
                 for (j <- 0 to controller.game.field.hmatrix.rows-1) {
                     val stone = controller.game.field.cells(j, i)
@@ -104,6 +109,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                     stone_matrix.add(entry, i, j)
                 }
             }
+            
+            
             border.setAlignment(CENTER)
             border.gridLinesVisibleProperty().setValue(false)
             border.setVgap(20)
@@ -115,7 +122,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             
             border.setStyle("-fx-background-color: #2f3136;")
             
-            val checkButton = new Button_MasterMind("Check Code", checkCode_Button_Handler) 
+            val checkButton = new Button_MasterMind("Check Code", checkCode_Button_Handler)
+            checkButton.button.setMinWidth(stone_matrix.getMaxWidth()) 
             border.add(checkButton.button, 0, 2, 1, 1)
         
             val labelCurrentTurn = new Label("Turns left: " + controller.game.getRemainingTurns())
@@ -130,8 +138,13 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                     -fx-background-radius: 10px;
                 """
             labelCurrentTurn.style = labelStyle_default
-            labelCurrentTurn.setAlignment(CENTER)
+            labelCurrentTurn.setMinWidth(hint_stone_matrix.getMaxWidth())
             border.add(labelCurrentTurn, 1, 2)
+            
+            val labelPLACEHOLDERUNDO = new Label("PLACEHOLDER Undo")
+            labelPLACEHOLDERUNDO.style = labelStyle_default
+            labelPLACEHOLDERUNDO.setMinWidth(stone_matrix.getMaxWidth() / 2)
+            border.add(labelPLACEHOLDERUNDO, 0, 3)
  
             root = border
             }
@@ -151,6 +164,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 //check if game is over
             }
     }
+    
+    //**************************************************************************
     
     /**
       * This class is a wrapper for the Button class. It defines the style of the button and takes a 
