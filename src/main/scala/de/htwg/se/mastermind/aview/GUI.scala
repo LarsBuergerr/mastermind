@@ -105,75 +105,17 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 }
             }
             border.setAlignment(CENTER)
-            border.gridLinesVisibleProperty().setValue(true)
+            border.gridLinesVisibleProperty().setValue(false)
             border.setVgap(20)
             border.setHgap(20)
             border.add(img, 0, 0, 2, 1)
             border.add(stone_matrix, 0, 1)
             border.add(hint_stone_matrix, 1, 1)
-            //val button = new Button("CheckCode") {
-            //    this.setOnMouseClicked(e => {
-            //        //check if currentstonevector has no empty stones
-            //        val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
-            //        if (check.length == 0) {
-            //            print("Checking code and placing hints")
-            //            val hints = controller.game.getCode().compareTo(currentStoneVector)
-            //            val tmp = currentStoneVector
-            //            for (i <- 0 until controller.game.field.matrix.cols) {
-            //                currentStoneVector = currentStoneVector.updated(i, Stone("E"))
-            //            }
-            //            print(currentStoneVector)
-            //            controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
-            //            //check if game is over
-            //        }
-            //    })  
-            //}
-            //
-            //val buttonStyle_default = s"""
-            //        -fx-background-color: 
-            //            #202225,
-            //            linear-gradient(#38424b 0%, #1f2429 20%, #202225 100%),
-            //            linear-gradient(#20262b, #202225),
-            //            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
-            //        -fx-background-radius: 5,4,3,5;
-            //        -fx-background-insets: 0,1,2,0;
-            //        -fx-text-fill: black;
-            //        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-            //        -fx-text-fill: linear-gradient(red, blue);
-            //        -fx-font-size: 20px;
-            //        -fx-padding: 10 20 10 20;
-            //    """
-            //
-            //val buttonStyle_hover = s"""
-            //        -fx-background-color: 
-            //            #202225,
-            //            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-            //            linear-gradient(#20262b, #191d22),
-            //            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
-            //        -fx-background-radius: 5,4,3,5;
-            //        -fx-background-insets: 0,1,2,0;
-            //        -fx-text-fill: black;
-            //        -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
-            //        -fx-text-fill: linear-gradient(red, blue);
-            //        -fx-font-size: 20px;
-            //        -fx-padding: 10 20 10 20;
-            //"""
-            
-            //#dark-blue Text {
-            //        -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
-            //    }
-            /* Using css for styling as example */
-            //button.setStyle("-fx-background-color: #202225 ; -fx-text-fill: white; -padding: 10px;")
-            //button.style = buttonStyle_default
-            //button.setOnMouseEntered(e => {
-            //    button.style = buttonStyle_hover
-            //})
-            //button.setPadding(Insets(10, 10, 10, 10))
-            //#p1 {background-color: #ff0000;}
+
             
             border.setStyle("-fx-background-color: #2f3136;")
             
-            val checkButton = new WasEinButton("Check Code") 
+            val checkButton = new Button_MasterMind("Check Code", checkCode_Button_Handler) 
             border.add(checkButton.button, 0, 2, 1, 1)
         
             val labelCurrentTurn = new Label("Turns left: " + controller.game.getRemainingTurns())
@@ -188,13 +130,38 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                     -fx-background-radius: 10px;
                 """
             labelCurrentTurn.style = labelStyle_default
-            border.add(labelCurrentTurn, 1, 2, 1, 1)
-            
+            labelCurrentTurn.setAlignment(CENTER)
+            border.add(labelCurrentTurn, 1, 2)
+ 
             root = border
             }
         }
+        
+    def checkCode_Button_Handler() : Unit = {
+        val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
+            if (check.length == 0) {
+                print("Checking code and placing hints")
+                val hints = controller.game.getCode().compareTo(currentStoneVector)
+                val tmp = currentStoneVector
+                for (i <- 0 until controller.game.field.matrix.cols) {
+                    currentStoneVector = currentStoneVector.updated(i, Stone("E"))
+                }
+                print(currentStoneVector)
+                controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+                //check if game is over
+            }
+    }
     
-    class WasEinButton(text: String) extends Button {
+    /**
+      * This class is a wrapper for the Button class. It defines the style of the button and takes a 
+      * function as parameter (Higher Order Function Principle)
+      *
+      * @param text Text the button should display
+      * @param f    Function that should be executed when the button is clicked
+      */
+    class Button_MasterMind(text: String, f: () => Unit) extends Button {
+        
+        /* Defines the DEFAULT style of the button in CSS */
         val buttonStyle_default = s"""
                 -fx-background-color: 
                     #202225,
@@ -208,6 +175,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 -fx-padding: 10 20 10 20;
             """
         
+        /* Defines the HOVER style of the button in CSS */    
         val buttonStyle_hover = s"""
                 -fx-background-color: 
                     #202225,
@@ -221,6 +189,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 -fx-padding: 10 20 10 20;
             """
         
+        /* Defines the CLICK style of the button in CSS */
         val buttonStyle_click = s"""
                 -fx-background-color: 
                     #202225,
@@ -233,34 +202,26 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 -fx-font-size: 20px;
                 -fx-padding: 10 20 10 20;
             """    
-            
+        
+        /* Create button */
         val button = new Button(text) {
+            
             this.setOnMouseClicked(e => {
                 this.setStyle(buttonStyle_click)
                 //check if currentstonevector has no empty stones
-                val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
-                if (check.length == 0) {
-                    print("Checking code and placing hints")
-                    val hints = controller.game.getCode().compareTo(currentStoneVector)
-                    val tmp = currentStoneVector
-                    for (i <- 0 until controller.game.field.matrix.cols) {
-                        currentStoneVector = currentStoneVector.updated(i, Stone("E"))
-                    }
-                    print(currentStoneVector)
-                    controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
-                    //check if game is over
-                }
+                
+                //calls the higher order function (HOF)
+                f()
             })
             
-            this.setOnMouseEntered(e => {
-                this.setStyle(buttonStyle_hover)
-            })
+            /* Set style when hovering over button */
+            this.setOnMouseEntered(e => {this.setStyle(buttonStyle_hover)})
             
-            this.setOnMouseExited(e => {
-                this.setStyle(buttonStyle_default)
-            })  
+            /* Set style when leaving button */
+            this.setOnMouseExited(e =>  {this.setStyle(buttonStyle_default)})  
         }
-            
+        
+        /* Set default style */    
         button.setStyle(buttonStyle_default)
         
     }
@@ -337,5 +298,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     
     override def stopApp(): Unit = {
         controller.request(QuitStateEvent())
+        //@todo: implement clean exit solution
+        System.exit(0)
     }
 }
