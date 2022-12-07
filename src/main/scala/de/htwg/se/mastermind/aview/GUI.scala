@@ -51,6 +51,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     }
 
     override def update = {
+        print(controller.game.state)
         //print(controller.game.field)
         //print(controller.game.getCurrentStateEvent())
         //print(controller.game.getCode())
@@ -175,6 +176,10 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                                     hint_stone_matrix.getMaxWidth() + stone_matrix.getMaxWidth(), 
                                     100, true, true))
             
+            val img_loose = new ImageView(new Image(getClass.getResource("/loose.png").toExternalForm(), 
+                                    hint_stone_matrix.getMaxWidth() + stone_matrix.getMaxWidth(), 
+                                    100, true, true))
+
             img.setOnMouseClicked(e => {
                 //img.setRotate(40)
             })
@@ -182,7 +187,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             //print(controller.game.state)
             if(controller.game.state.isInstanceOf[PlayerWin]) {
                 border.add(img_won, 0, 0, 2, 1)
-                  
+            
+            } else if(controller.game.state.isInstanceOf[PlayerLose]) {
+                border.add(img_loose, 0, 0, 2, 1)
             } else {
                 border.add(img, 0, 0, 2, 1)
             }
@@ -317,12 +324,13 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         //var glow = new Glow()
         //glow.setLevel(0.5)
 
-        this.setOnMouseClicked(e => {
-                if(controller.game.getCurrentTurn() == y) then
-                    currentStoneVector = currentStoneVector.updated(x, Stone(selectableColors(browseColors)))
-                    label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + selectableColors(browseColors) + ".png").toExternalForm, image_size, image_size, true, true)))
-            }
-        )
+        if !controller.game.state.isInstanceOf[PlayerWin] && !controller.game.state.isInstanceOf[PlayerLose] then
+            this.setOnMouseClicked(e => {
+                    if(controller.game.getCurrentTurn() == y) then
+                        currentStoneVector = currentStoneVector.updated(x, Stone(selectableColors(browseColors)))
+                        label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + selectableColors(browseColors) + ".png").toExternalForm, image_size, image_size, true, true)))
+                }
+            )
 
         
         this.setMinSize(circle_size, circle_size)
@@ -333,7 +341,12 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         label.setMinSize(circle_size, circle_size)
         label.setMaxSize(circle_size, circle_size)
             
-        if y == controller.game.getCurrentTurn() then
+
+        if (controller.game.state.isInstanceOf[PlayerWin]) then
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_win.png").toExternalForm(), image_size, image_size, true, true)))
+        else if (controller.game.state.isInstanceOf[PlayerLose]) then
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_E.png").toExternalForm(), image_size, image_size, true, true)))
+        else if y == controller.game.getCurrentTurn() then
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_animation.gif").toExternalForm(), image_size, image_size, true, true)))
             //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
             //label.setEffect(glow)
@@ -370,7 +383,12 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         label.setMaxSize(circle_size, circle_size)
 
 
-        label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_" + controller.game.field.hmatrix.cell(y, x).stringRepresentation + ".png").toExternalForm(), image_size, image_size, true, true)))
+        if (controller.game.state.isInstanceOf[PlayerWin]) then
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_R.png").toExternalForm(), image_size, image_size, true, true)))
+        else if(controller.game.state.isInstanceOf[PlayerLose]) then
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_E.png").toExternalForm(), image_size, image_size, true, true)))
+        else
+            label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_" + controller.game.field.hmatrix.cell(y, x).stringRepresentation + ".png").toExternalForm(), image_size, image_size, true, true)))
         //label.setEffect(reflection)
         // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
         // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))
