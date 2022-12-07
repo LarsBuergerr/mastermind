@@ -15,8 +15,6 @@ import scalafx.application.JFXApp3
 import de.htwg.se.mastermind.util.GameMode
 import scalafx.application.Platform
 
-
-
 //******************************************************************** CLASS DEF
 
 object starter extends Thread {
@@ -36,5 +34,6 @@ object starter extends Thread {
     }
     threadGui.setDaemon(true) //Does this help to fix the problem?
     threadGui.start()
+    Thread.sleep(1000)
     tui.run()
 }

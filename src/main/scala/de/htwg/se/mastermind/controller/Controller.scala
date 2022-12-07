@@ -20,7 +20,7 @@ class Controller(var game: Game) extends Observable:
   // Pass on the game state to the view and the event to game
   def request(event: Event): State = {
     var currState = game.request(event)
-    //notifyObservers
+    notifyObservers
     currState
   }
   

@@ -24,7 +24,6 @@ case class Code(code: Vector[Stone]):
   /* AUX CON: used to generate a vector with random values*/
   def this(size: Int = 4) = this(Vector.fill(size)(Stone.random))
   
-  
   val size = code.size
   
   
