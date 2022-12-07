@@ -24,6 +24,8 @@ import scalafx.scene.effect.Reflection
 import scalafx.scene.paint.Color
 import javafx.application.Platform
 import scalafx.stage.Popup
+import scalafx.scene.control.TextField
+import scalafx.scene.control.Tooltip
 
 import controller.{Controller}
 import util.Observer
@@ -131,6 +133,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             //********************************************************** Buttons
             val checkButton = new Button_MasterMind("Check Code", checkCode_Button_Handler)
             checkButton.button.setMinWidth(stone_matrix.getMaxWidth()) 
+            checkButton.button.setTooltip(new Tooltip("Check your code and get a hint"))
             border.add(checkButton.button, 0, 2, 1, 1)
             
             val undoRedo_Grid = new GridPane()
@@ -138,6 +141,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             val undoButton = new Button_MasterMind("Undo", undoCode_Button_Handler)
             undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 -10)
             undoButton.alignmentInParent = CENTER_LEFT
+            undoButton.button.setTooltip(new Tooltip("Undo your last move"))
             undoRedo_Grid.add(undoButton.button, 0, 0)
             
             val nastyLabel = new Label("      ")
@@ -146,6 +150,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             val redoButton = new Button_MasterMind("Redo", redoCode_Button_Handler)
             redoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
             redoButton.alignmentInParent = CENTER_RIGHT
+            redoButton.button.setTooltip(new Tooltip("Redo your last move"))
             undoRedo_Grid.add(redoButton.button, 2, 0)
             
             border.add(undoRedo_Grid, 0, 3)
@@ -155,6 +160,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             val helpButton = new Button_MasterMind("Help", help_Button_Handler)
             helpButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
             helpButton.alignmentInParent = CENTER_RIGHT
+            helpButton.button.setTooltip(new Tooltip("Get help"))
             resetInfo_Grid.add(helpButton.button, 3, 0)
             
             val dirtyLabel = new Label("      ")
@@ -163,6 +169,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             val resetButton = new Button_MasterMind("Reset", reset_Button_Handler)
             resetButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
             resetButton.alignmentInParent = CENTER_LEFT
+            resetButton.button.setTooltip(new Tooltip("Reset the game"))
             resetInfo_Grid.add(resetButton.button, 0, 0)
             
             border.add(resetInfo_Grid, 1, 3)
