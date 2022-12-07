@@ -21,13 +21,15 @@ import javafx.scene.paint.ImagePattern
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.effect.Glow
 import scalafx.scene.effect.Reflection
-
-import controller.Controller
-import util.*
-import util.Observable
-import model.{Stone, HintStone}
 import scalafx.scene.paint.Color
 import javafx.application.Platform
+
+import controller.{Controller}
+import util.Observer
+import util._
+import model._
+import scala.io.StdIn.readLine
+import scala.util.{Try, Success, Failure}
 
 class GUI(controller: Controller) extends JFXApp3 with Observer {
     
@@ -49,9 +51,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     }
 
     override def update = {
-        print(controller.game.field)
-        print(controller.game.getCurrentStateEvent())
-        print(controller.game.getCode())
+        //print(controller.game.field)
+        //print(controller.game.getCurrentStateEvent())
+        //print(controller.game.getCode())
         
         /* Refresh scene with a runnable which is added to the threads event queue.
            This is needed cause Java/ScalaFX Threads must not be updated/interrupted from other threads */
@@ -167,11 +169,25 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                                     hint_stone_matrix.getMaxWidth() + stone_matrix.getMaxWidth(), 
                                     100, true, true))
             img.alignmentInParent = CENTER
-            border.add(img, 0, 0, 2, 1)
+            
+            
+            val img_won = new ImageView(new Image(getClass.getResource("/won.png").toExternalForm(), 
+                                    hint_stone_matrix.getMaxWidth() + stone_matrix.getMaxWidth(), 
+                                    100, true, true))
             
             img.setOnMouseClicked(e => {
                 //img.setRotate(40)
             })
+
+            //print(controller.game.state)
+            if(controller.game.state.isInstanceOf[PlayerWin]) {
+                border.add(img_won, 0, 0, 2, 1)
+                  
+            } else {
+                border.add(img, 0, 0, 2, 1)
+            }
+            //border.add(img, 0, 0, 2, 1)
+
  
             root = border
             }
@@ -189,7 +205,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             for (i <- 0 until controller.game.field.matrix.cols) {
                 currentStoneVector = currentStoneVector.updated(i, Stone("E"))
             }
-            print(currentStoneVector)
+            //print(currentStoneVector)
             controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
             
             if hints.forall(p => p.stringRepresentation.equals("R")) then
@@ -316,8 +332,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         label.setPrefSize(circle_size, circle_size)
         label.setMinSize(circle_size, circle_size)
         label.setMaxSize(circle_size, circle_size)
-
-
+            
         if y == controller.game.getCurrentTurn() then
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_animation.gif").toExternalForm(), image_size, image_size, true, true)))
             //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
