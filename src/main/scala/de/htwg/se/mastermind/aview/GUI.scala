@@ -217,16 +217,19 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 checkButton.button.setDisable(true)
                 undoButton.button.setDisable(true)
                 redoButton.button.setDisable(true)
+                helpButton.button.setDisable(true)
             } else if(controller.game.state.isInstanceOf[PlayerLose]) {
                 border.add(img_loose, 0, 0, 2, 1)
                 checkButton.button.setDisable(true)
                 undoButton.button.setDisable(true)
                 redoButton.button.setDisable(true)
+                helpButton.button.setDisable(true)
             } else {
                 border.add(img, 0, 0, 2, 1)
                 checkButton.button.setDisable(false)
                 undoButton.button.setDisable(false)
                 redoButton.button.setDisable(false)
+                helpButton.button.setDisable(false)
             }
 
             root = border
