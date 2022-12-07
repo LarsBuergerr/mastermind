@@ -44,3 +44,13 @@ The Cain-of-Responsibility is used so analyze users input. See the implementatio
 ## Description
 
       ERROR 404 (DescriptionNotFound)
+
+---      
+      
+## Attribution
+We thank the following people for their contributions to this project:
+
+| Creator         | Content               | Link |
+|-----------------|-----------------------|------------|
+| Smashicons      | Mouse Scroll Icon     | [Scroll Logo Template](https://www.flaticon.com/free-icon/scroll_3646197?term=mouse%20wheel&related_id=3646197)      |
+

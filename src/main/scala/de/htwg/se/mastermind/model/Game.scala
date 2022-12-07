@@ -20,8 +20,8 @@ import util._
   */
 case class Game(var field: Field, var state: State = Init()){
   
-  //private val code = new Code(field.matrix.cols)
-  private val code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
+  //private var code = new Code(field.matrix.cols)
+  private var code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
   private var currentTurn: Int = 0
   private val maxTurn: Int = field.matrix.rows
   
@@ -96,6 +96,13 @@ case class Game(var field: Field, var state: State = Init()){
   }
 
   def getCode(): Code = code
+  
+  
+  //def resetGame(): Unit = {
+  //  field = new Field(field.matrix.rows, field.matrix.cols)
+  //  code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
+  //  currentTurn = 0
+  //}
   
   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {

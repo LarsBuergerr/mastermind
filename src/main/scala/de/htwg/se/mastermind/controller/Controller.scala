@@ -42,6 +42,10 @@ class Controller(var game: Game) extends Observable:
     game.field = invoker.undoStep.getOrElse(game.field)
     notifyObservers
 
+  def reset =
+    game = Game(GameMode.selectMode)
+    notifyObservers
+    game.field
 
   def update: String = {
     //game.toString()

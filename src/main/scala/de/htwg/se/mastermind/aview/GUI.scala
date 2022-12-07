@@ -23,6 +23,7 @@ import scalafx.scene.effect.Glow
 import scalafx.scene.effect.Reflection
 import scalafx.scene.paint.Color
 import javafx.application.Platform
+import scalafx.stage.Popup
 
 import controller.{Controller}
 import util.Observer
@@ -30,6 +31,7 @@ import util._
 import model._
 import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
+
 
 class GUI(controller: Controller) extends JFXApp3 with Observer {
     
@@ -131,22 +133,40 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             checkButton.button.setMinWidth(stone_matrix.getMaxWidth()) 
             border.add(checkButton.button, 0, 2, 1, 1)
             
-            val buttonGrid = new GridPane()
+            val undoRedo_Grid = new GridPane()
             
             val undoButton = new Button_MasterMind("Undo", undoCode_Button_Handler)
             undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 -10)
             undoButton.alignmentInParent = CENTER_LEFT
-            buttonGrid.add(undoButton.button, 0, 0)
+            undoRedo_Grid.add(undoButton.button, 0, 0)
             
-            val testLabel = new Label("      ")
-            buttonGrid.add(testLabel, 1, 0)
+            val nastyLabel = new Label("      ")
+            undoRedo_Grid.add(nastyLabel, 1, 0)
             
             val redoButton = new Button_MasterMind("Redo", redoCode_Button_Handler)
             redoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
             redoButton.alignmentInParent = CENTER_RIGHT
-            buttonGrid.add(redoButton.button, 2, 0)
+            undoRedo_Grid.add(redoButton.button, 2, 0)
             
-            border.add(buttonGrid, 0, 3)
+            border.add(undoRedo_Grid, 0, 3)
+            
+            val resetInfo_Grid = new GridPane()
+            
+            val helpButton = new Button_MasterMind("Help", help_Button_Handler)
+            helpButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
+            helpButton.alignmentInParent = CENTER_RIGHT
+            resetInfo_Grid.add(helpButton.button, 3, 0)
+            
+            val dirtyLabel = new Label("      ")
+            resetInfo_Grid.add(dirtyLabel, 1, 0)
+            
+            val resetButton = new Button_MasterMind("Reset", reset_Button_Handler)
+            resetButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
+            resetButton.alignmentInParent = CENTER_LEFT
+            resetInfo_Grid.add(resetButton.button, 0, 0)
+            
+            border.add(resetInfo_Grid, 1, 3)
+            
         
             val labelCurrentTurn = new Label("Remaining Turns: " + controller.game.getRemainingTurns())
             
@@ -206,6 +226,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             }
         }
     
+    //********************************************************** Button Handlers
+        
     /**
       * This method is called when the check button is clicked
       */    
@@ -242,13 +264,97 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         controller.redo
     }
     
+    /**
+     * This method is called when the quit button is clicked
+     */
+    def help_Button_Handler() : Unit = {
+        controller.request(HelpStateEvent())
+        val popup = new Popup()
+        
+        val helpGrid = new GridPane()
+        helpGrid.setPrefWidth(600)
+        helpGrid.setStyle("-fx-background-color: #202225; " +
+                          "-fx-padding: 7 9 7 9; " +
+                          "-fx-background-radius: 10px; " +
+                          "-fx-border-style: solid; " +
+                          "-fx-border-width: 2; " +
+                          "-fx-border-color: linear-gradient(#da1e28, #2625ff); " +
+                          "-fx-border-radius: 10px; " +
+                          "-fx-font-alignment: center;")
+        
+        val helpLabel = new Label("You need some help? Here you go!")
+        helpLabel.setAlignment(CENTER)
+        helpLabel.setStyle("-fx-background-color: #202225; -fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 7 9 7 9; -fx-background-radius: 10px; -fx-font-alignment: center;")
+                          
+        val scrollGrid = new GridPane()
+        val imgScroll = new ImageView(new Image(getClass.getResource("/info/scroll.png").toExternalForm(), 50, 50, true, true))
+        val labelScroll = new Label("Scroll to change the color of the courser to place \ndifferent stones")
+        labelScroll.setStyle("-fx-background-color: #202225; -fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 7 9 7 9; -fx-background-radius: 10px; -fx-font-alignment: center;")
+        
+        scrollGrid.add(imgScroll, 0, 0)
+        scrollGrid.add(labelScroll, 1, 0)
+        
+        val clickGrid = new GridPane()
+        val imgClick = new ImageView(new Image(getClass.getResource("/info/left-click.png").toExternalForm(), 50, 50, true, true))
+        val labelClick = new Label("To place a stone, click on a black field \n(You will make it, we believe in you) ")
+        labelClick.setStyle("-fx-background-color: #202225; -fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 7 9 7 9; -fx-background-radius: 10px; -fx-font-alignment: center;")
+        clickGrid.add(imgClick, 0, 0)
+        clickGrid.add(labelClick, 1, 0)
+        
+        val blackStoneGrid = new GridPane()
+        val imgBlackStone = new ImageView(new Image(getClass.getResource("/stones/stone_A.png").toExternalForm(), 50, 50, true, true))
+        val labelBlackStone = new Label("These stones show the current row in which you \nmay place stones")
+        labelBlackStone.setStyle("-fx-background-color: #202225; -fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 7 9 7 9; -fx-background-radius: 10px; -fx-font-alignment: center;")
+        blackStoneGrid.add(imgBlackStone, 0, 0)
+        blackStoneGrid.add(labelBlackStone, 1, 0)
+        
+        val whiteHintStoneGrid = new GridPane()
+        val imgWhiteHintStone = new ImageView(new Image(getClass.getResource("/hintstones/hstone_W.png").toExternalForm(), 50, 50, true, true))
+        val labelWhiteHintStone = new Label("Show there is a stone of the right color in the current \nrow but not in the right position")
+        labelWhiteHintStone.setStyle("-fx-background-color: #202225; -fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 7 9 7 9; -fx-background-radius: 10px; -fx-font-alignment: center;")
+        whiteHintStoneGrid.add(imgWhiteHintStone, 0, 0)
+        whiteHintStoneGrid.add(labelWhiteHintStone, 1, 0)
+        
+        val redHintStoneGrid = new GridPane()
+        val imgRedHintStone = new ImageView(new Image(getClass.getResource("/hintstones/hstone_R.png").toExternalForm(), 50, 50, true, true))
+        val labelRedHintStone = new Label("Show there is a stone of the right color and in the right \nposition in the current row (You so good!)")
+        labelRedHintStone.setStyle("-fx-background-color: #202225; -fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 7 9 7 9; -fx-background-radius: 10px; -fx-font-alignment: center;")
+        redHintStoneGrid.add(imgRedHintStone, 0, 0)
+        redHintStoneGrid.add(labelRedHintStone, 1, 0)
+        
+        val labelEnd = new Label("Thats all? Yeah not that complicated!")
+        labelEnd.setStyle("-fx-background-color: #202225; -fx-text-fill: #ffffff; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 7 9 7 9; -fx-background-radius: 10px; -fx-font-alignment: center;")
+        
+        val helpExit = new Button_MasterMind("Exit", () => popup.hide())
+        helpExit.alignmentInParent = CENTER_RIGHT
+        helpExit.button.setPrefWidth(helpGrid.getPrefWidth() - 10)
+        
+        helpGrid.add(helpLabel, 0, 0)
+        helpGrid.add(scrollGrid, 0, 1)
+        helpGrid.add(clickGrid, 0, 2)
+        helpGrid.add(blackStoneGrid, 0, 3)
+        helpGrid.add(whiteHintStoneGrid, 0, 4)
+        helpGrid.add(redHintStoneGrid, 0, 5)
+        helpGrid.add(labelEnd, 0, 6)
+        helpGrid.add(helpExit.button, 0, 7)
+        
+        helpGrid.setVgap(10)
+        
+        
+        popup.getContent().add(helpGrid)
+        popup.show(stage)
+    }
+    
+    
+    def reset_Button_Handler() : Unit = {
+        controller.reset
+    }
+    
     //**************************************************************************
     
     /**
       * This class is a wrapper for the Button class. It defines the style of the button and takes a 
       * function as parameter (Higher Order Function Principle)
-      *radial-gradient(focus-distance 0%, center 0% 50%, radius 40% , rgba(114,131,148,0.4), rgba(255,255,255,0)),
-                    radial-gradient(focus-distance 0%, center 100% 50% , radius 40% , rgba(114,131,148,0.4), rgba(255,255,255,0));
       * @param text Text the button should display
       * @param f    Function that should be executed when the button is clicked
       */
@@ -299,9 +405,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         val button = new Button(text) {
             
             this.setOnMouseClicked(e => {
-                this.setStyle(buttonStyle_click)
-                //check if currentstonevector has no empty stones
-                
+                this.setStyle(buttonStyle_click)            
                 //calls the higher order function (HOF)
                 f()
             })
@@ -318,12 +422,16 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         
     }
 
+    
+    /**
+      * Game Stone Class
+      *
+      * @param x
+      * @param y
+      */
     class Entry(x: Int, y: Int) extends StackPane {
         val circle_size = 60
         val image_size = circle_size - 5
-        
-        //var glow = new Glow()
-        //glow.setLevel(0.5)
 
         this.setOnMouseClicked(e => {
                 if(controller.game.getCurrentTurn() == y) then
@@ -332,15 +440,13 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             }
         )
 
-        
         this.setMinSize(circle_size, circle_size)
         this.setPrefSize(circle_size, circle_size)
         this.setMaxSize(circle_size, circle_size)
         val label = new Label("")
         label.setPrefSize(circle_size, circle_size)
         label.setMinSize(circle_size, circle_size)
-        label.setMaxSize(circle_size, circle_size)
-            
+        label.setMaxSize(circle_size, circle_size)          
 
         if (controller.game.state.isInstanceOf[PlayerWin]) then
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_win.png").toExternalForm(), image_size, image_size, true, true)))
@@ -348,31 +454,23 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_E.png").toExternalForm(), image_size, image_size, true, true)))
         else if y == controller.game.getCurrentTurn() then
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_animation.gif").toExternalForm(), image_size, image_size, true, true)))
-            //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
-            //label.setEffect(glow)
         else if y == (controller.game.getCurrentTurn() + 1) then
-            //label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_test.gif").toExternalForm(), image_size, image_size, true, true)))
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + currentStoneVector(x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
         else 
             label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + controller.game.field.matrix.cell(y, x).stringRepresentation + ".png").toExternalForm, image_size, image_size, true, true)))
-        
-        // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
-        // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))
-        // label.setOnMouseClicked(e => label.setGraphic(new ImageView(new Image("test.gif", image_size, image_size, true, true))))
-
         this.getChildren().add(label)
     }
 
+    
+    /**
+      * Hint Stone class
+      *
+      * @param x 
+      * @param y
+      */
     class Hints(x: Int, y: Int) extends StackPane {
         val circle_size = 60
         val image_size = circle_size - 5
-        
-        //val reflection = new Reflection()
-        //reflection.setBottomOpacity(0.0)
-        //reflection.setTopOpacity(0.5)
-        //reflection.setFraction(0.5)
-        //reflection.setTopOffset(-1.0)
-        
 
         this.setMinSize(circle_size, circle_size)
         this.setPrefSize(circle_size, circle_size)
@@ -389,10 +487,6 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_E.png").toExternalForm(), image_size, image_size, true, true)))
         else
             label.setGraphic(new ImageView(new Image(getClass.getResource("/hintstones/hstone_" + controller.game.field.hmatrix.cell(y, x).stringRepresentation + ".png").toExternalForm(), image_size, image_size, true, true)))
-        //label.setEffect(reflection)
-        // label.setOnMouseEntered(e => label.setGraphic(new ImageView(new Image("circle_back_light_512.png", image_size, image_size, true, true))))
-        // label.setOnMouseExited(e => label.setGraphic(new ImageView(new Image("circle_back_dark_512.png", image_size, image_size, true, true))))
-        // label.setOnMouseClicked(e => label.setGraphic(new ImageView(new Image("test.gif", image_size, image_size, true, true))))
 
         this.getChildren().add(label)
     }
