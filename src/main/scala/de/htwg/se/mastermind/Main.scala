@@ -34,13 +34,7 @@ object starter extends Thread {
         gui.main(Array[String]())
       }
     }
-    threadGui.setDaemon(true) //Does this help anything?
+    threadGui.setDaemon(true) //Does this help to fix the problem?
     threadGui.start()
-    //Platform.runLater(gui.main(Array[String]()))
     tui.run()
 }
-
-// object MainTUI extends App {
-//   starter.runTUI
-// }
-

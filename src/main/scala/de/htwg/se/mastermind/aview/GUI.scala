@@ -25,11 +25,12 @@ import scalafx.scene.effect.Reflection
 import controller.Controller
 import util.*
 import util.Observable
-import model.Stone
+import model.{Stone, HintStone}
 import scalafx.scene.paint.Color
 import javafx.application.Platform
 
 class GUI(controller: Controller) extends JFXApp3 with Observer {
+    
     controller.add(this)
 
     var currentStoneVector: Vector[Stone] = Vector.from[Stone](Array.fill[Stone](controller.game.field.matrix.cols)(Stone("E")))
@@ -62,7 +63,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     }
     
     def refreshScene() : Scene = {
-        new Scene(800, 1000) {
+        new Scene(800, 960) {
             this.setOnScroll(e => {
                 if (e.getDeltaY < 0) {
                     browseColors = (browseColors + 1) % selectableColors.length
@@ -149,9 +150,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             //Default Label Style
             val labelStyle_default = s"""
                     -fx-text-fill: linear-gradient(#da1e28, #2625ff);
-                    -fx-font-size: 30px;
+                    -fx-font-size: 25px;
                     -fx-font-weight: normal;
-                    -fx-padding: 2 4 2 4;
+                    -fx-padding: 7 9 7 9;
                     -fx-background-color: #202225;
                     -fx-background-radius: 10px;
                     -fx-font-alignment: center;
@@ -168,6 +169,9 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             img.alignmentInParent = CENTER
             border.add(img, 0, 0, 2, 1)
             
+            img.setOnMouseClicked(e => {
+                //img.setRotate(40)
+            })
  
             root = border
             }
@@ -187,6 +191,13 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             }
             print(currentStoneVector)
             controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+            
+            if hints.forall(p => p.stringRepresentation.equals("R")) then
+                return controller.request(PlayerWinStateEvent())
+            else if controller.game.getRemainingTurns().equals(0) then
+                return controller.request(PlayerLoseStateEvent())
+            else
+                return controller.request(PlayerInputStateEvent())
             //check if game is over
         }
     }
@@ -228,8 +239,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 -fx-background-insets: 0,1,2,0;
                 -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
                 -fx-text-fill: linear-gradient(#da1e28, #2625ff);
-                -fx-font-size: 20px;
-                -fx-padding: 10 20 10 20;
+                -fx-font-size: 25px;
+                -fx-padding: 5 15 5 15;
             """
         
         /* Defines the HOVER style of the button in CSS */    
@@ -242,8 +253,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 -fx-background-insets: 0,1,2,0;
                 -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
                 -fx-text-fill: linear-gradient(#da1e28, #2625ff);
-                -fx-font-size: 20px;
-                -fx-padding: 10 20 10 20;
+                -fx-font-size: 25px;
+                -fx-padding: 5 15 5 15;
             """
         
         /* Defines the CLICK style of the button in CSS */
@@ -256,8 +267,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 -fx-background-insets: 0,1,2,0;
                 -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
                 -fx-text-fill: linear-gradient(#da1e28, #2625ff);
-                -fx-font-size: 20px;
-                -fx-padding: 10 20 10 20;
+                -fx-font-size: 25px;
+                -fx-padding: 5 15 5 15;
             """    
         
         /* Create button */

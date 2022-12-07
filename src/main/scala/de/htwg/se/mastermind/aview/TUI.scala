@@ -87,8 +87,9 @@ case class TUI(controller: Controller) extends Observer:
             case Failure(e)      => return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
           }
           val hints         = controller.game.getCode().compareTo(codeVector)
+          print(hints)
           controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
-          if hints.forall(p => p == HintStone("B")) then
+          if hints.forall(p => p.stringRepresentation.equals("R")) then
             return controller.request(PlayerWinStateEvent())
           else if controller.game.getRemainingTurns().equals(0) then
             return controller.request(PlayerLoseStateEvent())
@@ -102,4 +103,5 @@ case class TUI(controller: Controller) extends Observer:
   
   override def update: Unit = {
     //println(controller.update)
+    
   }
