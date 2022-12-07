@@ -62,7 +62,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     }
     
     def refreshScene() : Scene = {
-        new Scene(1000, 1000) {
+        new Scene(800, 1000) {
             this.setOnScroll(e => {
                 if (e.getDeltaY < 0) {
                     browseColors = (browseColors + 1) % selectableColors.length
@@ -73,7 +73,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             
             val border = new GridPane()
             val stone_matrix = new GridPane()
-            val img = new ImageView(new Image(getClass.getResource("/mastermind_logo.png").toExternalForm(), 750, 100, true, true))
+            
             //get total witdh of gridpane
             val hint_stone_matrix = new GridPane()
             hint_stone_matrix.setMaxWidth(300)
@@ -115,54 +115,96 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
             border.gridLinesVisibleProperty().setValue(false)
             border.setVgap(20)
             border.setHgap(20)
-            border.add(img, 0, 0, 2, 1)
+            
             border.add(stone_matrix, 0, 1)
             border.add(hint_stone_matrix, 1, 1)
 
             
             border.setStyle("-fx-background-color: #2f3136;")
             
+            //********************************************************** Buttons
             val checkButton = new Button_MasterMind("Check Code", checkCode_Button_Handler)
             checkButton.button.setMinWidth(stone_matrix.getMaxWidth()) 
             border.add(checkButton.button, 0, 2, 1, 1)
+            
+            val buttonGrid = new GridPane()
+            
+            val undoButton = new Button_MasterMind("Undo", undoCode_Button_Handler)
+            undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 -10)
+            undoButton.alignmentInParent = CENTER_LEFT
+            buttonGrid.add(undoButton.button, 0, 0)
+            
+            val testLabel = new Label("      ")
+            buttonGrid.add(testLabel, 1, 0)
+            
+            val redoButton = new Button_MasterMind("Redo", redoCode_Button_Handler)
+            redoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
+            redoButton.alignmentInParent = CENTER_RIGHT
+            buttonGrid.add(redoButton.button, 2, 0)
+            
+            border.add(buttonGrid, 0, 3)
         
-            val labelCurrentTurn = new Label("Turns left: " + controller.game.getRemainingTurns())
+            val labelCurrentTurn = new Label("Remaining Turns: " + controller.game.getRemainingTurns())
             
             //Default Label Style
             val labelStyle_default = s"""
                     -fx-text-fill: linear-gradient(#da1e28, #2625ff);
                     -fx-font-size: 30px;
-                    -fx-font-weight: bold;
+                    -fx-font-weight: normal;
                     -fx-padding: 2 4 2 4;
                     -fx-background-color: #202225;
                     -fx-background-radius: 10px;
+                    -fx-font-alignment: center;
                 """
             labelCurrentTurn.style = labelStyle_default
+            labelCurrentTurn.setAlignment(CENTER)
             labelCurrentTurn.setMinWidth(hint_stone_matrix.getMaxWidth())
             border.add(labelCurrentTurn, 1, 2)
             
-            val labelPLACEHOLDERUNDO = new Label("PLACEHOLDER Undo")
-            labelPLACEHOLDERUNDO.style = labelStyle_default
-            labelPLACEHOLDERUNDO.setMinWidth(stone_matrix.getMaxWidth() / 2)
-            border.add(labelPLACEHOLDERUNDO, 0, 3)
+            //************************************************************* Logo
+            val img = new ImageView(new Image(getClass.getResource("/mastermind_logo.png").toExternalForm(), 
+                                    hint_stone_matrix.getMaxWidth() + stone_matrix.getMaxWidth(), 
+                                    100, true, true))
+            img.alignmentInParent = CENTER
+            border.add(img, 0, 0, 2, 1)
+            
  
             root = border
             }
         }
-        
+    
+    /**
+      * This method is called when the check button is clicked
+      */    
     def checkCode_Button_Handler() : Unit = {
         val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
-            if (check.length == 0) {
-                print("Checking code and placing hints")
-                val hints = controller.game.getCode().compareTo(currentStoneVector)
-                val tmp = currentStoneVector
-                for (i <- 0 until controller.game.field.matrix.cols) {
-                    currentStoneVector = currentStoneVector.updated(i, Stone("E"))
-                }
-                print(currentStoneVector)
-                controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
-                //check if game is over
+        if (check.length == 0) {
+            //print("Checking code and placing hints")
+            val hints = controller.game.getCode().compareTo(currentStoneVector)
+            val tmp = currentStoneVector
+            for (i <- 0 until controller.game.field.matrix.cols) {
+                currentStoneVector = currentStoneVector.updated(i, Stone("E"))
             }
+            print(currentStoneVector)
+            controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
+            //check if game is over
+        }
+    }
+    
+    /**
+      * This method is called when the undo button is clicked
+      */
+    def undoCode_Button_Handler() : Unit = {
+        //print("Undoing last move")
+        controller.undo
+    }
+    
+    /**
+      * This method is called when the redo button is clicked
+      */
+    def redoCode_Button_Handler() : Unit = {
+        //print("Redoing last move")
+        controller.redo
     }
     
     //**************************************************************************
@@ -170,7 +212,8 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     /**
       * This class is a wrapper for the Button class. It defines the style of the button and takes a 
       * function as parameter (Higher Order Function Principle)
-      *
+      *radial-gradient(focus-distance 0%, center 0% 50%, radius 40% , rgba(114,131,148,0.4), rgba(255,255,255,0)),
+                    radial-gradient(focus-distance 0%, center 100% 50% , radius 40% , rgba(114,131,148,0.4), rgba(255,255,255,0));
       * @param text Text the button should display
       * @param f    Function that should be executed when the button is clicked
       */
@@ -180,8 +223,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         val buttonStyle_default = s"""
                 -fx-background-color: 
                     #202225,
-                    linear-gradient(#20262b, #191d22),
-                    radial-gradient(center 50% 0%, radius 80%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+                    linear-gradient(#20262b, #191d22);
                 -fx-background-radius: 5,4,3,5;
                 -fx-background-insets: 0,1,2,0;
                 -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
