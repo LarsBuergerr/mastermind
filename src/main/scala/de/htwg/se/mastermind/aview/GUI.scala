@@ -184,18 +184,24 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 //img.setRotate(40)
             })
 
-            //print(controller.game.state)
+            // Change header image if game is won or lost
             if(controller.game.state.isInstanceOf[PlayerWin]) {
                 border.add(img_won, 0, 0, 2, 1)
-            
+                checkButton.button.setDisable(true)
+                undoButton.button.setDisable(true)
+                redoButton.button.setDisable(true)
             } else if(controller.game.state.isInstanceOf[PlayerLose]) {
                 border.add(img_loose, 0, 0, 2, 1)
+                checkButton.button.setDisable(true)
+                undoButton.button.setDisable(true)
+                redoButton.button.setDisable(true)
             } else {
                 border.add(img, 0, 0, 2, 1)
+                checkButton.button.setDisable(false)
+                undoButton.button.setDisable(false)
+                redoButton.button.setDisable(false)
             }
-            //border.add(img, 0, 0, 2, 1)
 
- 
             root = border
             }
         }
@@ -206,13 +212,11 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     def checkCode_Button_Handler() : Unit = {
         val check = currentStoneVector.filter(stone => stone.stringRepresentation == "E")
         if (check.length == 0) {
-            //print("Checking code and placing hints")
             val hints = controller.game.getCode().compareTo(currentStoneVector)
             val tmp = currentStoneVector
             for (i <- 0 until controller.game.field.matrix.cols) {
                 currentStoneVector = currentStoneVector.updated(i, Stone("E"))
             }
-            //print(currentStoneVector)
             controller.placeGuessAndHints(tmp, hints, controller.game.getCurrentTurn())
             
             if hints.forall(p => p.stringRepresentation.equals("R")) then
@@ -221,7 +225,6 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
                 return controller.request(PlayerLoseStateEvent())
             else
                 return controller.request(PlayerInputStateEvent())
-            //check if game is over
         }
     }
     
@@ -229,7 +232,6 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
       * This method is called when the undo button is clicked
       */
     def undoCode_Button_Handler() : Unit = {
-        //print("Undoing last move")
         controller.undo
     }
     
@@ -237,7 +239,6 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
       * This method is called when the redo button is clicked
       */
     def redoCode_Button_Handler() : Unit = {
-        //print("Redoing last move")
         controller.redo
     }
     
@@ -324,13 +325,12 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
         //var glow = new Glow()
         //glow.setLevel(0.5)
 
-        if !controller.game.state.isInstanceOf[PlayerWin] && !controller.game.state.isInstanceOf[PlayerLose] then
-            this.setOnMouseClicked(e => {
-                    if(controller.game.getCurrentTurn() == y) then
-                        currentStoneVector = currentStoneVector.updated(x, Stone(selectableColors(browseColors)))
-                        label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + selectableColors(browseColors) + ".png").toExternalForm, image_size, image_size, true, true)))
-                }
-            )
+        this.setOnMouseClicked(e => {
+                if(controller.game.getCurrentTurn() == y) then
+                    currentStoneVector = currentStoneVector.updated(x, Stone(selectableColors(browseColors)))
+                    label.setGraphic(new ImageView(new Image(getClass.getResource("/stones/stone_" + selectableColors(browseColors) + ".png").toExternalForm, image_size, image_size, true, true)))
+            }
+        )
 
         
         this.setMinSize(circle_size, circle_size)
