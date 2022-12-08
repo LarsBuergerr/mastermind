@@ -55,11 +55,7 @@ class GUI(controller: Controller) extends JFXApp3 with Observer {
     }
 
     override def update = {
-        print(controller.game.state)
-        //print(controller.game.field)
-        //print(controller.game.getCurrentStateEvent())
-        //print(controller.game.getCode())
-        
+
         /* Refresh scene with a runnable which is added to the threads event queue.
            This is needed cause Java/ScalaFX Threads must not be updated/interrupted from other threads */
         Platform.runLater(new Runnable() {

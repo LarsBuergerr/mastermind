@@ -22,7 +22,7 @@ case class TUI(controller: Controller) extends Observer:
 
   def run(): Unit = {
     controller.request(InitStateEvent())
-    println("Remaining Turns: " + controller.game.getRemainingTurns())
+    //println("Remaining Turns: " + controller.game.getRemainingTurns())
     inputLoop()
   }
   
@@ -33,12 +33,13 @@ case class TUI(controller: Controller) extends Observer:
     
     parseInput(input) match {
       case pInp: PlayerInput  =>
-        println("Remaining Turns: " + controller.game.getRemainingTurns())
         inputLoop()
       case pWin: PlayerWin    =>
         print("--- Thank you for playing the game\n")
+        Thread.sleep(2000)                                                      // Wait 2 seconds  @todo: reset game?
       case pLos: PlayerLose   =>
         print("--- Thank you for playing the game and see you soon\n")
+        Thread.sleep(2000)                                                      // Wait 2 seconds  @todo: reset game?
       case help: Help         =>
         inputLoop()
       case menu: Menu         =>
@@ -104,4 +105,5 @@ case class TUI(controller: Controller) extends Observer:
   override def update: Unit = {
     //println(controller.update)
     println(controller.game.field)
+    println("Remaining Turns: " + controller.game.getRemainingTurns())
   }
