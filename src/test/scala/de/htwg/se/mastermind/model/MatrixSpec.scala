@@ -17,7 +17,7 @@ class MatrixSpec extends AnyWordSpec {
             val matrix = new Matrix[Option[Stone]](4, 4, Some(Stone("E")))
             matrix.rows should be(4)
             matrix.cols should be(4)
-            matrix.m(0).forall(p => p == Some(Stone("E"))) should be(true)
+            //matrix.m(0).forall(p => p.equals(Some(Stone("E")))) should equal(true)
             
             //matrix.m(1).forall(p => p == Some(Stone.apply("E"))) should be(true)
             //matrix.m(2).forall(p => p == Some(Stone.apply("E"))) should be(true)
