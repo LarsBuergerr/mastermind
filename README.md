@@ -23,6 +23,26 @@
 
 ---
 
+## Description
+
+This is a implementation of the game Mastermind. The game is played against the computer. The game creates a secret code of four to five stones (depends on the chosen difficult) . The layer tries to guess the code. After each guess the player gets feedback about how many stones are in the right position and how many stones are in the wrong position. The game ends when the player guesses the code or when the player has used all his tries.
+
+## How to play
+| Icon | Description               |
+|-----------------|--------------------------------|
+| <img src="src/main/resources/coursers/courser_R.png" style="width:50px;"/> | <span style="font-size:larger;">Courser shows the current selected color which is used when placing stones</span> |
+| <img src="src/main/resources/info/scroll.png" style="width:50px;"/> | <span style="font-size:larger;">Scroll down your mouse wheel to change the courser color and therefore the stone placing color</span> |
+| <img src="src/main/resources/info/left-click.png" style="width:50px;"/> | <span style="font-size:larger;">Place your guess on an empty stone in the current row (see point below)</span> |
+| <img src="src/main/resources/stones/stone_A.png" style="width:50px;"/> | <span style="font-size:larger;">Empty stone where you can place your hint (Shows the active row)</span> |
+| <img src="src/main/resources/hintstones/hstone_W.png" style="width:50px;"/> | <span style="font-size:larger;">Hint that shows you that you guess a right color but at the wrong position</span> |
+| <img src="src/main/resources/hintstones/hstone_R.png" style="width:50px;"/> | <span style="font-size:larger;">Hint that shows you that you guess a right color and at the right position</span> |
+
+## Win/Lose
+You won the game if you guess the secret code so that all hint stones are red. 
+You lose the game if you used all your tries and you did not guess the secret code.
+
+---
+
 <!--- BRANCH 07 ONLY --->
 ## 07-Design Pattern Info
 
@@ -39,11 +59,6 @@ The state pattern was used to keep track over current game state. There are even
 ### Chain of Responsibility:
 The Cain-of-Responsibility is used so analyze users input. See the implementation [here](https://github.com/LarsBuergerr/mastermind/blob/07-DesignPattern/src/main/scala/de/htwg/se/mastermind/util/Request.scala) and in the game class
 
----
-
-## Description
-
-      ERROR 404 (DescriptionNotFound)
 
 ---      
       
