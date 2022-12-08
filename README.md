@@ -28,7 +28,7 @@
 This is a implementation of the game Mastermind. The game is played against the computer. The game creates a secret code of four to five stones (depends on the chosen difficult) . The layer tries to guess the code. After each guess the player gets feedback about how many stones are in the right position and how many stones are in the wrong position. The game ends when the player guesses the code or when the player has used all his tries.
 
 ## How to play
-|          |                |
+| Icon | Description               |
 |-----------------|--------------------------------|
 | <img src="src/main/resources/coursers/courser_R.png" style="width:50px;"/> | <span style="font-size:larger;">Courser shows the current selected color which is used when placing stones</span> |
 | <img src="src/main/resources/info/scroll.png" style="width:50px;"/> | <span style="font-size:larger;">Scroll down your mouse wheel to change the courser color and therefore the stone placing color</span> |
