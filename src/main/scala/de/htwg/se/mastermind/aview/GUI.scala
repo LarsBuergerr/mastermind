@@ -35,6 +35,7 @@ import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
 
 
+
 class GUI(controller: Controller) extends JFXApp3 with Observer {
     
     controller.add(this)
