@@ -7,15 +7,28 @@ lazy val root = project
     name := "mastermind",
     
     version := "0.1.0-SNAPSHOT",
-    
+    fork / run := true, // not pretty but fixes error on second startup
     scalaVersion := scala3Version,
     
+    libraryDependencies += "org.scalafx" %% "scalafx" % "16.0.0-R24",
+
     libraryDependencies ++= { 
       Seq(
       "org.scalameta" %% "munit" % "0.7.29" % Test,
       "org.scalactic" %% "scalactic" % scalaTestVersion,
       "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
       )
+    },
+    libraryDependencies ++= {
+  // Determine OS version of JavaFX binaries
+      lazy val osName = System.getProperty("os.name") match {
+        case n if n.startsWith("Linux") => "linux"
+        case n if n.startsWith("Mac") => "mac"
+        case n if n.startsWith("Windows") => "win"
+        case _ => throw new Exception("Unknown platform!")
+      } 
+      Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
+        .map(m => "org.openjfx" % s"javafx-$m" % "16" classifier osName)
     },
     
     jacocoReportSettings := JacocoReportSettings(
@@ -24,6 +37,11 @@ lazy val root = project
       JacocoThresholds(),
       Seq(JacocoReportFormats.ScalaHTML, JacocoReportFormats.XML),
       "utf-8"),
+    
+      jacocoExcludes := Seq(
+      "*aview.*",
+      "*Main.*",
+      ),
     
     jacocoCoverallsServiceName := "github-actions", 
     jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),

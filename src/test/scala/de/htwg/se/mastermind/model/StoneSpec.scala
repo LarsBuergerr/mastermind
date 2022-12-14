@@ -18,26 +18,28 @@ class StoneSpec extends AnyWordSpec{
     }
     "have a function to generate random stones that are not Empty" in {
       for(i <- 1 to 1000){
-        Stone.random should not be(Stone.Empty)
+        Stone.random should not be(Stone("E"))
       }
     }
   }
   "A Game-Stone" should {
     "have a String representation of its color [Initial letter]" in {
-      Stone.Red.toString() should be("R")
-      Stone.Green.toString() should be("G")
-      Stone.Blue.toString() should be("B")
-      Stone.Yellow.toString() should be("Y")
-      Stone.Purple.toString() should be("P")
-      Stone.White.toString() should be("W")
-      Stone.Empty.toString() should be(" ")
+      Stone.apply("R").toString() should be("R")
+      Stone.apply("G").toString() should be("G")
+      Stone.apply("B").toString() should be("B")
+      Stone.apply("Y").toString() should be("Y")
+      Stone.apply("P").toString() should be("P")
+      Stone.apply("W").toString() should be("W")
+      Stone.apply(" ").toString() should be("E")
+      Stone.apply("E").toString() should be("E")
     }
   }
   "A Hint-Stone" should {
     "have a String representation of its color [Initial letter]" in {
-      HintStone.Black.toString() should be("B")
-      HintStone.White.toString() should be("W")
-      HintStone.Empty.toString() should be(" ")
+      HintStone.apply("R").toString() should be("R")
+      HintStone.apply("W").toString() should be("W")
+      HintStone.apply("E").toString() should be("E")
+      HintStone.apply(" ").toString() should be("E")
     }  
   }
 }
