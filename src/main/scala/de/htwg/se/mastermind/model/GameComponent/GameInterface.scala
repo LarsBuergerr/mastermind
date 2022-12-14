@@ -43,6 +43,6 @@ trait GameInterface() {
 
   def getDefaultInputRule(input: String): Event
   
-  def resetGame() : Unit
+  def resetGame() : GameInterface
 
 }

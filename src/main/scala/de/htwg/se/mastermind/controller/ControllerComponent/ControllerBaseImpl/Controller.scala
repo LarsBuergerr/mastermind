@@ -18,7 +18,7 @@ import util.{Request, Event, Observable}
 
 
 //******************************************************************** CLASS DEF
-class Controller(var game: GameInterface) extends Observable with ControllerInterface:
+class Controller(var game: GameInterface) extends ControllerInterface:
 
 
   val invoker = new Invoker

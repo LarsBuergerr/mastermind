@@ -21,8 +21,7 @@ import model._
   */
 case class Game(var field: Field) extends GameInterface {  
   
-  //private var code = new Code(field.matrix.cols)
-  var code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
+  var code = new Code(field.matrix.cols)
   
   var state: State = Init()
   

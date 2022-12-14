@@ -32,7 +32,8 @@ object mastermind extends Thread {
   
   val controller = Controller(Game(GameMode.selectMode))
   
-  @main override def start(): Unit = 
+  @main 
+  override def start(): Unit = 
     val tui = TUI(controller)
     val gui = GUI(controller)
     
