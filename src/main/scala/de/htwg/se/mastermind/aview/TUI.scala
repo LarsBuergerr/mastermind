@@ -17,13 +17,12 @@ import scala.util.{Try, Success, Failure}
 
 //********************************************************************** CLASS DEF
 case class TUI(controller: Controller) extends Observer:
-  
-  val code = new Code(controller.game.field.cols)
+
   controller.add(this)
 
   def run(): Unit = {
     controller.request(InitStateEvent())
-    println("Remaining Turns: " + controller.game.getRemainingTurns())
+    //println("Remaining Turns: " + controller.game.getRemainingTurns())
     inputLoop()
   }
   
@@ -34,16 +33,17 @@ case class TUI(controller: Controller) extends Observer:
     
     parseInput(input) match {
       case pInp: PlayerInput  =>
-        println("Remaining Turns: " + controller.game.getRemainingTurns())
         inputLoop()
       case pWin: PlayerWin    =>
         print("--- Thank you for playing the game\n")
+        Thread.sleep(2000)                                                      // Wait 2 seconds  @todo: reset game?
       case pLos: PlayerLose   =>
         print("--- Thank you for playing the game and see you soon\n")
+        Thread.sleep(2000)                                                      // Wait 2 seconds  @todo: reset game?
       case help: Help         =>
         inputLoop()
       case menu: Menu         =>
-        print("Code:" + code.toString() + "\n")
+        print("Code:" + controller.game.getCode().toString() + "\n")
         inputLoop()
       case play: Play         =>
         println(controller.game.field.toString())
@@ -87,9 +87,10 @@ case class TUI(controller: Controller) extends Observer:
             case Success(vector) => codeVector = vector.asInstanceOf[Vector[Stone]]
             case Failure(e)      => return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
           }
-          val hints         = code.compareTo(codeVector)
+          val hints         = controller.game.getCode().compareTo(codeVector)
+          //print(hints)
           controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
-          if hints.forall(p => p == HintStone.Black) then
+          if hints.forall(p => p.stringRepresentation.equals("R")) then
             return controller.request(PlayerWinStateEvent())
           else if controller.game.getRemainingTurns().equals(0) then
             return controller.request(PlayerLoseStateEvent())
@@ -102,5 +103,7 @@ case class TUI(controller: Controller) extends Observer:
   }
   
   override def update: Unit = {
-    println(controller.update)
+    //println(controller.update)
+    println(controller.game.field)
+    println("Remaining Turns: " + controller.game.getRemainingTurns())
   }

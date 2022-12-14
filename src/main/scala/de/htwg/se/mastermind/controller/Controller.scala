@@ -8,7 +8,7 @@ package controller
 
 
 //********************************************************************** IMPORTS
-import model.{Field, Stone, HintStone, State, Game}
+import model.{Field, Stone, HStone, HintStone, State, Game}
 import util.*
 
 
@@ -19,7 +19,9 @@ class Controller(var game: Game) extends Observable:
   val invoker = new Invoker
   // Pass on the game state to the view and the event to game
   def request(event: Event): State = {
-    game.request(event)
+    var currState = game.request(event)
+    notifyObservers
+    currState
   }
   
   def handleRequest(request: Request): Event = {
@@ -27,26 +29,26 @@ class Controller(var game: Game) extends Observable:
   }
 
 
-  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HintStone], row: Int): Field =
+  def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HStone], row: Int): Field =
     game.field = invoker.doStep(PlaceCommand(game, stone, hints, row))
-
-    //game.field = game.field.placeGuessAndHints(stone, hints, row)
-    //game.setTurn()
     notifyObservers
-    //game.field
     game.field
 
   def redo =
     game.field = invoker.redoStep.getOrElse(game.field)
-    //game.setTurn()
     notifyObservers
 
   def undo =
     game.field = invoker.undoStep.getOrElse(game.field)
-    //game.undoTurn()
     notifyObservers
 
+  def reset =
+    game = Game(GameMode.selectMode)
+    notifyObservers
+    game.field
 
   def update: String = {
-    game.toString()
+    //game.toString()
+    print("How was it possible for you to call this function?")
+    ""
   }

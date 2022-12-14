@@ -17,23 +17,23 @@ class FieldSpec extends AnyWordSpec{
     "have a bar as String of form '+---+---+---+---+" in {
       defaultField.bar() should be("+---+---+---+---+" + eol)
     }
-    "have cells as String of form '|   |   |   |   |   [   |   |   |   ]'" in {
-      defaultField.cells() should be("|   |   |   |   |   [   |   |   |   ]" + eol)
+    "have cells as String of form '| E | E | E | E |   [ E | E | E | E ]'" in {
+      defaultField.cells() should be("| E | E | E | E |   [ E | E | E | E ]" + eol)
     }
     "have a mesh in form of a Mastermind field" in {
       defaultField.mesh() should be
       ("""+---+---+---+---+
-          |   |   |   |   |   [   |   |   |   ]
+          | E | E | E | E |   [ E | E | E | E ]
           +---+---+---+---+
-          |   |   |   |   |   [   |   |   |   ]
+          | E | E | E | E |   [ E | E | E | E ]
           +---+---+---+---+
-          |   |   |   |   |   [   |   |   |   ]
+          | E | E | E | E |   [ E | E | E | E ]
           +---+---+---+---+
-          |   |   |   |   |   [   |   |   |   ]
+          | E | E | E | E |   [ E | E | E | E ]
           +---+---+---+---+
-          |   |   |   |   |   [   |   |   |   ]
+          | E | E | E | E |   [ E | E | E | E ]
           +---+---+---+---+
-          |   |   |   |   |   [   |   |   |   ]
+          | E | E | E | E |   [ E | E | E | E ]
           +---+---+---+---+""")
     }
     "have a String representation in form of the mesh" in {
@@ -45,13 +45,13 @@ class FieldSpec extends AnyWordSpec{
     "have a bar as String of form '+---+" in {
       smallField.bar() should be("+---+" + eol)
     }
-    "have cells as String of form '|   |   [   ]'" in {
-      smallField.cells() should be("|   |   [   ]" + eol)
+    "have cells as String of form '| E |   [ E ]'" in {
+      smallField.cells() should be("| E |   [ E ]" + eol)
     }
     "have a mesh in form of a Mastermind field" in {
       smallField.mesh() should be
       ("""+---+
-          |   |   [   ]
+          | E |   [ E ]
           +---+""")
     }
     "have a String representation in form of the mesh" in {
@@ -62,8 +62,8 @@ class FieldSpec extends AnyWordSpec{
     "be scalable" in {
       for(i <- 1 to 10){
         for(j <- 1 to 10)
-          val stoneMatrix = new Matrix(i, j, Stone.Empty)
-          val hintMatrix = new Matrix(i, j, HintStone.Empty)
+          val stoneMatrix = new Matrix(i, j, Stone.apply("E"))
+          val hintMatrix = new Matrix(i, j, HintStone.apply("E"))
           
           val scalableField = new Field(stoneMatrix, hintMatrix)
           

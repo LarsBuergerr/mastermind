@@ -7,11 +7,33 @@ package de.htwg.se.mastermind
 
 
 //********************************************************************** IMPORTS
-import aview.TUI
+import aview.{TUI, GUI}
 import controller.Controller
 import model.Game
-import util.GameMode
-
+import util.GameMode._
+import scalafx.application.JFXApp3
+import de.htwg.se.mastermind.util.GameMode
+import scalafx.application.Platform
 
 //******************************************************************** CLASS DEF
-@main def main: Unit = new TUI(new Controller(new Game(GameMode.selectMode))).run()
+
+object starter extends Thread {
+  
+  val gamemode = GameMode.selectMode
+  val game = Game(gamemode)
+  val controller = Controller(game)
+  
+  @main override def start(): Unit = 
+    val tui = TUI(controller)
+    val gui = GUI(controller)
+    
+    val threadGui = new Thread {
+      override def run(): Unit = {
+        gui.main(Array[String]())
+      }
+    }
+    threadGui.setDaemon(true) //Does this help to fix the problem?
+    threadGui.start()
+    Thread.sleep(1000)
+    tui.run()
+}
