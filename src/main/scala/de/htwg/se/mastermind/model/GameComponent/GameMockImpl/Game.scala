@@ -24,7 +24,7 @@ import model.GameComponent.GameBaseImpl._
   */
 case class Game(var field: Field) extends GameInterface {
   
-  var code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
+  var code = new Code(Vector(Stone("G")))
   
   var state: State = Init()
   

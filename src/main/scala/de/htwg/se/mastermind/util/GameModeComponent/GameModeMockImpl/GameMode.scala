@@ -30,7 +30,7 @@ object GameMode extends GameModeInterface{
   
   def parseInput(): Field = {
    
-   val in = readLine("Choose gamemode (Easy, Medium [default] , Hard, Extrem): ")
+   val in = readLine("You are in mock mode so you have no choice (Muhahaha): ")
 
    in match {
      case "Easy" | "easy"        => return strategy_easy
