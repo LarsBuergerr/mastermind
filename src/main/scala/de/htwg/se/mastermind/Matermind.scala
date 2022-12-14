@@ -1,6 +1,15 @@
 /**
+  * ███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗██████╗ 
+  * ████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗
+  * ██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║██║  ██║
+  * ██║╚██╔╝██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██║  ██║
+  * ██║ ╚═╝ ██║██║  ██║███████║   ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██████╔╝
+  * ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝ 
+  *                                                                                  
   * Mastermind.scala
   * Created by: LarsBuergerr & Smokey95
+  * 
+  * Project is part of the course "Software Engineering" at HTWG Konstanz
   * 
   * This is the main class of the Mastermind game.
   */
@@ -14,18 +23,13 @@ import aview.{TUI, GUI}
 import controller.ControllerComponent.ControllerBaseImpl.Controller
 import model.GameComponent.GameBaseImpl.Game
 import model.GameComponent.GameInterface
-import util.GameMode._
-import scalafx.application.JFXApp3
-import de.htwg.se.mastermind.util.GameMode
-import scalafx.application.Platform
+import util.GameModeComponent.GameModeBaseImpl.GameMode
 
 //******************************************************************** CLASS DEF
 
 object starter extends Thread {
   
-  val gamemode = GameMode.selectMode
-  val game = Game(gamemode)
-  val controller = Controller(game)
+  val controller = Controller(Game(GameMode.selectMode))
   
   @main override def start(): Unit = 
     val tui = TUI(controller)
@@ -36,7 +40,7 @@ object starter extends Thread {
         gui.main(Array[String]())
       }
     }
-    threadGui.setDaemon(true) //Does this help to fix the problem?
+
     threadGui.start()
     Thread.sleep(1000)
     tui.run()

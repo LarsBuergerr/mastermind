@@ -3,22 +3,29 @@
   * Implements the STRATEGY_PATTERN to select different game modes
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package util
+package GameModeComponent
+package GameModeBaseImpl
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import model.GameComponent.GameBaseImpl.{Field, Stone, HintStone}
+import GameModeComponent.GameModeInterface
 import scala.io.StdIn.readLine
 
 
-object GameMode{
+//****************************************************************************** OBJECT DEFINITION
+object GameMode extends GameModeInterface{
 
   var selectMode = parseInput()
 
   def strategy_easy =   new Field(12, 4, Stone("E"), HintStone("E"))
+  
   def strategy_medium = new Field(10, 4, Stone("E"), HintStone("E"))
+  
   def strategy_hard =   new Field(10, 5, Stone("E"), HintStone("E"))
+  
   def strategy_extrem = new Field(8, 5,  Stone("E"), HintStone("E"))
   
   def parseInput(): Field = {
