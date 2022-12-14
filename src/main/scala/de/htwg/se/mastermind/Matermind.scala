@@ -22,9 +22,14 @@ package de.htwg.se.mastermind
 
 //****************************************************************************** IMPORTS
 import aview.{TUI, GUI}
-import controller.ControllerComponent.ControllerBaseImpl.Controller
-import model.GameComponent.GameBaseImpl.Game
-import util.GameModeComponent.GameModeBaseImpl.GameMode
+
+//import controller.ControllerComponent.ControllerBaseImpl.Controller
+//import model.GameComponent.GameBaseImpl.Game
+//import util.GameModeComponent.GameModeBaseImpl.GameMode
+
+import controller.ControllerComponent.ControllerMockImpl.Controller
+import model.GameComponent.GameMockImpl.Game
+import util.GameModeComponent.GameModeMockImpl.GameMode
 
 
 //****************************************************************************** MAIN
