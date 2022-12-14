@@ -48,9 +48,7 @@ class Controller(var game: GameInterface) extends Observable with ControllerInte
     notifyObservers
 
   def reset =
-    // @TODO: Cleanup
-    //game = Game(GameMode.selectMode)
-    //game = new GameInterface()
+    game.resetGame()
     notifyObservers
     game.field
 

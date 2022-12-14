@@ -42,5 +42,7 @@ trait GameInterface() {
   def handleRequest(request: Request): Event
 
   def getDefaultInputRule(input: String): Event
+  
+  def resetGame() : Unit
 
 }

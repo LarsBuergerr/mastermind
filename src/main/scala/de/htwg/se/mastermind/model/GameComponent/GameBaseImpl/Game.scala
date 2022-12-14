@@ -103,11 +103,12 @@ case class Game(var field: Field) extends GameInterface {
   def getCode(): Code = code
   
   
-  //def resetGame(): Unit = {
-  //  field = new Field(field.matrix.rows, field.matrix.cols)
-  //  code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
-  //  currentTurn = 0
-  //}
+  def resetGame(): Unit = {
+    field = new Field(field.matrix.rows, field.matrix.cols)
+    code = new Code()
+    state = Init()
+    currentTurn = 0
+  }
   
   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
