@@ -1,13 +1,15 @@
 /**
   * TUI.scala
+  * 
+  * Class for the Text User Interface of the Mastermind game.
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package aview
 
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import controller.ControllerComponent.ControllerInterface
 import model.GameComponent.GameBaseImpl._
 import util.Observer
@@ -16,7 +18,7 @@ import model._
 import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
 
-//********************************************************************** CLASS DEF
+//****************************************************************************** CLASS DEFINITION
 case class TUI(controller: ControllerInterface) extends Observer:
 
   controller.add(this)

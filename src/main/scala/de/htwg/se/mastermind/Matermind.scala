@@ -12,22 +12,23 @@
   * Project is part of the course "Software Engineering" at HTWG Konstanz
   * 
   * This is the main class of the Mastermind game.
+  * 
+  * © LarsBuergerr & Smokey95
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import aview.{TUI, GUI}
 import controller.ControllerComponent.ControllerBaseImpl.Controller
 import model.GameComponent.GameBaseImpl.Game
-import model.GameComponent.GameInterface
 import util.GameModeComponent.GameModeBaseImpl.GameMode
 
-//******************************************************************** CLASS DEF
 
-object starter extends Thread {
+//****************************************************************************** MAIN
+object mastermind extends Thread {
   
   val controller = Controller(Game(GameMode.selectMode))
   

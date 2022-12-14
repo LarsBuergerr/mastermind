@@ -1,44 +1,34 @@
+/**
+  * GUI.scala
+  * 
+  * Class for the GUI of the Mastermind game.
+  */
+
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package aview
 
-import scalafx.scene.layout.{HBox, StackPane, BorderPane, Pane, VBox, Background, BackgroundFill, CornerRadii}
-import scalafx.scene.paint.{Stops, LinearGradient}
-import scalafx.scene.control.{Button, Label}
-import scalafx.scene.text.{Text, Font}
-import scalafx.scene.shape.Polygon
+//****************************************************************************** IMPORTS
 import scalafx.application.JFXApp3
-import scalafx.scene.paint.Color._
+import scalafx.application.Platform
+import scalafx.scene.layout.{StackPane, CornerRadii, GridPane}
+import scalafx.scene.control.{Button, Label, Tooltip}
 import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.Scene
+import scalafx.stage.{Stage, Popup}
 import scalafx.scene.ImageCursor
 import scalafx.geometry.Insets
 import scalafx.geometry.Pos._
-import scalafx.scene.Scene
-import scalafx.stage.Stage
 import scalafx.Includes._
-import javafx.scene.layout.GridPane
-import scalafx.scene.shape.Circle
-import javafx.scene.paint.ImagePattern
-import scalafx.scene.effect.DropShadow
-import scalafx.scene.effect.Glow
-import scalafx.scene.effect.Reflection
-import scalafx.scene.paint.Color
-import javafx.application.Platform
-import scalafx.stage.Popup
-import scalafx.scene.control.TextField
-import scalafx.scene.control.Tooltip
 
 import controller.ControllerComponent.ControllerInterface
-import model.GameComponent.GameBaseImpl.{Stone}
 import model.GameComponent.GameBaseImpl._
 
 import util.Observer
 import util._
-import model._
-import scala.io.StdIn.readLine
-import scala.util.{Try, Success, Failure}
 
 
-
+//****************************************************************************** CLASS DEFINITION
 class GUI(controller: ControllerInterface) extends JFXApp3 with Observer {
     
     controller.add(this)
@@ -82,7 +72,7 @@ class GUI(controller: ControllerInterface) extends JFXApp3 with Observer {
             val border = new GridPane()
             val stone_matrix = new GridPane()
             
-            //get total witdh of gridpane
+            //get total width of grid-pane
             val hint_stone_matrix = new GridPane()
             hint_stone_matrix.setMaxWidth(300)
             hint_stone_matrix.setMaxHeight(300)
@@ -93,6 +83,7 @@ class GUI(controller: ControllerInterface) extends JFXApp3 with Observer {
             hint_stone_matrix.setStyle("-fx-background-color: #202225; -fx-background-radius: 10;")
             
             //@TODO: Realize as FOREACH loop
+   
             for (i <- 0 to controller.game.field.matrix.cols-1) {
                 for (j <- 0 to controller.game.field.matrix.rows-1) {
                     val stone = controller.game.field.cells(j, i)
