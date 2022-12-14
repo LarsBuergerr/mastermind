@@ -103,11 +103,8 @@ case class Game(var field: Field) extends GameInterface {
   def getCode(): Code = code
   
   
-  def resetGame(): Unit = {
-    field = new Field(field.matrix.rows, field.matrix.cols)
-    code = new Code()
-    state = Init()
-    currentTurn = 0
+  def resetGame(): Game = {
+    Game(new Field(field.matrix.rows, field.matrix.cols))
   }
   
   
