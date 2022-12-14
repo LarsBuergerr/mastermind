@@ -1,5 +1,8 @@
 /**
-  * Main.scala
+  * Mastermind.scala
+  * Created by: LarsBuergerr & Smokey95
+  * 
+  * This is the main class of the Mastermind game.
   */
 
 //********************************************************************** PACKAGE  
@@ -8,8 +11,9 @@ package de.htwg.se.mastermind
 
 //********************************************************************** IMPORTS
 import aview.{TUI, GUI}
-import controller.Controller
-import model.Game
+import controller.ControllerComponent.ControllerBaseImpl.Controller
+import model.GameComponent.GameBaseImpl.Game
+import model.GameComponent.GameInterface
 import util.GameMode._
 import scalafx.application.JFXApp3
 import de.htwg.se.mastermind.util.GameMode

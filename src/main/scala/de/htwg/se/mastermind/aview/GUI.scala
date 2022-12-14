@@ -27,7 +27,10 @@ import scalafx.stage.Popup
 import scalafx.scene.control.TextField
 import scalafx.scene.control.Tooltip
 
-import controller.{Controller}
+import controller.ControllerComponent.ControllerInterface
+import model.GameComponent.GameBaseImpl.{Stone}
+import model.GameComponent.GameBaseImpl._
+
 import util.Observer
 import util._
 import model._
@@ -36,7 +39,7 @@ import scala.util.{Try, Success, Failure}
 
 
 
-class GUI(controller: Controller) extends JFXApp3 with Observer {
+class GUI(controller: ControllerInterface) extends JFXApp3 with Observer {
     
     controller.add(this)
 

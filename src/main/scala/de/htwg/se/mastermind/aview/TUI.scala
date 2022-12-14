@@ -8,7 +8,8 @@ package aview
 
 
 //********************************************************************** IMPORTS
-import controller.{Controller}
+import controller.ControllerComponent.ControllerInterface
+import model.GameComponent.GameBaseImpl._
 import util.Observer
 import util._
 import model._
@@ -16,7 +17,7 @@ import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
 
 //********************************************************************** CLASS DEF
-case class TUI(controller: Controller) extends Observer:
+case class TUI(controller: ControllerInterface) extends Observer:
 
   controller.add(this)
 
@@ -85,7 +86,7 @@ case class TUI(controller: Controller) extends Observer:
           var codeVector = Vector[Stone]()
           Try (controller.game.buildVector(emptyVector, chars)) match {
             case Success(vector) => codeVector = vector.asInstanceOf[Vector[Stone]]
-            case Failure(e)      => return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
+            case Failure(e)      => return controller.request(controller.game.getDefaultInputRule(input))
           }
           val hints         = controller.game.getCode().compareTo(codeVector)
           //print(hints)

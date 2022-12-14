@@ -8,12 +8,13 @@ package controller
 
 
 //********************************************************************** IMPORTS
-import model.{Field, Stone, HStone, HintStone, State, Game}
+import model.GameComponent.GameBaseImpl.{Field, Stone, HStone, State, Game}
+import model.GameComponent.GameInterface
 import util.*
 
 
 //******************************************************************** CLASS DEF
-case class PlaceCommand(game: Game, stone: Vector[Stone], hints: Vector[HStone], row: Int) extends Command():
+case class PlaceCommand(game: GameInterface, stone: Vector[Stone], hints: Vector[HStone], row: Int) extends Command():
     val oldfield = game.field
     var newfield = game.field
     

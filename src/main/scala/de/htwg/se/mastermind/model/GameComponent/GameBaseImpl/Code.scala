@@ -6,6 +6,8 @@
 package de.htwg.se.mastermind
 package model
 
+package GameComponent
+package GameBaseImpl
 
 //********************************************************************** IMPORTS
 import scala.util.{Try,Success,Failure}

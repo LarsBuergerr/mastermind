@@ -8,8 +8,7 @@ package de.htwg.se.mastermind
 package util
 
 //********************************************************************** IMPORTS
-import controller.Controller
-import model.{Field, Stone, HintStone}
+import model.GameComponent.GameBaseImpl.{Field, Stone, HintStone}
 import scala.io.StdIn.readLine
 
 

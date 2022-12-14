@@ -6,7 +6,7 @@
 package de.htwg.se.mastermind
 package util
 
-import model.Field
+import model.GameComponent.GameBaseImpl.Field
 
 trait Command:
     def execute: Field

@@ -5,11 +5,12 @@
 //********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
-
+package GameComponent
+package GameBaseImpl
 
 //********************************************************************** IMPORTS
 import util._
-
+import model._
 
 //********************************************************************** CLASS DEF
 /**
@@ -18,10 +19,13 @@ import util._
   * @param field  mastermind game field
   * @param state  state in which the game is currently
   */
-case class Game(var field: Field, var state: State = Init()){
+case class Game(var field: Field) extends GameInterface {  
   
   //private var code = new Code(field.matrix.cols)
-  private var code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
+  var code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
+  
+  var state: State = Init()
+  
   private var currentTurn: Int = 0
   private val maxTurn: Int = field.matrix.rows
   
@@ -37,6 +41,7 @@ case class Game(var field: Field, var state: State = Init()){
     RequestHandlerSCR.UndoInputRule orElse
     RequestHandlerSCR.RedoInputRule
   }
+
   
   /**
     * Calls the responsible chain
@@ -138,6 +143,9 @@ case class Game(var field: Field, var state: State = Init()){
     }
   }
   
+  def getDefaultInputRule(input: String): Event = {
+    RequestHandlerSCR.DefaultInputRule(input)
+  }
   
   object RequestHandlerSCR {
     

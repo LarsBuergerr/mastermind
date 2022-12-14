@@ -5,15 +5,20 @@
 //********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package controller
+package ControllerComponent
+package ControllerBaseImpl
 
 
 //********************************************************************** IMPORTS
-import model.{Field, Stone, HStone, HintStone, State, Game}
-import util.*
+import model.GameComponent.GameInterface
+import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field}
+
+
+import util.{Request, Event, Observable}
 
 
 //******************************************************************** CLASS DEF
-class Controller(var game: Game) extends Observable:
+class Controller(var game: GameInterface) extends Observable with ControllerInterface:
 
 
   val invoker = new Invoker
@@ -43,7 +48,9 @@ class Controller(var game: Game) extends Observable:
     notifyObservers
 
   def reset =
-    game = Game(GameMode.selectMode)
+    // @TODO: Cleanup
+    //game = Game(GameMode.selectMode)
+    //game = new GameInterface()
     notifyObservers
     game.field
 

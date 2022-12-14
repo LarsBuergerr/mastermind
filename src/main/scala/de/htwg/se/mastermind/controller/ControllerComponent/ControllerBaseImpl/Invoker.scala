@@ -7,7 +7,7 @@ package de.htwg.se.mastermind
 package controller
 
 //********************************************************************** IMPORTS
-import model.{Field, Stone, HintStone, State, Game}
+import model.GameComponent.GameBaseImpl.{Field, Stone, HintStone, State, Game}
 import util.*
 
 //******************************************************************** CLASS DEF
