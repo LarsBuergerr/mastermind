@@ -1,95 +1,106 @@
+/**
+  * TUI.scala
+  */
+
+//********************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package aview
 
+
+//********************************************************************** IMPORTS
 import controller.{Controller}
 import util.Observer
-import model.{Code, Field, Stone, HintStone}
+import util._
+import model._
 import scala.io.StdIn.readLine
+import scala.util.{Try, Success, Failure}
 
-case class TUI(var controller: Controller) extends Observer:
-  val WIN_VAL     = 2
-  val LOOSE_VAL   = 3
-  val EXIT_VAL    = 1
-  val ERROR_VAL   = -1
-  val SUCCESS_VAL = 0
-  val loopCount = 0
-  val code = new Code(controller.field.cols)
-
+//********************************************************************** CLASS DEF
+case class TUI(controller: Controller) extends Observer:
+  
+  val code = new Code(controller.game.field.cols)
   controller.add(this)
-  println(controller.field.toString())
 
-  def this() =
-    this(new Controller)
-
-
-  def run(loopCount: Int): Unit =
-    val newLoopCount = loopCount + 1
+  def run(): Unit = {
+    controller.request(InitStateEvent())
+    println("Remaining Turns: " + controller.game.getRemainingTurns())
+    inputLoop()
+  }
+  
+  //@todo Boolean return type for testing?
+  def inputLoop(): Unit = {
+    
     val input = readLine(">> ")
-    parseInput(input, loopCount) match {
-      case SUCCESS_VAL =>
-        run(newLoopCount)
-      case ERROR_VAL   =>
-        run(loopCount)
-      case EXIT_VAL    =>
-        print("Exiting...\n")
-      case WIN_VAL     =>
-        print("You won. Thank you for playing the game\n")
-      case LOOSE_VAL   =>
-        print("You lost!!!")
+    
+    parseInput(input) match {
+      case pInp: PlayerInput  =>
+        println("Remaining Turns: " + controller.game.getRemainingTurns())
+        inputLoop()
+      case pWin: PlayerWin    =>
+        print("--- Thank you for playing the game\n")
+      case pLos: PlayerLose   =>
+        print("--- Thank you for playing the game and see you soon\n")
+      case help: Help         =>
+        inputLoop()
+      case menu: Menu         =>
+        print("Code:" + code.toString() + "\n")
+        inputLoop()
+      case play: Play         =>
+        println(controller.game.field.toString())
+        inputLoop()    
+      case quit: Quit         =>
+        print("--- See you later alligator...\n")
     }
+  }
 
-
-  def parseInput(input: String, loopCount: Int): Int =
+  
+  def parseInput(input: String): State = {
+    
     val emptyVector: Vector[Stone] = Vector()
     val chars = input.toCharArray()
 
-    if(chars.size == 0)
-      print("No input!\n")
-      return ERROR_VAL
-
-    if(chars.size == 1)
-      chars(0) match {
-        case 'h' | 'H' =>
-          printHelp()
-          return ERROR_VAL
-        case 'q' | 'Q' =>
-          return EXIT_VAL
+    chars.size match {
+      case 0 => {// Handles no user input -> stay in current state
+        val currentRequest = controller.handleRequest(SingleCharRequest(" "))
+        return controller.request(currentRequest)
       }
-
-    if(chars.size != controller.field.matrix.cols)
-      print("Selected Code has the wrong length!\n")
-      return ERROR_VAL
-
-    val codeVector    = buildVector(emptyVector, chars)
-    val hints         = code.compareTo(codeVector)
-
-    controller.placeGuessAndHints(codeVector, hints, loopCount)
-
-    if hints.forall(p => p == HintStone.Black) then
-      return WIN_VAL
-    else if loopCount == controller.field.matrix.rows - 1 then
-      return LOOSE_VAL
-    else
-      return SUCCESS_VAL
-
-  def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] =
-    val stone = chars(vector.size) match
-      case 'R'|'r'|'1' => Stone.Red
-      case 'G'|'g'|'2' => Stone.Green
-      case 'B'|'b'|'3' => Stone.Blue
-      case 'Y'|'y'|'4' => Stone.Yellow
-      case 'W'|'w'|'5' => Stone.White
-      case 'P'|'p'|'6' => Stone.Purple
-
-      val newvector = vector.appended(stone)
-      if (newvector.size < controller.field.cols)
-        buildVector(newvector, chars)
-      else
-        return newvector
-
-  def printHelp() =
-    println("Userinput example at Codelength 4: 'rgby' would indicate a Code with the Colors Red, Green, Blue, Yellow\n")
-
+      case 1 => { //Handles single char user input (first with CoR, then with State Pattern)
+        val currentRequest = controller.handleRequest(SingleCharRequest(input))
+        currentRequest match {
+          case undo: UndoStateEvent  => {
+            controller.undo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case redo: RedoStateEvent  => {
+            controller.redo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case _ => return controller.request(currentRequest)
+        }
+        
+      }
+      case _ => { //Handles multi char user input
+        val currentRequest = controller.handleRequest(MultiCharRequest(input))
+        if(currentRequest.isInstanceOf[PlayerAnalyzeEvent])
+          var codeVector = Vector[Stone]()
+          Try (controller.game.buildVector(emptyVector, chars)) match {
+            case Success(vector) => codeVector = vector.asInstanceOf[Vector[Stone]]
+            case Failure(e)      => return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
+          }
+          val hints         = code.compareTo(codeVector)
+          controller.placeGuessAndHints(codeVector, hints, controller.game.getCurrentTurn())
+          if hints.forall(p => p == HintStone.Black) then
+            return controller.request(PlayerWinStateEvent())
+          else if controller.game.getRemainingTurns().equals(0) then
+            return controller.request(PlayerLoseStateEvent())
+          else
+            return controller.request(PlayerInputStateEvent())
+        else  //Invalid input -> stay in current state
+          return controller.request(currentRequest)
+      }
+    }
+  }
   
-  override def update: Unit = 
+  override def update: Unit = {
     println(controller.update)
+  }
