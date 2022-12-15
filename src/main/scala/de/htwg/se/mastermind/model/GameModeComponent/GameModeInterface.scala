@@ -11,7 +11,7 @@ package GameModeComponent
 import model.GameComponent.GameBaseImpl.Field
 
 
-//****************************************************************************** INTERFACE
+//****************************************************************************** INTERFACE DEFINITION
 trait GameModeInterface {
   
   var selectMode : Field

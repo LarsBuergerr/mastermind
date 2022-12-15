@@ -2,19 +2,18 @@
   * Game.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
-
 package GameComponent
 
-//********************************************************************** IMPORTS
 
+//****************************************************************************** IMPORTS
 import GameBaseImpl.{Code, Field, State, Stone}
-import util.*
+import util.{Event, Request}
 
-//******************************************************************** CLASS DEF
 
+//****************************************************************************** INTERFACE DEFINITION
 trait GameInterface() {
 
   var field: Field

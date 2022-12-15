@@ -2,18 +2,18 @@
   * Code.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
-
 package GameComponent
 package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import scala.util.{Try,Success,Failure}
 
 
-
+//****************************************************************************** CLASS DEFINITION
 /**
   * Code that has to be solved in game
   * Default Constructor: for test and when in 2 Player Mode
@@ -28,9 +28,7 @@ case class Code(code: Vector[Stone]):
   
   val size = code.size
   
-  
   override def toString(): String = code.map(_.toString()).mkString(" | ")
-  
 
   /**
     * Compares a generated code with the input code done by the user
@@ -39,11 +37,6 @@ case class Code(code: Vector[Stone]):
     * @return HintStone Vector (All black: code are equal)
     */
   def compareTo(userInput: Vector[Stone]):Vector[HStone] = {
-    
-    /* Shouldn't be possible but check anyway (Safety First)*/
-    if(this.code.size != userInput.size){
-      //@todo throw exception?
-    }
     
     val equalsList = compareToEqual(userInput, 0, List())
     

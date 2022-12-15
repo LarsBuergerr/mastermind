@@ -11,7 +11,6 @@ package GameModeMockImpl
 
 //****************************************************************************** IMPORTS
 import model.GameComponent.GameBaseImpl.{Field, Stone, HintStone}
-import GameModeComponent.GameModeInterface
 import scala.io.StdIn.readLine
 
 
@@ -22,23 +21,17 @@ object GameMode extends GameModeInterface{
 
   def strategy_easy =   new Field(1, 1, Stone("E"), HintStone("E"))
   
-  def strategy_medium = new Field(1, 1, Stone("E"), HintStone("E"))
+  def strategy_medium = strategy_easy
   
-  def strategy_hard =   new Field(1, 1, Stone("E"), HintStone("E"))
+  def strategy_hard =   strategy_easy
   
-  def strategy_extrem = new Field(1, 1,  Stone("E"), HintStone("E"))
+  def strategy_extrem = strategy_easy
   
   def parseInput(): Field = {
    
    val in = readLine("You are in mock mode so you have no choice (Muhahaha): ")
 
-   in match {
-     case "Easy" | "easy"        => return strategy_easy
-     case "Medium" | "medium"    => return strategy_medium
-     case "Hard" | "hard"        => return strategy_hard
-     case "Extrem" | "extrem"    => return strategy_extrem
-     case _                      => return strategy_medium
-   }
+   return strategy_medium
   }
   
   override def toString(): String = "GameMode"

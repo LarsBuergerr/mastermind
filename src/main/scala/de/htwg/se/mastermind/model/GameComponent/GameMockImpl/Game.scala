@@ -2,20 +2,20 @@
   * Game.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
 package GameComponent
 package GameMockImpl
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import util._
 import model._
 
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl._
 
-//********************************************************************** CLASS DEF
+//****************************************************************************** CLASS DEFINITION
 /**
   * Represents a game instance with it's current state and game field
   *
