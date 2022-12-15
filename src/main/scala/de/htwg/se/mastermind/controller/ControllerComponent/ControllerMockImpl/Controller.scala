@@ -12,14 +12,11 @@ package ControllerMockImpl
 //********************************************************************** IMPORTS
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field}
-
-
 import util.{Request, Event, Observable}
 
 
 //******************************************************************** CLASS DEF
-class Controller(var game: GameInterface) extends ControllerInterface:
-
+class Controller(using var game: GameInterface) extends ControllerInterface:
 
   val invoker = new Invoker
   // Pass on the game state to the view and the event to game

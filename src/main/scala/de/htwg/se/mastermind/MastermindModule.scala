@@ -23,12 +23,15 @@ package de.htwg.se.mastermind
 //****************************************************************************** IMPORTS
 import controller.ControllerComponent.ControllerInterface
 import controller.ControllerComponent.ControllerBaseImpl.Controller
+//import controller.ControllerComponent.ControllerMockImpl.Controller
 
-import model.GameComponent.GameBaseImpl.Game
 import model.GameComponent.GameInterface
+import model.GameComponent.GameBaseImpl.Game
+//import model.GameComponent.GameMockImpl.Game
 
-import model.GameModeComponent.GameModeBaseImpl.GameMode
 import model.GameModeComponent.GameModeInterface
+import model.GameModeComponent.GameModeBaseImpl.GameMode
+//import model.GameModeComponent.GameModeMockImpl.GameMode
 
 
 //****************************************************************************** OBJECT DEFINITION
