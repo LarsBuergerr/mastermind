@@ -28,10 +28,11 @@ import model.GameComponent.GameBaseImpl.Game
 import model.GameComponent.GameInterface
 
 import model.GameModeComponent.GameModeBaseImpl.GameMode
+import model.GameModeComponent.GameModeInterface
 
 
 //****************************************************************************** OBJECT DEFINITION
 object MastermindModule {
-    given GameInterface = new Game(GameMode.selectMode)
-    given ControllerInterface = new Controller()
+    given GameInterface       = Game(GameMode.selectMode)
+    given ControllerInterface = Controller()
 }

@@ -8,8 +8,7 @@ package model
 package GameModeComponent
 
 //****************************************************************************** IMPORTS
-import model.GameComponent.GameBaseImpl.{Field, Stone, HintStone}
-import scala.io.StdIn.readLine
+import model.GameComponent.GameBaseImpl.Field
 
 
 //****************************************************************************** INTERFACE
