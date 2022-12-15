@@ -1,15 +1,19 @@
 /**
-  * FILENAME.scala
+  * StateSpec.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
+package GameComponent
+package GameBaseImpl
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
+
+//****************************************************************************** CLASS DEFINITION
 class StateSpec extends AnyWordSpec{
   
   "The State class represents the game state and" should {
