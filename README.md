@@ -3,9 +3,9 @@
 ---
 
 ![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/codecov.yml/badge.svg)
-[![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/07-DesignPattern/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/develop)
+[![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/11-DependencyInjection-GivenUsing/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/11-DependencyInjection-GivenUsing)
 ![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/coveralls.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/LarsBuergerr/mastermind/badge.svg?branch=09-GUI)](https://coveralls.io/github/LarsBuergerr/mastermind?branch=09-GUI)
+[![Coverage Status](https://coveralls.io/repos/github/LarsBuergerr/mastermind/badge.svg?branch=11-DependencyInjection-GivenUsing)](https://coveralls.io/github/LarsBuergerr/mastermind?branch=11-DependencyInjection-GivenUsing)
 
 ![RepoSize](https://img.shields.io/github/repo-size/LarsBuergerr/mastermind)
 [![License](https://img.shields.io/github/license/LarsBuergerr/mastermind?color=green)](https://cdn130.picsart.com/272563229032201.jpg?r1024x1024)

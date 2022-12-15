@@ -1,10 +1,20 @@
+/**
+  * ObserverSpec.scala
+  */
+
+//****************************************************************************** PACKAGE
 package de.htwg.se.mastermind
 package util
 
+
+//****************************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
+
+//****************************************************************************** CLASS DEFINITION
 class ObserverSpec extends AnyWordSpec {
+  
   class TestObservable extends Observable {}
   class TestObserver(observable: TestObservable) extends Observer {
     val observed = observable
