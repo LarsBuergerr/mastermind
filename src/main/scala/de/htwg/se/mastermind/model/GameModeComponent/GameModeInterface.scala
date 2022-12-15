@@ -15,6 +15,8 @@ import scala.io.StdIn.readLine
 //****************************************************************************** INTERFACE
 trait GameModeInterface {
   
+  var selectMode : Field
+  
   def strategy_easy: Field
   
   def strategy_medium: Field

@@ -12,16 +12,20 @@ package ControllerBaseImpl
 //********************************************************************** IMPORTS
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field}
-
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
 
 import util.{Request, Event, Observable}
 
 
 //******************************************************************** CLASS DEF
-class Controller(var game: GameInterface) extends ControllerInterface:
+class Controller @Inject() (var game: GameInterface) extends ControllerInterface:
 
 
   val invoker = new Invoker
+
+  def this() = this(Guice.createInjector(new MastermindModule).getInstance(classOf[GameInterface]))
+  
   // Pass on the game state to the view and the event to game
   def request(event: Event): State = {
     var currState = game.request(event)

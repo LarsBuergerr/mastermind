@@ -14,7 +14,6 @@ import model.GameComponent.GameBaseImpl.{Field, Stone, HintStone}
 import GameModeComponent.GameModeInterface
 import scala.io.StdIn.readLine
 
-
 //****************************************************************************** OBJECT DEFINITION
 object GameMode extends GameModeInterface{
 

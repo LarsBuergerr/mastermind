@@ -12,6 +12,7 @@ package GameBaseImpl
 import util._
 import model._
 
+import com.google.inject.Inject
 //********************************************************************** CLASS DEF
 /**
   * Represents a game instance with it's current state and game field
@@ -19,7 +20,9 @@ import model._
   * @param field  mastermind game field
   * @param state  state in which the game is currently
   */
-case class Game(var field: Field) extends GameInterface {  
+case class Game @Inject() (var field: Field) extends GameInterface {
+  
+  def this() = this(new Field(10, 4))  
   
   var code = new Code(field.matrix.cols)
   

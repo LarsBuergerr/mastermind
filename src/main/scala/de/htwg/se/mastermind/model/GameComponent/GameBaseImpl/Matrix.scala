@@ -13,7 +13,7 @@ package GameBaseImpl
 
 
 //****************************************************************************** CLASS DEFINITION
-case class Matrix[T](m: Vector[Vector[T]]):
+case class Matrix[T] (m: Vector[Vector[T]]):
   
   def this(rows: Int,cols: Int, filling: T) = this(Vector.tabulate(rows, cols) { (row, col) => filling })
   

@@ -16,8 +16,9 @@ lazy val root = project
       Seq(
       "org.scalameta" %% "munit" % "0.7.29" % Test,
       "org.scalactic" %% "scalactic" % scalaTestVersion,
-      "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
-      )
+      "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
+      "com.google.inject" % "guice" % "4.2.3",
+      ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13)),
     },
     libraryDependencies ++= {
   // Determine OS version of JavaFX binaries
