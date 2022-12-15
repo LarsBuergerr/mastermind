@@ -22,31 +22,17 @@ package de.htwg.se.mastermind
 
 //****************************************************************************** IMPORTS
 import aview.{TUI, GUI}
+import MastermindModule.{given}
 
-//import controller.ControllerComponent.ControllerBaseImpl.Controller
-//import model.GameComponent.GameBaseImpl.Game
-//import util.GameModeComponent.GameModeBaseImpl.GameMode
-
-//import controller.ControllerComponent.ControllerMockImpl.Controller
-//import model.GameComponent.GameMockImpl.Game
-//import util.GameModeComponent.GameModeMockImpl.GameMode
-
-import controller.ControllerComponent.ControllerInterface
-import model.GameComponent.GameInterface
-import model.GameModeComponent.GameModeInterface
-
-import com.google.inject.Guice
 
 //****************************************************************************** MAIN
 object mastermind extends Thread {
-  
-  val injector = Guice.createInjector(new MastermindModule)
-  val controller = injector.getInstance(classOf[ControllerInterface])
-  
+
+  val tui = TUI()
+  val gui = GUI()
+
   @main 
   override def start(): Unit = 
-    val tui = TUI(controller)
-    val gui = GUI(controller)
     
     val threadGui = new Thread {
       override def run(): Unit = {

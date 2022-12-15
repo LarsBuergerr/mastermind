@@ -16,7 +16,7 @@ import util.*
 //******************************************************************** CLASS DEF
 
 trait ControllerInterface extends Observable {
-    
+
   var game: GameInterface
 
   def placeGuessAndHints(stone: Vector[Stone],hints: Vector[HStone], row: Int): Field

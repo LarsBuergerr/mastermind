@@ -29,7 +29,7 @@ import util._
 
 
 //****************************************************************************** CLASS DEFINITION
-class GUI(controller: ControllerInterface) extends JFXApp3 with Observer {
+class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
     
     controller.add(this)
 

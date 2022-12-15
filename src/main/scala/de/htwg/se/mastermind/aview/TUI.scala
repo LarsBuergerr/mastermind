@@ -17,9 +17,10 @@ import util._
 import model._
 import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
+import MastermindModule.{given}
 
 //****************************************************************************** CLASS DEFINITION
-case class TUI(controller: ControllerInterface) extends Observer:
+class TUI(using controller: ControllerInterface) extends Observer:
 
   controller.add(this)
 
