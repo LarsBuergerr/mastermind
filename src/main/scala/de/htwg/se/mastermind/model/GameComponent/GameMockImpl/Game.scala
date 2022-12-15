@@ -8,12 +8,13 @@ package model
 package GameComponent
 package GameMockImpl
 
+
 //****************************************************************************** IMPORTS
 import util._
 import model._
-
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl._
+
 
 //****************************************************************************** CLASS DEFINITION
 /**

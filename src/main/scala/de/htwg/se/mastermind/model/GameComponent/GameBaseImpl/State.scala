@@ -3,26 +3,26 @@
   * Implements the STATE_PATTERN to keep track over current game state
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
-
 package GameComponent
 package GameBaseImpl
 
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import util._
 
 
-//******************************************************************** CLASS DEF
-val horizontalLine = "----------------------------------------------------------------" + eol
-
+//****************************************************************************** INTERFACE DEFINITION
 trait State {
   def handle(): State
   override def toString(): String
 }
- 
+
+
+//****************************************************************************** CLASS DEFINITIONS
+val horizontalLine = "----------------------------------------------------------------" + eol
  
 class Init extends State {
   override def handle(): State = {

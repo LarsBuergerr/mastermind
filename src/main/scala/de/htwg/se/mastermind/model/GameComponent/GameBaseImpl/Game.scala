@@ -2,18 +2,20 @@
   * Game.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE
 package de.htwg.se.mastermind
 package model
 package GameComponent
 package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import util._
 import model._
-
 import com.google.inject.Inject
-//********************************************************************** CLASS DEF
+
+
+//****************************************************************************** CLASS DEFINITION
 /**
   * Represents a game instance with it's current state and game field
   *

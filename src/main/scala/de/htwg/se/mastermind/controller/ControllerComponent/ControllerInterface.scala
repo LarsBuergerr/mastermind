@@ -1,20 +1,20 @@
 /**
-  * Controller.scala
+  * ControllerInterface.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package controller
-
 package ControllerComponent
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import model.GameComponent.GameBaseImpl.{Field, Stone, HStone, State, Game}
 import model.GameComponent.GameInterface
-import util.*
+import util.{Observable, Event, Request}
 
-//******************************************************************** CLASS DEF
 
+//****************************************************************************** INTERFACE DEFINITION
 trait ControllerInterface extends Observable {
 
   var game: GameInterface

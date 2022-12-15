@@ -2,18 +2,18 @@
   * PlaceCommand.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package controller
 
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import model.GameComponent.GameBaseImpl.{Field, Stone, HStone, State, Game}
 import model.GameComponent.GameInterface
 import util.*
 
 
-//******************************************************************** CLASS DEF
+//****************************************************************************** CLASS DEFINITION
 case class PlaceCommand(game: GameInterface, stone: Vector[Stone], hints: Vector[HStone], row: Int) extends Command():
     val oldfield = game.field
     var newfield = game.field
@@ -28,7 +28,6 @@ case class PlaceCommand(game: GameInterface, stone: Vector[Stone], hints: Vector
         oldfield
     
     override def redoStep: Field = 
-        if(newfield != oldfield){
+        if(newfield != oldfield)
             game.setTurn()
-        }
         newfield

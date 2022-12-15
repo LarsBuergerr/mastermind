@@ -2,12 +2,16 @@
   * Command.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package util
 
+
+//****************************************************************************** IMPORTS
 import model.GameComponent.GameBaseImpl.Field
 
+
+//****************************************************************************** INTERFACE DEFINITION
 trait Command:
     def execute: Field
     def undoStep: Field

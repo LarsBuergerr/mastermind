@@ -1,5 +1,7 @@
 /**
   * GameMode.scala
+  * 
+  * Base implementation of the GameModeInterface
   * Implements the STRATEGY_PATTERN to select different game modes
   */
 

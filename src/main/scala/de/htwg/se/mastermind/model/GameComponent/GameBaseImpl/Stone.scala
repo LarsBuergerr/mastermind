@@ -3,21 +3,30 @@
   * Implements the Factory Pattern to create different stones
   */
 
-//********************************************************************** PACKAGE
+//****************************************************************************** PACKAGE
 package de.htwg.se.mastermind
 package model
-
 package GameComponent
 package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import scala.util.Random
 
+
+//****************************************************************************** INTERFACE DEFINITION
 trait Stone {
   val stringRepresentation: String
   override def toString(): String = stringRepresentation
 }
 
+trait HStone {
+  val stringRepresentation: String
+  override def toString(): String = stringRepresentation
+}
+
+
+//****************************************************************************** CLASS DEFINITIONS
 private class Red extends Stone {
   val stringRepresentation = "R"
   override def toString(): String = stringRepresentation
@@ -53,6 +62,22 @@ private class Empty extends Stone {
   override def toString(): String = stringRepresentation
 }
 
+private class HRed extends HStone {
+  val stringRepresentation = "R"
+  override def toString(): String = stringRepresentation
+}
+
+private class HWhite extends HStone {
+  val stringRepresentation = "W"
+  override def toString(): String = stringRepresentation
+}
+
+private class HEmpty extends HStone {
+  val stringRepresentation = "E"
+  override def toString(): String = stringRepresentation
+}
+
+//****************************************************************************** OBJECT DEFINITION
 object Stone {
   def apply(stringRepresentation: String): Stone = stringRepresentation match {
     case "R" => new Red
@@ -76,33 +101,6 @@ object Stone {
       case _ => "E"
     })
   } 
-}
-
-  
-/**
-  * Enum declaration for the mastermind hint stones (Black and White)
-  *
-  * @param stringRepresentation
-  */  
-
-trait HStone {
-  val stringRepresentation: String
-  override def toString(): String = stringRepresentation
-}
-
-private class HRed extends HStone {
-  val stringRepresentation = "R"
-  override def toString(): String = stringRepresentation
-}
-
-private class HWhite extends HStone {
-  val stringRepresentation = "W"
-  override def toString(): String = stringRepresentation
-}
-
-private class HEmpty extends HStone {
-  val stringRepresentation = "E"
-  override def toString(): String = stringRepresentation
 }
 
 

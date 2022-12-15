@@ -2,16 +2,17 @@
   * Field.scala
   */
 
-//********************************************************************** PACKAGE
+//****************************************************************************** PACKAGE
 package de.htwg.se.mastermind
 package model
-
 package GameComponent
 package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 
 
+//****************************************************************************** CLASS DEFINITION
 /* Don't wanna use the stings all the time */
 private val plus = "+"
 private val minus = "-"
@@ -29,8 +30,6 @@ private val eol = sys.props("line.separator")
   * @param hmatrix  Matrix with the hint stones
   */
 case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HStone]):
-  
-  
 
   def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone("E"), hfilling: HStone = HintStone("E")) = {
     this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))

@@ -1,11 +1,19 @@
+/**
+  * Observable.scala
+  */
+
+//****************************************************************************** PACKAGE
 package de.htwg.se.mastermind
 package util
 
 
+//****************************************************************************** INTERFACE DEFINITION
 trait Observer {
     def update: Unit
 }
 
+
+//****************************************************************************** CLASS DEFINITIONS
 class Observable {
     var subscribers: Vector[Observer] = Vector()
 

@@ -8,6 +8,7 @@
 package de.htwg.se.mastermind
 package aview
 
+
 //****************************************************************************** IMPORTS
 import scalafx.application.JFXApp3
 import scalafx.application.Platform
@@ -23,8 +24,6 @@ import scalafx.Includes._
 
 import controller.ControllerComponent.ControllerInterface
 import model.GameComponent.GameBaseImpl._
-
-import util.Observer
 import util._
 
 
