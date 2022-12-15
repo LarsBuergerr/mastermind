@@ -33,7 +33,7 @@ import aview.{TUI, GUI}
 
 import controller.ControllerComponent.ControllerInterface
 import model.GameComponent.GameInterface
-import util.GameModeComponent.GameModeInterface
+import model.GameModeComponent.GameModeInterface
 
 import com.google.inject.Guice
 

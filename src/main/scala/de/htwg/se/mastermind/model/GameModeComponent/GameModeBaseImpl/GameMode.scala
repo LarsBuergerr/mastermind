@@ -5,7 +5,7 @@
 
 //****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
-package util
+package model
 package GameModeComponent
 package GameModeBaseImpl
 

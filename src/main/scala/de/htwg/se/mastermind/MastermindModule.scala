@@ -1,3 +1,22 @@
+/**
+  * ███╗   ███╗ █████╗ ███████╗████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗██████╗ 
+  * ████╗ ████║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗
+  * ██╔████╔██║███████║███████╗   ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║██║  ██║
+  * ██║╚██╔╝██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██║  ██║
+  * ██║ ╚═╝ ██║██║  ██║███████║   ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██████╔╝
+  * ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝ 
+  *                                                                                  
+  * Mastermind.scala
+  * Created by: LarsBuergerr & Smokey95
+  * 
+  * Project is part of the course "Software Engineering" at HTWG Konstanz
+  * 
+  * This is the main class of the Mastermind game.
+  * 
+  * © LarsBuergerr & Smokey95
+  */
+
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 
 
@@ -8,8 +27,8 @@ import controller.ControllerComponent._
 import controller.ControllerComponent.ControllerBaseImpl.Controller
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl.Game
-import util.GameModeComponent.GameModeBaseImpl.GameMode
-import util.GameModeComponent.GameModeInterface
+import model.GameModeComponent.GameModeBaseImpl.GameMode
+import model.GameModeComponent.GameModeInterface
 
 class MastermindModule extends AbstractModule {
   override def configure(): Unit = {
