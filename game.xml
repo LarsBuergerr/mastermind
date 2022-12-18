@@ -1,0 +1,94 @@
+<game>
+      <matrix>
+      <row row="0">
+      <cell row="0" col="0">
+      E
+    </cell><cell row="0" col="1">
+      E
+    </cell><cell row="0" col="2">
+      E
+    </cell><cell row="0" col="3">
+      E
+    </cell>
+    </row><row row="1">
+      <cell row="1" col="0">
+      E
+    </cell><cell row="1" col="1">
+      E
+    </cell><cell row="1" col="2">
+      E
+    </cell><cell row="1" col="3">
+      E
+    </cell>
+    </row><row row="2">
+      <cell row="2" col="0">
+      E
+    </cell><cell row="2" col="1">
+      E
+    </cell><cell row="2" col="2">
+      E
+    </cell><cell row="2" col="3">
+      E
+    </cell>
+    </row><row row="3">
+      <cell row="3" col="0">
+      E
+    </cell><cell row="3" col="1">
+      E
+    </cell><cell row="3" col="2">
+      E
+    </cell><cell row="3" col="3">
+      E
+    </cell>
+    </row>
+    </matrix>
+      <matrix>
+      <row row="0">
+      <cell row="0" col="0">
+      E
+    </cell><cell row="0" col="1">
+      E
+    </cell><cell row="0" col="2">
+      E
+    </cell><cell row="0" col="3">
+      E
+    </cell>
+    </row><row row="1">
+      <cell row="1" col="0">
+      E
+    </cell><cell row="1" col="1">
+      E
+    </cell><cell row="1" col="2">
+      E
+    </cell><cell row="1" col="3">
+      E
+    </cell>
+    </row><row row="2">
+      <cell row="2" col="0">
+      E
+    </cell><cell row="2" col="1">
+      E
+    </cell><cell row="2" col="2">
+      E
+    </cell><cell row="2" col="3">
+      E
+    </cell>
+    </row><row row="3">
+      <cell row="3" col="0">
+      E
+    </cell><cell row="3" col="1">
+      E
+    </cell><cell row="3" col="2">
+      E
+    </cell><cell row="3" col="3">
+      E
+    </cell>
+    </row>
+    </matrix>
+      <turns>
+        0
+      </turns>
+      <code>
+        W | Y | G | W
+      </code>
+    </game>

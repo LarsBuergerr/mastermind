@@ -28,3 +28,4 @@ case class QuitStateEvent()         extends Event
 
 case class UndoStateEvent()         extends Event
 case class RedoStateEvent()         extends Event
+case class SaveStateEvent()         extends Event

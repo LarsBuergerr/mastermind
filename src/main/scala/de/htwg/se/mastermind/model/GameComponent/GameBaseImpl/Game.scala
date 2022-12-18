@@ -163,6 +163,7 @@ case class Game(var field: Field) extends GameInterface {
     val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
     val UndoInputRule: PartialFunctionRule = singleCharRule(_ == "u", UndoStateEvent())
     val RedoInputRule: PartialFunctionRule = singleCharRule(_ == "r", RedoStateEvent())
+    val saveInputRule: PartialFunctionRule = singleCharRule(_ == "s", SaveStateEvent())
     
     //defines the default rule
     def DefaultInputRule(userinput: String): Event = {

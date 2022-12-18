@@ -15,6 +15,7 @@ import model.GameComponent.GameBaseImpl._
 import util.Observer
 import util._
 import model._
+import model.FileIOComponent.fileIOxmlImpl.FileIO
 import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
 import MastermindModule.{given}
@@ -77,6 +78,11 @@ class TUI(using controller: ControllerInterface) extends Observer:
           }
           case redo: RedoStateEvent  => {
             controller.redo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case save: SaveStateEvent  => {
+            val fileIO = new FileIO()
+            fileIO.save(controller.game)
             return controller.request(PlayerInputStateEvent())
           }
           case _ => return controller.request(currentRequest)
