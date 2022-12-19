@@ -29,7 +29,7 @@ private val eol = sys.props("line.separator")
   * @param matrix   Matrix with the actual player stones
   * @param hmatrix  Matrix with the hint stones
   */
-case class Field(matrix: Matrix[Stone], hmatrix: Matrix[HStone]):
+case class Field(var matrix: Matrix[Stone], var hmatrix: Matrix[HStone]):
 
   def this(rows: Int = 6, cols: Int = 4, filling: Stone = Stone("E"), hfilling: HStone = HintStone("E")) = {
     this(new Matrix(rows, cols, filling), new Matrix(rows, cols, hfilling))

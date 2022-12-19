@@ -1,87 +1,82 @@
 <game>
+      <rows>
+        4
+      </rows>
+      <cols>
+        4
+      </cols>
       <matrix>
       <row row="0">
       <cell row="0" col="0">
-      E
+      <value>
+        G
+      </value>
     </cell><cell row="0" col="1">
-      E
+      <value>
+        G
+      </value>
     </cell><cell row="0" col="2">
-      E
+      <value>
+        G
+      </value>
     </cell><cell row="0" col="3">
-      E
+      <value>
+        G
+      </value>
     </cell>
     </row><row row="1">
       <cell row="1" col="0">
-      E
+      <value>
+        R
+      </value>
     </cell><cell row="1" col="1">
-      E
+      <value>
+        R
+      </value>
     </cell><cell row="1" col="2">
-      E
+      <value>
+        R
+      </value>
     </cell><cell row="1" col="3">
-      E
+      <value>
+        R
+      </value>
     </cell>
     </row><row row="2">
       <cell row="2" col="0">
-      E
+      <value>
+        B
+      </value>
     </cell><cell row="2" col="1">
-      E
+      <value>
+        B
+      </value>
     </cell><cell row="2" col="2">
-      E
+      <value>
+        B
+      </value>
     </cell><cell row="2" col="3">
-      E
+      <value>
+        B
+      </value>
     </cell>
     </row><row row="3">
       <cell row="3" col="0">
-      E
+      <value>
+        Y
+      </value>
     </cell><cell row="3" col="1">
-      E
+      <value>
+        Y
+      </value>
     </cell><cell row="3" col="2">
-      E
+      <value>
+        Y
+      </value>
     </cell><cell row="3" col="3">
-      E
-    </cell>
-    </row>
-    </matrix>
-      <matrix>
-      <row row="0">
-      <cell row="0" col="0">
-      E
-    </cell><cell row="0" col="1">
-      E
-    </cell><cell row="0" col="2">
-      E
-    </cell><cell row="0" col="3">
-      E
-    </cell>
-    </row><row row="1">
-      <cell row="1" col="0">
-      E
-    </cell><cell row="1" col="1">
-      E
-    </cell><cell row="1" col="2">
-      E
-    </cell><cell row="1" col="3">
-      E
-    </cell>
-    </row><row row="2">
-      <cell row="2" col="0">
-      E
-    </cell><cell row="2" col="1">
-      E
-    </cell><cell row="2" col="2">
-      E
-    </cell><cell row="2" col="3">
-      E
-    </cell>
-    </row><row row="3">
-      <cell row="3" col="0">
-      E
-    </cell><cell row="3" col="1">
-      E
-    </cell><cell row="3" col="2">
-      E
-    </cell><cell row="3" col="3">
-      E
+      <value>
+        Y
+      </value>
     </cell>
     </row>
     </matrix>
@@ -89,6 +84,6 @@
         0
       </turns>
       <code>
-        W | Y | G | W
+        P | R | P | W
       </code>
     </game>
