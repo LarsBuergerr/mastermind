@@ -8,6 +8,6 @@ import GameComponent.GameInterface
 import GameComponent.GameBaseImpl.{Field, Stone, Matrix}
 
 class FileIO extends FileIOInterface {
-  override def load: Matrix[Stone] = ???
+  override def load: GameInterface = ???
   override def save(game: GameInterface): Unit = ???
 }

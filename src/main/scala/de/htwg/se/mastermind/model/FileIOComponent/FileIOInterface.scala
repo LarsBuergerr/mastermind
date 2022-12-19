@@ -9,7 +9,7 @@ import GameComponent.GameBaseImpl.{Field, Stone, Matrix}
 
 trait FileIOInterface {
 
-  def load: Matrix[Stone]
+  def load: GameInterface
 
   def save(game: GameInterface): Unit
 }

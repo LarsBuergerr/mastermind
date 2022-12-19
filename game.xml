@@ -80,10 +80,85 @@
     </cell>
     </row>
     </matrix>
+      <hint_matrix>
+      <row row="0">
+      <cell row="0" col="0">
+      <value>
+        E
+      </value>
+    </cell><cell row="0" col="1">
+      <value>
+        E
+      </value>
+    </cell><cell row="0" col="2">
+      <value>
+        E
+      </value>
+    </cell><cell row="0" col="3">
+      <value>
+        E
+      </value>
+    </cell>
+    </row><row row="1">
+      <cell row="1" col="0">
+      <value>
+        W
+      </value>
+    </cell><cell row="1" col="1">
+      <value>
+        R
+      </value>
+    </cell><cell row="1" col="2">
+      <value>
+        W
+      </value>
+    </cell><cell row="1" col="3">
+      <value>
+        R
+      </value>
+    </cell>
+    </row><row row="2">
+      <cell row="2" col="0">
+      <value>
+        E
+      </value>
+    </cell><cell row="2" col="1">
+      <value>
+        E
+      </value>
+    </cell><cell row="2" col="2">
+      <value>
+        E
+      </value>
+    </cell><cell row="2" col="3">
+      <value>
+        E
+      </value>
+    </cell>
+    </row><row row="3">
+      <cell row="3" col="0">
+      <value>
+        E
+      </value>
+    </cell><cell row="3" col="1">
+      <value>
+        E
+      </value>
+    </cell><cell row="3" col="2">
+      <value>
+        E
+      </value>
+    </cell><cell row="3" col="3">
+      <value>
+        E
+      </value>
+    </cell>
+    </row>
+    </hint_matrix>
       <turns>
         0
       </turns>
       <code>
-        P | R | P | W
+        W | P | G | P
       </code>
     </game>

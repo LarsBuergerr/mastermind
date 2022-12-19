@@ -5,14 +5,14 @@ package FileIOComponent
 package fileIOxmlImpl
 
 import GameComponent.GameInterface
-import GameComponent.GameBaseImpl.{Field, Stone, Matrix}
+import GameComponent.GameBaseImpl.{Field, Stone, Matrix, HintStone, HStone}
 import GameComponent.GameBaseImpl.Game
 
 import java.io._
 import scala.xml._
 
 class FileIO extends FileIOInterface {
-  override def load: Matrix[Stone] = 
+  override def load: GameInterface = 
     import java.io._
     import scala.xml._
 
@@ -20,13 +20,24 @@ class FileIO extends FileIOInterface {
     val xml = XML.loadString(source.mkString)
     source.close()
 
+    val turns = (xml \ "turns").text.trim.toInt
+    val code = (xml \ "code").text
+    print(code)
+
+    val matrix = loadMatrix(xml, "matrix").asInstanceOf[Matrix[Stone]]
+    val hint_matrix = loadMatrix(xml, "hint_matrix").asInstanceOf[Matrix[HStone]]
+
+    val game = new Game(new Field(matrix, hint_matrix))
+
+    return game
+
+  
+  def loadMatrix(xml: NodeSeq, m_type: String): Matrix[Object] =
     val rows = (xml \ "rows").text.trim.toInt
     val cols = (xml \ "cols").text.trim.toInt
-    val turns = (xml \ "turns").text.trim.toInt
-    val code = (xml \ "code").text.trim
 
-    var matrix = new Matrix(rows, cols, Stone(" "))
-    val all_rows = (xml \ "matrix" \ "row")
+    var matrix = if (m_type == "matrix") new Matrix(rows, cols, Stone(" ")) else new Matrix(rows, cols, HintStone(" "))
+    val all_rows = (xml \ m_type \ "row")
     all_rows.map(row => {
       val row_num = (row \ "@row").text.trim.toInt
       val all_cells = (row \ "cell")
@@ -35,10 +46,10 @@ class FileIO extends FileIOInterface {
         val cell_x = (cell \ "@row").text.trim.toInt
         val cell_value = (cell \ "value").text.trim
 
-        matrix = matrix.replaceCell(cell_x, cell_y, Stone(cell_value))
+
+        matrix = if (m_type == "matrix") matrix.replaceCell(cell_x, cell_y, Stone(cell_value)) else matrix.replaceCell(cell_x, cell_y, HintStone(cell_value))
       })
     })
-    print(matrix)
 
     return matrix
 
@@ -50,28 +61,36 @@ class FileIO extends FileIOInterface {
     pw.write(gameToXml(game).toString())
     pw.close()
 
-  def cellToXml(game: GameInterface, row: Int, col: Int) =
+  def cellToXml(matrix: Matrix[Object], row: Int, col: Int) =
     <cell row={row.toString} col={col.toString}>
       <value>
-        {game.field.matrix.cell(row, col)}
+        {matrix.cell(row, col)}
       </value>
     </cell>
 
-  def rowToXml(game: GameInterface, row: Int) =
+  def rowToXml(matrix: Matrix[Object], row: Int) =
     <row row={row.toString}>
       {
-        for (col <- 0 until game.field.matrix.cols)
-          yield cellToXml(game, row, col)
+        for (col <- 0 until matrix.cols)
+          yield cellToXml(matrix, row, col)
       }
     </row>
 
-  def matrixToXml(game: GameInterface) =
+  def matrixToXml(matrix: Matrix[Object]) =
     <matrix>
       {
-        for (row <- 0 until game.field.matrix.rows)
-          yield rowToXml(game, row)
+        for (row <- 0 until matrix.rows)
+          yield rowToXml(matrix, row)
       }
     </matrix>
+
+  def hmatrixToXml(hmatrix: Matrix[Object]) =
+    <hint_matrix>
+      {
+        for (row <- 0 until hmatrix.rows)
+          yield rowToXml(hmatrix, row)
+      }
+    </hint_matrix>
 
   def gameToXml(game: GameInterface) =
     <game>
@@ -81,7 +100,8 @@ class FileIO extends FileIOInterface {
       <cols>
         {game.field.matrix.cols}
       </cols>
-      {matrixToXml(game)}
+      {matrixToXml(game.field.matrix.asInstanceOf[Matrix[Object]])}
+      {hmatrixToXml(game.field.hmatrix.asInstanceOf[Matrix[Object]])}
       <turns>
         {game.getCurrentTurn()}
       </turns>
