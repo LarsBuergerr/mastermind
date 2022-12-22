@@ -1,53 +1,45 @@
 <game>
       <rows>
-        8
+        10
       </rows>
       <cols>
-        5
+        4
       </cols>
       <matrix>
       <row row="0">
       <cell row="0" col="0">
       <value>
-        R
+        E
       </value>
     </cell><cell row="0" col="1">
       <value>
-        G
+        E
       </value>
     </cell><cell row="0" col="2">
       <value>
-        B
+        E
       </value>
     </cell><cell row="0" col="3">
       <value>
-        Y
-      </value>
-    </cell><cell row="0" col="4">
-      <value>
-        Y
+        E
       </value>
     </cell>
     </row><row row="1">
       <cell row="1" col="0">
       <value>
-        R
+        E
       </value>
     </cell><cell row="1" col="1">
       <value>
-        G
+        E
       </value>
     </cell><cell row="1" col="2">
       <value>
-        B
+        E
       </value>
     </cell><cell row="1" col="3">
       <value>
-        Y
-      </value>
-    </cell><cell row="1" col="4">
-      <value>
-        Y
+        E
       </value>
     </cell>
     </row><row row="2">
@@ -64,10 +56,6 @@
         E
       </value>
     </cell><cell row="2" col="3">
-      <value>
-        E
-      </value>
-    </cell><cell row="2" col="4">
       <value>
         E
       </value>
@@ -89,10 +77,6 @@
       <value>
         E
       </value>
-    </cell><cell row="3" col="4">
-      <value>
-        E
-      </value>
     </cell>
     </row><row row="4">
       <cell row="4" col="0">
@@ -108,10 +92,6 @@
         E
       </value>
     </cell><cell row="4" col="3">
-      <value>
-        E
-      </value>
-    </cell><cell row="4" col="4">
       <value>
         E
       </value>
@@ -133,10 +113,6 @@
       <value>
         E
       </value>
-    </cell><cell row="5" col="4">
-      <value>
-        E
-      </value>
     </cell>
     </row><row row="6">
       <cell row="6" col="0">
@@ -152,10 +128,6 @@
         E
       </value>
     </cell><cell row="6" col="3">
-      <value>
-        E
-      </value>
-    </cell><cell row="6" col="4">
       <value>
         E
       </value>
@@ -177,7 +149,39 @@
       <value>
         E
       </value>
-    </cell><cell row="7" col="4">
+    </cell>
+    </row><row row="8">
+      <cell row="8" col="0">
+      <value>
+        E
+      </value>
+    </cell><cell row="8" col="1">
+      <value>
+        E
+      </value>
+    </cell><cell row="8" col="2">
+      <value>
+        E
+      </value>
+    </cell><cell row="8" col="3">
+      <value>
+        E
+      </value>
+    </cell>
+    </row><row row="9">
+      <cell row="9" col="0">
+      <value>
+        E
+      </value>
+    </cell><cell row="9" col="1">
+      <value>
+        E
+      </value>
+    </cell><cell row="9" col="2">
+      <value>
+        E
+      </value>
+    </cell><cell row="9" col="3">
       <value>
         E
       </value>
@@ -188,11 +192,11 @@
       <row row="0">
       <cell row="0" col="0">
       <value>
-        R
+        E
       </value>
     </cell><cell row="0" col="1">
       <value>
-        R
+        E
       </value>
     </cell><cell row="0" col="2">
       <value>
@@ -202,29 +206,21 @@
       <value>
         E
       </value>
-    </cell><cell row="0" col="4">
-      <value>
-        E
-      </value>
     </cell>
     </row><row row="1">
       <cell row="1" col="0">
       <value>
-        R
+        E
       </value>
     </cell><cell row="1" col="1">
       <value>
-        R
+        E
       </value>
     </cell><cell row="1" col="2">
       <value>
         E
       </value>
     </cell><cell row="1" col="3">
-      <value>
-        E
-      </value>
-    </cell><cell row="1" col="4">
       <value>
         E
       </value>
@@ -246,10 +242,6 @@
       <value>
         E
       </value>
-    </cell><cell row="2" col="4">
-      <value>
-        E
-      </value>
     </cell>
     </row><row row="3">
       <cell row="3" col="0">
@@ -265,10 +257,6 @@
         E
       </value>
     </cell><cell row="3" col="3">
-      <value>
-        E
-      </value>
-    </cell><cell row="3" col="4">
       <value>
         E
       </value>
@@ -290,10 +278,6 @@
       <value>
         E
       </value>
-    </cell><cell row="4" col="4">
-      <value>
-        E
-      </value>
     </cell>
     </row><row row="5">
       <cell row="5" col="0">
@@ -309,10 +293,6 @@
         E
       </value>
     </cell><cell row="5" col="3">
-      <value>
-        E
-      </value>
-    </cell><cell row="5" col="4">
       <value>
         E
       </value>
@@ -334,10 +314,6 @@
       <value>
         E
       </value>
-    </cell><cell row="6" col="4">
-      <value>
-        E
-      </value>
     </cell>
     </row><row row="7">
       <cell row="7" col="0">
@@ -356,7 +332,39 @@
       <value>
         E
       </value>
-    </cell><cell row="7" col="4">
+    </cell>
+    </row><row row="8">
+      <cell row="8" col="0">
+      <value>
+        E
+      </value>
+    </cell><cell row="8" col="1">
+      <value>
+        E
+      </value>
+    </cell><cell row="8" col="2">
+      <value>
+        E
+      </value>
+    </cell><cell row="8" col="3">
+      <value>
+        E
+      </value>
+    </cell>
+    </row><row row="9">
+      <cell row="9" col="0">
+      <value>
+        E
+      </value>
+    </cell><cell row="9" col="1">
+      <value>
+        E
+      </value>
+    </cell><cell row="9" col="2">
+      <value>
+        E
+      </value>
+    </cell><cell row="9" col="3">
       <value>
         E
       </value>
@@ -364,9 +372,9 @@
     </row>
     </hint_matrix>
       <turns>
-        2
+        0
       </turns>
       <code>
-        BWBYB
+        RBRR
       </code>
     </game>

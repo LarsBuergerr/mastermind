@@ -59,7 +59,7 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
     }
     
     def refreshScene() : Scene = {
-        new Scene(800, 960) {
+        new Scene(1000, 1050) {
             this.setOnScroll(e => {
                 if (e.getDeltaY < 0) {
                     browseColors = (browseColors + 1) % selectableColors.length
@@ -163,6 +163,25 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             resetInfo_Grid.add(resetButton.button, 0, 0)
             
             border.add(resetInfo_Grid, 1, 3)
+
+            val saveLoad_Grid = new GridPane()
+
+            val saveButton = new Button_MasterMind("Save", save_Button_Handler)
+            saveButton.button.setMinWidth(stone_matrix.getMaxWidth())
+            saveButton.alignmentInParent = CENTER_LEFT
+            saveButton.button.setTooltip(new Tooltip("Save the game"))
+            saveLoad_Grid.add(saveButton.button, 0, 0)
+
+            val pervertLabel = new Label("      ")
+            saveLoad_Grid.add(pervertLabel, 1, 0)
+
+            val loadButton = new Button_MasterMind("Load", load_Button_Handler)
+            loadButton.button.setMinWidth(stone_matrix.getMaxWidth())
+            loadButton.alignmentInParent = CENTER_RIGHT
+            loadButton.button.setTooltip(new Tooltip("Load the game"))
+            saveLoad_Grid.add(loadButton.button, 2, 0)
+
+            border.add(saveLoad_Grid, 0, 4, 2, 1)
             
         
             val labelCurrentTurn = new Label("Remaining Turns: " + controller.game.getRemainingTurns())
@@ -348,6 +367,14 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
     
     def reset_Button_Handler() : Unit = {
         controller.reset
+    }
+
+    def save_Button_Handler() : Unit = {
+        controller.save
+    }
+
+    def load_Button_Handler() : Unit = {
+        controller.load
     }
     
     //**************************************************************************
