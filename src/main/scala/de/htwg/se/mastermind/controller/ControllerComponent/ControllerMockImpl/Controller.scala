@@ -13,6 +13,7 @@ package ControllerMockImpl
 //******************************************************************************* IMPORTS
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field}
+import model.FileIOComponent.fileIOxmlImpl.FileIO
 import util.{Request, Event, Observable}
 
 
@@ -41,6 +42,16 @@ class Controller(using var game: GameInterface) extends ControllerInterface:
   def undo =
     game.field = invoker.undoStep.getOrElse(game.field)
     notifyObservers
+
+  def save =
+    val fileIO = new FileIO()
+    fileIO.save(game)
+
+  def load =
+    val fileIO = new FileIO()
+    game = fileIO.load
+    notifyObservers
+    game.field
 
   def reset =
     game = game.resetGame()

@@ -71,7 +71,8 @@ class TUI(using controller: ControllerInterface) extends Observer:
       }
       case 1 => { //Handles single char user input (first with CoR, then with State Pattern)
         val currentRequest = controller.handleRequest(SingleCharRequest(input))
-        currentRequest match {
+        print(currentRequest)
+          currentRequest match {
           case undo: UndoStateEvent  => {
             controller.undo
             return controller.request(PlayerInputStateEvent())
@@ -83,6 +84,11 @@ class TUI(using controller: ControllerInterface) extends Observer:
           case save: SaveStateEvent  => {
             val fileIO = new FileIO()
             fileIO.save(controller.game)
+            return controller.request(PlayerInputStateEvent())
+          }
+          case load: LoadStateEvent  => {
+            val fileIO = new FileIO()
+            controller.game = fileIO.load
             return controller.request(PlayerInputStateEvent())
           }
           case _ => return controller.request(currentRequest)

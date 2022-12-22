@@ -43,7 +43,9 @@ case class Game(var field: Field) extends GameInterface {
     RequestHandlerSCR.PlayInputRule orElse
     RequestHandlerSCR.QuitInputRule orElse
     RequestHandlerSCR.UndoInputRule orElse
-    RequestHandlerSCR.RedoInputRule
+    RequestHandlerSCR.RedoInputRule orElse
+    RequestHandlerSCR.SaveInputRule orElse
+    RequestHandlerSCR.LoadInputRule
   }
 
   
@@ -143,7 +145,9 @@ case class Game(var field: Field) extends GameInterface {
     
     //defines the general rule for the chain
     def singleCharRule(f: String => Boolean, result: Event): PartialFunctionRule = {
-      case s if f(s) => result
+      case s if f(s) => 
+        print(">>> " + result + " [will be processed] ")
+        result
     }
     
     //defines the concrete rules
@@ -153,6 +157,8 @@ case class Game(var field: Field) extends GameInterface {
     val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
     val UndoInputRule: PartialFunctionRule = singleCharRule(_ == "u", UndoStateEvent())
     val RedoInputRule: PartialFunctionRule = singleCharRule(_ == "r", RedoStateEvent())
+    val SaveInputRule: PartialFunctionRule = singleCharRule(_ == "s", SaveStateEvent())
+    val LoadInputRule: PartialFunctionRule = singleCharRule(_ == "l", LoadStateEvent())
     
     //defines the default rule
     def DefaultInputRule(userinput: String): Event = {

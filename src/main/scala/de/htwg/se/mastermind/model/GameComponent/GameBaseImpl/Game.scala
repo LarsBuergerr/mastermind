@@ -22,15 +22,12 @@ import com.google.inject.Inject
   * @param field  mastermind game field
   * @param state  state in which the game is currently
   */
-case class Game(var field: Field) extends GameInterface {
+case class Game(var field: Field, code: Code, var currentTurn: Int) extends GameInterface {
   
-  def this() = this(new Field(10, 4))  
-  
-  var code = new Code(field.matrix.cols)
+  def this() = this(new Field(10, 4), new Code(4), 0)  
   
   var state: State = Init()
-  
-  private var currentTurn: Int = 0
+
   private val maxTurn: Int = field.matrix.rows
   
   //Partial function gets string and returns a event
@@ -43,7 +40,9 @@ case class Game(var field: Field) extends GameInterface {
     RequestHandlerSCR.PlayInputRule orElse
     RequestHandlerSCR.QuitInputRule orElse
     RequestHandlerSCR.UndoInputRule orElse
-    RequestHandlerSCR.RedoInputRule
+    RequestHandlerSCR.RedoInputRule orElse
+    RequestHandlerSCR.SaveInputRule orElse
+    RequestHandlerSCR.LoadInputRule
   }
 
   
@@ -108,7 +107,7 @@ case class Game(var field: Field) extends GameInterface {
   
   
   def resetGame(): Game = {
-    Game(new Field(field.matrix.rows, field.matrix.cols))
+    Game(new Field(field.matrix.rows, field.matrix.cols), new Code(field.matrix.cols), 0)
   }
   
   
@@ -163,7 +162,8 @@ case class Game(var field: Field) extends GameInterface {
     val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
     val UndoInputRule: PartialFunctionRule = singleCharRule(_ == "u", UndoStateEvent())
     val RedoInputRule: PartialFunctionRule = singleCharRule(_ == "r", RedoStateEvent())
-    val saveInputRule: PartialFunctionRule = singleCharRule(_ == "s", SaveStateEvent())
+    val SaveInputRule: PartialFunctionRule = singleCharRule(_ == "s", SaveStateEvent())
+    val LoadInputRule: PartialFunctionRule = singleCharRule(_ == "l", LoadStateEvent())
     
     //defines the default rule
     def DefaultInputRule(userinput: String): Event = {

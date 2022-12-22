@@ -31,11 +31,14 @@ import model.GameComponent.GameBaseImpl.Game
 
 import model.GameModeComponent.GameModeInterface
 import model.GameModeComponent.GameModeBaseImpl.GameMode
+
+import model.GameComponent.GameBaseImpl.Code
 //import model.GameModeComponent.GameModeMockImpl.GameMode
 
 
 //****************************************************************************** OBJECT DEFINITION
 object MastermindModule {
-    given GameInterface       = Game(GameMode.selectMode)
+    val field = GameMode.selectMode
+    given GameInterface       = Game(field, new Code(field.matrix.cols), 0)
     given ControllerInterface = Controller()
 }

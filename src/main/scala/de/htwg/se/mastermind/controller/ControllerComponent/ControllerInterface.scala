@@ -26,7 +26,11 @@ trait ControllerInterface extends Observable {
   def undo: Unit
     
   def reset: Field
-    
+  
+  def save: Unit
+
+  def load: Field
+
   def update: String
     
   def request(event: Event): State

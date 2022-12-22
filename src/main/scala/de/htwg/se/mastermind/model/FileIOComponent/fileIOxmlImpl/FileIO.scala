@@ -5,13 +5,14 @@ package FileIOComponent
 package fileIOxmlImpl
 
 import GameComponent.GameInterface
-import GameComponent.GameBaseImpl.{Field, Stone, Matrix, HintStone, HStone}
+import GameComponent.GameBaseImpl.{Field, Stone, Matrix, HintStone, HStone, Code}
 import GameComponent.GameBaseImpl.Game
 
 import java.io._
 import scala.xml._
 
 class FileIO extends FileIOInterface {
+
   override def load: GameInterface = 
     import java.io._
     import scala.xml._
@@ -20,14 +21,12 @@ class FileIO extends FileIOInterface {
     val xml = XML.loadString(source.mkString)
     source.close()
 
-    val turns = (xml \ "turns").text.trim.toInt
-    val code = (xml \ "code").text
-    print(code)
-
+    val curr_turn = (xml \ "turns").text.trim.toInt
+    val code = Code((xml \ "code").text.trim.map(c => Stone(c.toString)).toVector)
     val matrix = loadMatrix(xml, "matrix").asInstanceOf[Matrix[Stone]]
     val hint_matrix = loadMatrix(xml, "hint_matrix").asInstanceOf[Matrix[HStone]]
 
-    val game = new Game(new Field(matrix, hint_matrix))
+    val game = new Game(new Field(matrix, hint_matrix), code, curr_turn)
 
     return game
 
@@ -56,7 +55,6 @@ class FileIO extends FileIOInterface {
   override def save(game: GameInterface): Unit =
     import java.io._
     import scala.xml._
-
     val pw = new PrintWriter(new File("game.xml"))
     pw.write(gameToXml(game).toString())
     pw.close()
@@ -106,7 +104,7 @@ class FileIO extends FileIOInterface {
         {game.getCurrentTurn()}
       </turns>
       <code>
-        {game.getCode()}
+        {game.getCode().code}
       </code>
     </game>
 }
