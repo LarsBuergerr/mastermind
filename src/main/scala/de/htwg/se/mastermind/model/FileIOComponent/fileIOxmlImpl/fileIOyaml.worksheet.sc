@@ -187,3 +187,5 @@ file.close
 //loading yamlChangedGame variable from file
 val source = scala.io.Source.fromFile("game.yaml")
 val lines = try source.mkString finally source.close()
+val yamlChangedGameFromFile = lines.parseYaml
+val gameFromFile = yamlChangedGameFromFile.convertTo[Game](GameProtocol)
