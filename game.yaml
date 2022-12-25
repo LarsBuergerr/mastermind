@@ -1,5 +1,20 @@
 matrix:
 - vector:
+  - stone: G
+  - stone: G
+  - stone: Y
+  - stone: W
+- vector:
+  - stone: W
+  - stone: W
+  - stone: G
+  - stone: R
+- vector:
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
+- vector:
   - stone: E
   - stone: E
   - stone: E
@@ -10,10 +25,25 @@ matrix:
   - stone: E
   - stone: E
 - vector:
-  - stone: R
-  - stone: R
-  - stone: R
-  - stone: R
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
+- vector:
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
+- vector:
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
+- vector:
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
 - vector:
   - stone: E
   - stone: E
@@ -21,6 +51,21 @@ matrix:
   - stone: E
 hmatrix:
 - vector:
+  - hstone: W
+  - hstone: E
+  - hstone: E
+  - hstone: E
+- vector:
+  - hstone: R
+  - hstone: W
+  - hstone: E
+  - hstone: E
+- vector:
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
+- vector:
   - hstone: E
   - hstone: E
   - hstone: E
@@ -31,10 +76,25 @@ hmatrix:
   - hstone: E
   - hstone: E
 - vector:
-  - hstone: R
-  - hstone: R
-  - hstone: R
-  - hstone: R
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
+- vector:
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
+- vector:
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
+- vector:
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
 - vector:
   - hstone: E
   - hstone: E
@@ -42,8 +102,8 @@ hmatrix:
   - hstone: E
 code:
   code:
-  - stone: E
+  - stone: P
+  - stone: B
+  - stone: W
   - stone: R
-  - stone: R
-  - stone: E
-turn: 1
+turn: 2

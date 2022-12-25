@@ -3,7 +3,7 @@ import net.jcazevedo.moultingyaml.DefaultYamlProtocol._ // if you don't supply y
 
 //import game
 import de.htwg.se.mastermind.model.GameComponent.GameBaseImpl.{Game, Field, Code, Matrix, Stone, HStone, HintStone}
-
+import de.htwg.se.mastermind.model.GameComponent.GameInterface
 
 case class Person(name: String, value: Int)
 
@@ -122,10 +122,10 @@ val VectorProtocol = new YamlFormat[Vector[Object]] {
 }
 
 //-------------------------------Matrix yaml protocol--------------------------------
-val GameProtocol = new YamlFormat[Game] {
+val GameProtocol = new YamlFormat[GameInterface] {
   
   //write Game to yaml
-  def write(obj: Game): YamlValue = 
+  def write(obj: GameInterface): YamlValue = 
     YamlObject(
       YamlString("matrix") -> YamlArray(obj.field.matrix.m.map(_.toYaml(VectorProtocol.asInstanceOf[YamlFormat[Vector[Object]]]))),
       YamlString("hmatrix") -> YamlArray(obj.field.hmatrix.m.map(_.toYaml(VectorProtocol.asInstanceOf[YamlFormat[Vector[Object]]]))),
@@ -176,8 +176,8 @@ val yamlChangedGame = changed_game.toYaml(GameProtocol)
 print(yamlGame.prettyPrint)
 print(yamlChangedGame.prettyPrint)
 
-val gameFromYaml = yamlGame.convertTo[Game](GameProtocol)
-val changedGameFromYaml = yamlChangedGame.convertTo[Game](GameProtocol)
+val gameFromYaml = yamlGame.convertTo[GameInterface](GameProtocol)
+val changedGameFromYaml = yamlChangedGame.convertTo[GameInterface](GameProtocol)
 
 //saving yamlChangedGame variable to file
 val file = new java.io.PrintWriter("game.yaml")
@@ -188,4 +188,4 @@ file.close
 val source = scala.io.Source.fromFile("game.yaml")
 val lines = try source.mkString finally source.close()
 val yamlChangedGameFromFile = lines.parseYaml
-val gameFromFile = yamlChangedGameFromFile.convertTo[Game](GameProtocol)
+val gameFromFile = yamlChangedGameFromFile.convertTo[GameInterface](GameProtocol)

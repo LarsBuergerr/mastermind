@@ -22,7 +22,7 @@ import com.google.inject.Inject
   * @param field  mastermind game field
   * @param state  state in which the game is currently
   */
-case class Game(var field: Field, code: Code, var currentTurn: Int) extends GameInterface {
+case class Game(var field: Field,val code: Code, var currentTurn: Int) extends GameInterface {
   
   def this() = this(new Field(10, 4), new Code(4), 0)  
   

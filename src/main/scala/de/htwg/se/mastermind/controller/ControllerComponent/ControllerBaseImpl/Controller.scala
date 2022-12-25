@@ -13,7 +13,7 @@ package ControllerBaseImpl
 //****************************************************************************** IMPORTS
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field}
-import model.FileIOComponent.fileIOxmlImpl.FileIO
+import model.FileIOComponent.fileIOyamlImpl.FileIO
 import util.{Request, Event, Observable}
 
 

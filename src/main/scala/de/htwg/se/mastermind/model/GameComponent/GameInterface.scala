@@ -18,6 +18,10 @@ trait GameInterface() {
 
   var field: Field
 
+  val code: Code
+
+  var currentTurn: Int
+
   def state: State
 
   def request(event: Event): State

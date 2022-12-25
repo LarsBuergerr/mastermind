@@ -15,7 +15,7 @@ import model.GameComponent.GameBaseImpl._
 import util.Observer
 import util._
 import model._
-import model.FileIOComponent.fileIOxmlImpl.FileIO
+import model.FileIOComponent.fileIOyamlImpl.FileIO
 import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
 import MastermindModule.{given}

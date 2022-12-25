@@ -23,14 +23,10 @@ import model.GameComponent.GameBaseImpl._
   * @param field  mastermind game field
   * @param state  state in which the game is currently
   */
-case class Game(var field: Field) extends GameInterface {
-  
-  var code = new Code(Vector(Stone("G")))
-  
+case class Game(var field: Field, val code: Code, var currentTurn: Int) extends GameInterface {
+    
   var state: State = Init()
-  
-  var currentTurn: Int = 0
-  
+    
   val maxTurn: Int = 1
   
   //Partial function gets string and returns a event
