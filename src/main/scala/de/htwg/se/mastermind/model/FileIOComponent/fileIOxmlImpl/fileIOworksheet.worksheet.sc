@@ -7,6 +7,7 @@ import de.htwg.se.mastermind.model.GameComponent.GameBaseImpl.HStone
 import de.htwg.se.mastermind.model.GameComponent.GameBaseImpl.Code
 import de.htwg.se.mastermind.model.FileIOComponent.fileIOxmlImpl.FileIO
 
+
 val fileIO = new FileIO()
 
 val game = new Game(new Field(4, 4 , Stone("G")), new Code(4), 0)
