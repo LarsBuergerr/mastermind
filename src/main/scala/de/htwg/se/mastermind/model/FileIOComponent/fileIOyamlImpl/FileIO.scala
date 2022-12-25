@@ -9,7 +9,6 @@ import GameComponent.GameBaseImpl.{Field, Code, Matrix, Stone, HStone, HintStone
 import de.htwg.se.mastermind.model.GameComponent.GameInterface
 
 import net.jcazevedo.moultingyaml._
-import net.jcazevedo.moultingyaml.DefaultYamlProtocol._ // if you don't supply your own protocol
 import MastermindModule.{given}
 
 class FileIO extends FileIOInterface {
@@ -89,10 +88,8 @@ class FileIO extends FileIOInterface {
         YamlObject(
           obj(0) match {
             case _: Stone => 
-              print("Using StoneProtocol")
               YamlString("vector") -> YamlArray(obj.map(_.toYaml(StoneProtocol.asInstanceOf[YamlFormat[Object]])))
             case _: HStone =>
-              print("Using HStoneProtocol")
               YamlString("vector") -> YamlArray(obj.map(_.toYaml(HStoneProtocol.asInstanceOf[YamlFormat[Object]])))
           }
         )
@@ -140,8 +137,4 @@ class FileIO extends FileIOInterface {
           return deserializationError("Game expected")
       }
   }
-
-
 }
-
-

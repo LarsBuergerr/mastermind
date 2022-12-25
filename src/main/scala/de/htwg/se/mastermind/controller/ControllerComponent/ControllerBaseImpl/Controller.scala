@@ -13,12 +13,12 @@ package ControllerBaseImpl
 //****************************************************************************** IMPORTS
 import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field}
-import model.FileIOComponent.fileIOyamlImpl.FileIO
+import model.FileIOComponent.FileIOInterface
 import util.{Request, Event, Observable}
 
 
 //****************************************************************************** CLASS DEFINITION
-class Controller (using var game: GameInterface) extends ControllerInterface:
+class Controller (using var game: GameInterface, var fileIO: FileIOInterface) extends ControllerInterface:
 
   val invoker = new Invoker
   
@@ -45,12 +45,9 @@ class Controller (using var game: GameInterface) extends ControllerInterface:
     notifyObservers
 
   def save =
-    val fileIO = new FileIO()
     fileIO.save(game)
-    notifyObservers
 
   def load =
-    val fileIO = new FileIO()
     game = fileIO.load
     notifyObservers
     game.field

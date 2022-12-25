@@ -2,23 +2,23 @@ matrix:
 - vector:
   - stone: G
   - stone: G
-  - stone: Y
-  - stone: W
-- vector:
-  - stone: W
-  - stone: W
   - stone: G
-  - stone: R
+  - stone: G
 - vector:
-  - stone: E
-  - stone: E
-  - stone: E
-  - stone: E
+  - stone: G
+  - stone: G
+  - stone: G
+  - stone: G
 - vector:
-  - stone: E
-  - stone: E
-  - stone: E
-  - stone: E
+  - stone: G
+  - stone: G
+  - stone: G
+  - stone: G
+- vector:
+  - stone: G
+  - stone: G
+  - stone: G
+  - stone: G
 - vector:
   - stone: E
   - stone: E
@@ -51,13 +51,13 @@ matrix:
   - stone: E
 hmatrix:
 - vector:
-  - hstone: W
+  - hstone: E
   - hstone: E
   - hstone: E
   - hstone: E
 - vector:
-  - hstone: R
-  - hstone: W
+  - hstone: E
+  - hstone: E
   - hstone: E
   - hstone: E
 - vector:
@@ -103,7 +103,7 @@ hmatrix:
 code:
   code:
   - stone: P
+  - stone: P
   - stone: B
-  - stone: W
   - stone: R
-turn: 2
+turn: 4
