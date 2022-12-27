@@ -21,7 +21,8 @@ lazy val root = project
       ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13),
       "org.scala-lang.modules" %% "scala-xml" % "2.0.1", // XML
       "com.lihaoyi" %% "upickle" % "1.4.4", // JSON
-      ("net.jcazevedo" %% "moultingyaml" % "0.4.2").cross(CrossVersion.for3Use2_13)), //YAML
+      ("net.jcazevedo" %% "moultingyaml" % "0.4.2").cross(CrossVersion.for3Use2_13), //YAML
+      ("com.typesafe.play" %% "play-json" % "2.9.3").cross(CrossVersion.for3Use2_13)), // JSON
     },
     libraryDependencies ++= {
   // Determine OS version of JavaFX binaries
