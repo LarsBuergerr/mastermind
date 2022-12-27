@@ -43,14 +43,6 @@ class FileIO extends FileIOInterface {
     )
 
 
-  def matrixToJson(matrix: Matrix[Object]) =
-    Json.obj(
-      "matrix" -> {
-        for (row <- matrix.m.indices) yield vectorToJson(matrix.m(row), row)
-      }
-    )
-
-
   def gameToJson(game: GameInterface) =
     Json.obj(
       "matrix" -> {
