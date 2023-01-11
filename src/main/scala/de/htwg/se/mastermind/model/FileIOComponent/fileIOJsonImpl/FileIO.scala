@@ -6,22 +6,51 @@ package fileIOjsonImpl
 
 import GameComponent.GameInterface
 import GameComponent.GameBaseImpl.{Field, Stone, Matrix, HStone, HintStone, Code, Game}
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 //import json lib
 import play.api.libs.json.*
+//import javax.swing.filechooser.FileNameExtensionFilter
 
 class FileIO extends FileIOInterface {
   override def load: GameInterface = 
     import scala.io.Source
-    val source: String = Source.fromFile("game.json").getLines.mkString
-    val json: JsValue = Json.parse(source)
-    JsonToGame(json)
+    import scalafx.stage.FileChooser
+    import scalafx.stage.FileChooser.ExtensionFilter
+    import java.io.File
+    
+    val fileChooser = new FileChooser()
+    fileChooser.setTitle("Load Game")
+    fileChooser.setInitialDirectory(new File("src/main/savegames/"))
+    // Set shown file filter to JSON files only
+    fileChooser.extensionFilters.addAll(
+      new ExtensionFilter("JSON Files", "*.json")
+    )
+    val seletedFile = fileChooser.showOpenDialog(null)
+    
+    if(seletedFile != null) {
+      val source: String = Source.fromFile(seletedFile).getLines.mkString
+      val json: JsValue = Json.parse(source)
+      JsonToGame(json)
+    } else {
+      val source: String = Source.fromFile("game.json").getLines.mkString
+      val json: JsValue = Json.parse(source)
+      JsonToGame(json)
+    }  
     
   
   override def save(game: GameInterface): Unit = 
     import java.io._
     import scala.xml._
-    val pw = new PrintWriter(new File("game.json"))
+    //get gameMode as String representation
+    val gameMode = Map(12 -> "easy", 10 -> "medium", 8 -> "hard", 6 -> "expert")
+    //get timestamp, path and create filename
+    val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
+    val path = "src/main/savegames/"
+    val filename = path + "game_" + gameMode.get(game.field.rows).get + "_" + timestamp + ".json"
+    //write to game file
+    val pw = new PrintWriter(new File(filename))
     pw.write(gameToJson(game).toString())
     pw.close()
 

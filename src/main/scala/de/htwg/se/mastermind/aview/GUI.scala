@@ -16,7 +16,7 @@ import scalafx.scene.layout.{StackPane, CornerRadii, GridPane}
 import scalafx.scene.control.{Button, Label, Tooltip}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.Scene
-import scalafx.stage.{Stage, Popup}
+import scalafx.stage.{Stage, Popup, FileChooser}
 import scalafx.scene.ImageCursor
 import scalafx.geometry.Insets
 import scalafx.geometry.Pos._
