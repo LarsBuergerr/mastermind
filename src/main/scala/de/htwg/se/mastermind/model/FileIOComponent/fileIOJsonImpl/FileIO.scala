@@ -2,7 +2,7 @@ package de.htwg.se.mastermind
 
 package model
 package FileIOComponent
-package fileIOJsonImpl
+package fileIOjsonImpl
 
 import GameComponent.GameInterface
 import GameComponent.GameBaseImpl.{Field, Stone, Matrix, HStone, HintStone, Code, Game}

@@ -70,4 +70,6 @@ We thank the following people for their contributions to this project:
 | Smashicons      | Mouse Scroll Icon     | [Scroll Logo Template](https://www.flaticon.com/free-icon/scroll_3646197?term=mouse%20wheel&related_id=3646197)      |
 | Dave Gandy      | Undo Icon             | [Undo Icon Template](https://www.flaticon.com/free-icon/undo-arrow_25249?term=undo&page=1&position=6&origin=search&related_id=25249)|
 | Dave Gandy      | Reset Icon            | [Reset Icon Template](https://www.flaticon.com/free-icon/refresh-page-option_25429?related_id=25429&origin=pack)|
-
+| Dave Gandy      | Save Icon             | [Save Icon Template](https://www.flaticon.com/free-icon/save-file-option_25398?related_id=25398&origin=pack)|
+| Dave Gandy      | Load Icon             | [Load Icon Template](https://www.flaticon.com/free-icon/open-folder-outline_25402?related_id=25402&origin=pack)|
+| Dave Gandy      | Help Icon             | [Help Icon Template](https://www.flaticon.com/free-icon/question-sign_25333?related_id=25333&origin=pack)|

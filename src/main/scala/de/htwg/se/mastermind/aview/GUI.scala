@@ -59,7 +59,7 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
     }
     
     def refreshScene() : Scene = {
-        new Scene(1000, 1050) {
+        new Scene(800, 960) {
             this.setOnScroll(e => {
                 if (e.getDeltaY < 0) {
                     browseColors = (browseColors + 1) % selectableColors.length
@@ -126,67 +126,68 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             checkButton.button.setTooltip(new Tooltip("Check your code and get a hint"))
             border.add(checkButton.button, 0, 2, 1, 1)
             
-            val undoRedo_Grid = new GridPane()
+            //*** Undo / Redo / Reset Buttons
+            val urr_Grid = new GridPane()
+            val urr_buttonSize = 96
             
             val undoButton = new Button_MasterMind("undo.png", undoCode_Button_Handler)
-            undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 65)
+            undoButton.button.setMinWidth(urr_buttonSize)
             undoButton.alignmentInParent = CENTER_LEFT
             undoButton.button.setTooltip(new Tooltip("Undo your last move"))
-            undoRedo_Grid.add(undoButton.button, 0, 0)
+            urr_Grid.add(undoButton.button, 0, 0)
             
-            val nastyLabel = new Label("  ")
-            undoRedo_Grid.add(nastyLabel, 1, 0)
+            val spaceLabel_1 = new Label("  ")
+            urr_Grid.add(spaceLabel_1, 1, 0)
             
             val redoButton = new Button_MasterMind("redo.png", redoCode_Button_Handler)
-            redoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 65)
+            redoButton.button.setMinWidth(urr_buttonSize)
             redoButton.alignmentInParent = CENTER_RIGHT
             redoButton.button.setTooltip(new Tooltip("Redo your last move"))
-            undoRedo_Grid.add(redoButton.button, 2, 0)
+            urr_Grid.add(redoButton.button, 2, 0)
                                    
-            val nastyLabel2 = new Label("  ")
-            undoRedo_Grid.add(nastyLabel2, 3, 0)
+            val spaceLabel_2 = new Label("  ")
+            urr_Grid.add(spaceLabel_2, 3, 0)
             
             val resetButton = new Button_MasterMind("reset.png", reset_Button_Handler)
-            resetButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 65)
+            resetButton.button.setMinWidth(urr_buttonSize)
             resetButton.alignmentInParent = CENTER_LEFT
             resetButton.button.setTooltip(new Tooltip("Reset the game"))
-            undoRedo_Grid.add(resetButton.button, 4, 0)
+            urr_Grid.add(resetButton.button, 4, 0)
             
-            border.add(undoRedo_Grid, 0, 3)
+            border.add(urr_Grid, 0, 3)
             
-            val resetInfo_Grid = new GridPane()
             
-            val helpButton = new Button_MasterMind("Help", help_Button_Handler)
-            helpButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
+            //*** Help / Save / Load Buttons
+            val hsl_Grid = new GridPane()
+            val hsl_buttonSize = 96
+            
+            val helpButton = new Button_MasterMind("help.png", help_Button_Handler)
+            helpButton.button.setMinWidth(hsl_buttonSize)
             helpButton.alignmentInParent = CENTER_RIGHT
             helpButton.button.setTooltip(new Tooltip("Get help"))
-            resetInfo_Grid.add(helpButton.button, 3, 0)
+            hsl_Grid.add(helpButton.button, 0, 0)
             
-            val dirtyLabel = new Label("      ")
-            resetInfo_Grid.add(dirtyLabel, 1, 0)
+            val spaceLabel_3 = new Label("  ")
+            hsl_Grid.add(spaceLabel_3, 1, 0)
             
-            border.add(resetInfo_Grid, 1, 3)
-
-            val saveLoad_Grid = new GridPane()
-
-            val saveButton = new Button_MasterMind("Save", save_Button_Handler)
-            saveButton.button.setMinWidth(stone_matrix.getMaxWidth())
+            val saveButton = new Button_MasterMind("save.png", save_Button_Handler)
+            saveButton.button.setMinWidth(hsl_buttonSize)
             saveButton.alignmentInParent = CENTER_LEFT
             saveButton.button.setTooltip(new Tooltip("Save the game"))
-            saveLoad_Grid.add(saveButton.button, 0, 0)
-
-            val pervertLabel = new Label("      ")
-            saveLoad_Grid.add(pervertLabel, 1, 0)
-
-            val loadButton = new Button_MasterMind("Load", load_Button_Handler)
-            loadButton.button.setMinWidth(stone_matrix.getMaxWidth())
+            hsl_Grid.add(saveButton.button, 2, 0)
+            
+            val spaceLabel_4 = new Label("  ")
+            hsl_Grid.add(spaceLabel_4, 3, 1)
+            
+            val loadButton = new Button_MasterMind("load.png", load_Button_Handler)
+            loadButton.button.setMinWidth(hsl_buttonSize)
             loadButton.alignmentInParent = CENTER_RIGHT
             loadButton.button.setTooltip(new Tooltip("Load the game"))
-            saveLoad_Grid.add(loadButton.button, 2, 0)
-
-            border.add(saveLoad_Grid, 0, 4, 2, 1)
+            hsl_Grid.add(loadButton.button, 4, 0)
             
-        
+            border.add(hsl_Grid, 1, 3)
+            
+            // *** Label Current Turn
             val labelCurrentTurn = new Label("Remaining Turns: " + controller.game.getRemainingTurns())
             
             //Default Label Style
@@ -434,7 +435,7 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
 
         val button = new Button() {
             if(buttonText.contains(".png")) {
-                val button_img = new ImageView(new Image(getClass.getResource("/buttons/" + buttonText).toExternalForm(), 32, 32, true, true))
+                val button_img = new ImageView(new Image(getClass.getResource("/buttons/" + buttonText).toExternalForm(), 32, 32,true, true ))
                 this.setGraphic(button_img)
             } else {
                 this.setText(buttonText)
