@@ -129,19 +129,28 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             val undoRedo_Grid = new GridPane()
             
             val undoButton = new Button_MasterMind("undo.png", undoCode_Button_Handler)
-            undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 -40)
+            undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 65)
             undoButton.alignmentInParent = CENTER_LEFT
             undoButton.button.setTooltip(new Tooltip("Undo your last move"))
             undoRedo_Grid.add(undoButton.button, 0, 0)
             
-            val nastyLabel = new Label("      ")
+            val nastyLabel = new Label("  ")
             undoRedo_Grid.add(nastyLabel, 1, 0)
             
-            val redoButton = new Button_MasterMind("R", redoCode_Button_Handler)
-            redoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
+            val redoButton = new Button_MasterMind("redo.png", redoCode_Button_Handler)
+            redoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 65)
             redoButton.alignmentInParent = CENTER_RIGHT
             redoButton.button.setTooltip(new Tooltip("Redo your last move"))
             undoRedo_Grid.add(redoButton.button, 2, 0)
+                                   
+            val nastyLabel2 = new Label("  ")
+            undoRedo_Grid.add(nastyLabel2, 3, 0)
+            
+            val resetButton = new Button_MasterMind("reset.png", reset_Button_Handler)
+            resetButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 65)
+            resetButton.alignmentInParent = CENTER_LEFT
+            resetButton.button.setTooltip(new Tooltip("Reset the game"))
+            undoRedo_Grid.add(resetButton.button, 4, 0)
             
             border.add(undoRedo_Grid, 0, 3)
             
@@ -155,12 +164,6 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             
             val dirtyLabel = new Label("      ")
             resetInfo_Grid.add(dirtyLabel, 1, 0)
-            
-            val resetButton = new Button_MasterMind("Reset", reset_Button_Handler)
-            resetButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
-            resetButton.alignmentInParent = CENTER_LEFT
-            resetButton.button.setTooltip(new Tooltip("Reset the game"))
-            resetInfo_Grid.add(resetButton.button, 0, 0)
             
             border.add(resetInfo_Grid, 1, 3)
 
@@ -395,8 +398,7 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
                     #202225,
                     linear-gradient(#20262b, #191d22);
                 -fx-background-radius: 5,4,3,5;
-                -fx-background-insets: 0,1,2,0;
-                -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+                
                 -fx-text-fill: linear-gradient(#da1e28, #2625ff);
                 -fx-font-size: 25px;
                 -fx-padding: 5 15 5 15;
@@ -429,20 +431,10 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
                 -fx-font-size: 25px;
                 -fx-padding: 5 15 5 15;
             """    
-        
-        /* Create button */
-        /* Check if buttons contains a .png reference */
-        //if(text.contains(".png")) {
-        //    val img = new Image(getClass.getResourceAsStream(text))
-        //    val imgView = new ImageView(img)
-        //    imgView.setFitWidth(50)
-        //    imgView.setFitHeight(50)
-        //    this.setGraphic(imgView)
-        //}
-        //else {
+
         val button = new Button() {
             if(buttonText.contains(".png")) {
-                val button_img = new ImageView(new Image(getClass.getResource("/buttons/" + buttonText).toExternalForm(), 25, 25, true, true))
+                val button_img = new ImageView(new Image(getClass.getResource("/buttons/" + buttonText).toExternalForm(), 32, 32, true, true))
                 this.setGraphic(button_img)
             } else {
                 this.setText(buttonText)
