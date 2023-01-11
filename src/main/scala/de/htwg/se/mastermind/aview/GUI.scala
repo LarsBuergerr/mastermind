@@ -128,8 +128,8 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             
             val undoRedo_Grid = new GridPane()
             
-            val undoButton = new Button_MasterMind("Undo", undoCode_Button_Handler)
-            undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 -10)
+            val undoButton = new Button_MasterMind("undo.png", undoCode_Button_Handler)
+            undoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 -40)
             undoButton.alignmentInParent = CENTER_LEFT
             undoButton.button.setTooltip(new Tooltip("Undo your last move"))
             undoRedo_Grid.add(undoButton.button, 0, 0)
@@ -137,7 +137,7 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             val nastyLabel = new Label("      ")
             undoRedo_Grid.add(nastyLabel, 1, 0)
             
-            val redoButton = new Button_MasterMind("Redo", redoCode_Button_Handler)
+            val redoButton = new Button_MasterMind("R", redoCode_Button_Handler)
             redoButton.button.setMinWidth(stone_matrix.getMaxWidth() / 2 - 10)
             redoButton.alignmentInParent = CENTER_RIGHT
             redoButton.button.setTooltip(new Tooltip("Redo your last move"))
@@ -284,7 +284,7 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
     }
     
     /**
-     * This method is called when the quit button is clicked
+     * This method is called when the help button is clicked
      */
     def help_Button_Handler() : Unit = {
         controller.request(HelpStateEvent())
@@ -386,6 +386,8 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
       * @param f    Function that should be executed when the button is clicked
       */
     class Button_MasterMind(text: String, f: () => Unit) extends Button {
+      
+        val buttonText = text
         
         /* Defines the DEFAULT style of the button in CSS */
         val buttonStyle_default = s"""
@@ -429,8 +431,22 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             """    
         
         /* Create button */
-        val button = new Button(text) {
-            
+        /* Check if buttons contains a .png reference */
+        //if(text.contains(".png")) {
+        //    val img = new Image(getClass.getResourceAsStream(text))
+        //    val imgView = new ImageView(img)
+        //    imgView.setFitWidth(50)
+        //    imgView.setFitHeight(50)
+        //    this.setGraphic(imgView)
+        //}
+        //else {
+        val button = new Button() {
+            if(buttonText.contains(".png")) {
+                val button_img = new ImageView(new Image(getClass.getResource("/buttons/" + buttonText).toExternalForm(), 25, 25, true, true))
+                this.setGraphic(button_img)
+            } else {
+                this.setText(buttonText)
+            }
             this.setOnMouseClicked(e => {
                 this.setStyle(buttonStyle_click)            
                 //calls the higher order function (HOF)
@@ -443,10 +459,9 @@ class GUI(using controller: ControllerInterface) extends JFXApp3 with Observer {
             /* Set style when leaving button */
             this.setOnMouseExited(e =>  {this.setStyle(buttonStyle_default)})  
         }
-        
         /* Set default style */    
         button.setStyle(buttonStyle_default)
-        
+        //}
     }
 
     

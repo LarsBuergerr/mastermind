@@ -68,4 +68,5 @@ We thank the following people for their contributions to this project:
 | Creator         | Content               | Link |
 |-----------------|-----------------------|------------|
 | Smashicons      | Mouse Scroll Icon     | [Scroll Logo Template](https://www.flaticon.com/free-icon/scroll_3646197?term=mouse%20wheel&related_id=3646197)      |
+| Dave Gandy      | Undo Icon             | [Undo Icon Template](https://www.flaticon.com/free-icon/undo-arrow_25249?term=undo&page=1&position=6&origin=search&related_id=25249)
 
