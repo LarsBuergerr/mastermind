@@ -13,7 +13,7 @@ import MastermindModule.{given}
 
 class FileIO extends FileIOInterface {
   
-  override def load: GameInterface = 
+  override def load(game: GameInterface): GameInterface = 
     val source = scala.io.Source.fromFile("game.yaml")
     val yaml = source.mkString.parseYaml
     source.close()

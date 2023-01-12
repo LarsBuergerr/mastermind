@@ -88,7 +88,7 @@ class TUI(using controller: ControllerInterface) extends Observer:
           }
           case load: LoadStateEvent  => {
             val fileIO = new FileIO()
-            controller.game = fileIO.load
+            controller.game = fileIO.load(controller.game)
             return controller.request(PlayerInputStateEvent())
           }
           case _ => return controller.request(currentRequest)

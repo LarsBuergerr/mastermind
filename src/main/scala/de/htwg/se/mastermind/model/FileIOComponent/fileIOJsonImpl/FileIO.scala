@@ -14,7 +14,7 @@ import play.api.libs.json.*
 //import javax.swing.filechooser.FileNameExtensionFilter
 
 class FileIO extends FileIOInterface {
-  override def load: GameInterface = 
+  override def load(game: GameInterface): GameInterface = 
     import scala.io.Source
     import scalafx.stage.FileChooser
     import scalafx.stage.FileChooser.ExtensionFilter

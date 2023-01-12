@@ -13,7 +13,7 @@ import scala.xml._
 
 class FileIO extends FileIOInterface {
 
-  override def load: GameInterface = 
+  override def load(game: GameInterface): GameInterface = 
     import java.io._
     import scala.xml._
 

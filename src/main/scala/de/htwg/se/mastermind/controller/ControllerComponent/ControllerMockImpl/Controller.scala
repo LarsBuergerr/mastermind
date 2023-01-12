@@ -49,7 +49,7 @@ class Controller(using var game: GameInterface) extends ControllerInterface:
 
   def load =
     val fileIO = new FileIO()
-    game = fileIO.load
+    game = fileIO.load(game)
     notifyObservers
     game.field
 

@@ -48,7 +48,7 @@ class Controller (using var game: GameInterface, var fileIO: FileIOInterface) ex
     fileIO.save(game)
 
   def load =
-    game = fileIO.load
+    game = fileIO.load(game)
     notifyObservers
     game.field
 
