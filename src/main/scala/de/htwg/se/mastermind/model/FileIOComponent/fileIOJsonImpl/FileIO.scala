@@ -29,14 +29,14 @@ class FileIO extends FileIOInterface {
     )
     val seletedFile = fileChooser.showOpenDialog(null)
     
-    if(seletedFile != null) {
+    val gameMode = Map((12, 4) -> "easy", (10, 4) -> "medium", (10, 5) -> "hard", (8, 5) -> "extrem")
+    
+    if(seletedFile != null && seletedFile.getName().contains(gameMode.get((game.field.rows, game.field.cols)).get)) {
       val source: String = Source.fromFile(seletedFile).getLines.mkString
       val json: JsValue = Json.parse(source)
       JsonToGame(json)
     } else {
-      val source: String = Source.fromFile("game.json").getLines.mkString
-      val json: JsValue = Json.parse(source)
-      JsonToGame(json)
+      game
     }  
     
   
@@ -44,11 +44,11 @@ class FileIO extends FileIOInterface {
     import java.io._
     import scala.xml._
     //get gameMode as String representation
-    val gameMode = Map(12 -> "easy", 10 -> "medium", 8 -> "hard", 6 -> "expert")
+    val gameMode = Map((12, 4) -> "easy", (10, 4) -> "medium", (10, 5) -> "hard", (8, 5) -> "extrem")
     //get timestamp, path and create filename
     val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
     val path = "src/main/savegames/"
-    val filename = path + "game_" + gameMode.get(game.field.rows).get + "_" + timestamp + ".json"
+    val filename = path + "game_" + gameMode.get((game.field.rows, game.field.cols)).get + "_" + timestamp + ".json"
     //write to game file
     val pw = new PrintWriter(new File(filename))
     pw.write(gameToJson(game).toString())
