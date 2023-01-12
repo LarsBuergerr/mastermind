@@ -2,15 +2,19 @@
   * CodeSpec.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
+package GameComponent
+package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
 
+//****************************************************************************** CLASS DEFINITION
 class CodeSpec extends AnyWordSpec{
   "A default Code for single player mode" should {
     val defaultCode = new Code()

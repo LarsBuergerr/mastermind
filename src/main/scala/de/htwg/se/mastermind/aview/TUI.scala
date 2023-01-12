@@ -1,28 +1,32 @@
 /**
   * TUI.scala
+  * 
+  * Class for the Text User Interface of the Mastermind game.
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package aview
 
 
-//********************************************************************** IMPORTS
-import controller.{Controller}
+//****************************************************************************** IMPORTS
+import controller.ControllerComponent.ControllerInterface
+import model.GameComponent.GameBaseImpl._
 import util.Observer
 import util._
 import model._
+import model.FileIOComponent.fileIOyamlImpl.FileIO
 import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
+import MastermindModule.{given}
 
-//********************************************************************** CLASS DEF
-case class TUI(controller: Controller) extends Observer:
+//****************************************************************************** CLASS DEFINITION
+class TUI(using controller: ControllerInterface) extends Observer:
 
   controller.add(this)
 
   def run(): Unit = {
     controller.request(InitStateEvent())
-    //println("Remaining Turns: " + controller.game.getRemainingTurns())
     inputLoop()
   }
   
@@ -66,13 +70,24 @@ case class TUI(controller: Controller) extends Observer:
       }
       case 1 => { //Handles single char user input (first with CoR, then with State Pattern)
         val currentRequest = controller.handleRequest(SingleCharRequest(input))
-        currentRequest match {
+        print(currentRequest)
+          currentRequest match {
           case undo: UndoStateEvent  => {
             controller.undo
             return controller.request(PlayerInputStateEvent())
           }
           case redo: RedoStateEvent  => {
             controller.redo
+            return controller.request(PlayerInputStateEvent())
+          }
+          case save: SaveStateEvent  => {
+            val fileIO = new FileIO()
+            fileIO.save(controller.game)
+            return controller.request(PlayerInputStateEvent())
+          }
+          case load: LoadStateEvent  => {
+            val fileIO = new FileIO()
+            controller.game = fileIO.load(controller.game)
             return controller.request(PlayerInputStateEvent())
           }
           case _ => return controller.request(currentRequest)
@@ -85,7 +100,7 @@ case class TUI(controller: Controller) extends Observer:
           var codeVector = Vector[Stone]()
           Try (controller.game.buildVector(emptyVector, chars)) match {
             case Success(vector) => codeVector = vector.asInstanceOf[Vector[Stone]]
-            case Failure(e)      => return controller.request(controller.game.RequestHandlerSCR.DefaultInputRule(input))
+            case Failure(e)      => return controller.request(controller.game.getDefaultInputRule(input))
           }
           val hints         = controller.game.getCode().compareTo(codeVector)
           //print(hints)

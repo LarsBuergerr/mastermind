@@ -1,15 +1,18 @@
 /**
-  * GameEvent.scala
+  * Event.scala
   * Implements the STATE_PATTERN to keep track over current game state
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package util
 
 
+//****************************************************************************** INTERFACE DEFINITION
 trait Event
 
+
+//****************************************************************************** CLASS DEFINITIONS
 case class MenuStateEvent()         extends Event
 case class PlayStateEvent()         extends Event
 case class InitStateEvent()         extends Event
@@ -25,3 +28,5 @@ case class QuitStateEvent()         extends Event
 
 case class UndoStateEvent()         extends Event
 case class RedoStateEvent()         extends Event
+case class SaveStateEvent()         extends Event
+case class LoadStateEvent()         extends Event

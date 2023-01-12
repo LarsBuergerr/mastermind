@@ -1,5 +1,6 @@
 *.class
 *.log
+**/savegames/*.json
 .metals/
 .vscode/
 .bloop/

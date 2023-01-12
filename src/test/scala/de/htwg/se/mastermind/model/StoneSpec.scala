@@ -2,15 +2,19 @@
   * FILENAME.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
+package GameComponent
+package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
 
+//****************************************************************************** CLASS DEFINITION
 class StoneSpec extends AnyWordSpec{
   "A Stone object" should {
     "be only instanced one time (singleton pattern)" in {

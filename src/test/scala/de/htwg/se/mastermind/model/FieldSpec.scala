@@ -2,15 +2,19 @@
   * FieldSpec.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
+package GameComponent
+package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
 
+//****************************************************************************** CLASS DEFINITION
 class FieldSpec extends AnyWordSpec{
   "A default Field" should {//---------------------------------------------------------------------- Test default Values
     val defaultField = new Field()
