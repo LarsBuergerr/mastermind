@@ -1,6 +1,6 @@
 import de.htwg.se.mastermind.model.GameComponent.GameBaseImpl.{Field, Stone, Matrix, Game, Code, HStone, HintStone}
 
-import de.htwg.se.mastermind.model.FileIOComponent.fileIOJsonImpl.FileIO
+import de.htwg.se.mastermind.model.FileIOComponent.fileIOjsonImpl.FileIO
 
 import play.api.libs.json.*
 
@@ -14,8 +14,6 @@ val cellToJson = fileIO.cellToJson(matrix.m(0)(0), 0, 0)
 
 val vectorToJson = fileIO.vectorToJson(matrix.m(0), 0)
 
-val matrixToJson = fileIO.matrixToJson(matrix.asInstanceOf[Matrix[Object]])
-
 
 var game = new Game()
 game.field.matrix = game.field.matrix.replaceRow(0, Vector(Stone("R"), Stone("R"), Stone("R"), Stone("R")))
@@ -26,7 +24,6 @@ game.field.hmatrix = game.field.hmatrix.replaceRow(2, Vector(HintStone("R"), Hin
 
 var gameToJson = fileIO.gameToJson(game)
 
-Json prettyPrint matrixToJson
 
 def JsonToStone(cellJson: JsValue) = 
   val x = cellJson("x").as[Int]
@@ -72,5 +69,3 @@ val gameFromJson = JsonToGame(gameToJson)
 fileIO.save(game)
 
 val gameFromJson2 = fileIO.load
-
-val t = gameFromJson2.currentTurn
