@@ -27,7 +27,6 @@ class TUI(using controller: ControllerInterface) extends Observer:
 
   def run(): Unit = {
     controller.request(InitStateEvent())
-    //println("Remaining Turns: " + controller.game.getRemainingTurns())
     inputLoop()
   }
   

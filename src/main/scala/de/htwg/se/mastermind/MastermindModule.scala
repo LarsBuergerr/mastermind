@@ -29,24 +29,22 @@ import model.GameComponent.GameInterface
 import model.GameComponent.GameBaseImpl.Game
 //import model.GameComponent.GameMockImpl.Game
 
+import model.GameComponent.GameBaseImpl.Code
+
 import model.GameModeComponent.GameModeInterface
 import model.GameModeComponent.GameModeBaseImpl.GameMode
-
-import model.GameComponent.GameBaseImpl.Code
+//import model.GameModeComponent.GameModeMockImpl.GameMode
 
 import model.FileIOComponent.FileIOInterface
 //import model.FileIOComponent.fileIOyamlImpl.FileIO
 import model.FileIOComponent.fileIOjsonImpl.FileIO
 //import model.FileIOComponent.fileIOxmlImpl.FileIO
 
-//import model.GameModeComponent.GameModeMockImpl.GameMode
-
 
 //****************************************************************************** OBJECT DEFINITION
 object MastermindModule {
-    val field = GameMode.selectMode
-    given GameInterface       = Game(field, new Code(field.matrix.cols), 0)
-    given ControllerInterface = Controller()
-
-    given FileIOInterface     = FileIO()
+  val field = GameMode.selectMode
+  given GameInterface       = Game(field, new Code(field.matrix.cols), 0)
+  given ControllerInterface = Controller()
+  given FileIOInterface     = FileIO()
 }
