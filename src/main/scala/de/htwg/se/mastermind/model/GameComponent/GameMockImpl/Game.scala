@@ -2,28 +2,32 @@
   * Game.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
+package GameComponent
+package GameMockImpl
 
 
-//********************************************************************** IMPORTS
+//****************************************************************************** IMPORTS
 import util._
+import model._
+import model.GameComponent.GameInterface
+import model.GameComponent.GameBaseImpl._
 
 
-//********************************************************************** CLASS DEF
+//****************************************************************************** CLASS DEFINITION
 /**
   * Represents a game instance with it's current state and game field
   *
   * @param field  mastermind game field
   * @param state  state in which the game is currently
   */
-case class Game(var field: Field, var state: State = Init()){
-  
-  //private var code = new Code(field.matrix.cols)
-  private var code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
-  private var currentTurn: Int = 0
-  private val maxTurn: Int = field.matrix.rows
+case class Game(var field: Field, val code: Code, var currentTurn: Int) extends GameInterface {
+    
+  var state: State = Init()
+    
+  val maxTurn: Int = 1
   
   //Partial function gets string and returns a event
   type PartialFunctionRule = PartialFunction[String, Event]
@@ -35,8 +39,11 @@ case class Game(var field: Field, var state: State = Init()){
     RequestHandlerSCR.PlayInputRule orElse
     RequestHandlerSCR.QuitInputRule orElse
     RequestHandlerSCR.UndoInputRule orElse
-    RequestHandlerSCR.RedoInputRule
+    RequestHandlerSCR.RedoInputRule orElse
+    RequestHandlerSCR.SaveInputRule orElse
+    RequestHandlerSCR.LoadInputRule
   }
+
   
   /**
     * Calls the responsible chain
@@ -85,25 +92,13 @@ case class Game(var field: Field, var state: State = Init()){
   
   def getCurrentTurn() = currentTurn
   
-  def setTurn(): Int = {
-    currentTurn = currentTurn + 1
-    return currentTurn
-  }
+  def setTurn(): Int = currentTurn
   
-  def undoTurn(): Int = {
-    currentTurn = currentTurn - 1
-    return currentTurn
-  }
+  def undoTurn(): Int = currentTurn
 
   def getCode(): Code = code
   
-  
-  //def resetGame(): Unit = {
-  //  field = new Field(field.matrix.rows, field.matrix.cols)
-  //  code = new Code(Vector(Stone("G"), Stone("G"), Stone("G"), Stone("G")))
-  //  currentTurn = 0
-  //}
-  
+  def resetGame(): GameInterface = this
   
   def buildVector(vector: Vector[Stone], chars: Array[Char]): Vector[Stone] = {
     val stone = chars(vector.size) match
@@ -138,12 +133,17 @@ case class Game(var field: Field, var state: State = Init()){
     }
   }
   
+  def getDefaultInputRule(input: String): Event = {
+    RequestHandlerSCR.DefaultInputRule(input)
+  }
   
   object RequestHandlerSCR {
     
     //defines the general rule for the chain
     def singleCharRule(f: String => Boolean, result: Event): PartialFunctionRule = {
-      case s if f(s) => result
+      case s if f(s) => 
+        print(">>> " + result + " [will be processed] ")
+        result
     }
     
     //defines the concrete rules
@@ -153,6 +153,8 @@ case class Game(var field: Field, var state: State = Init()){
     val QuitInputRule: PartialFunctionRule = singleCharRule(_ == "q", QuitStateEvent())
     val UndoInputRule: PartialFunctionRule = singleCharRule(_ == "u", UndoStateEvent())
     val RedoInputRule: PartialFunctionRule = singleCharRule(_ == "r", RedoStateEvent())
+    val SaveInputRule: PartialFunctionRule = singleCharRule(_ == "s", SaveStateEvent())
+    val LoadInputRule: PartialFunctionRule = singleCharRule(_ == "l", LoadStateEvent())
     
     //defines the default rule
     def DefaultInputRule(userinput: String): Event = {

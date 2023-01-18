@@ -1,3 +1,10 @@
+In this file is the definition of the coding guidelines regarding code syntax 
+and command style.
+
+//------------------------------------------------------------------------------ General
+TAB SIZE: 2 spaces
+
+//------------------------------------------------------------------------------ File Head Definition
 /**
   * FILENAME.scala
   */

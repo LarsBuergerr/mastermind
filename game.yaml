@@ -1,0 +1,49 @@
+matrix:
+- vector:
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
+- vector:
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
+- vector:
+  - stone: R
+  - stone: R
+  - stone: R
+  - stone: R
+- vector:
+  - stone: E
+  - stone: E
+  - stone: E
+  - stone: E
+hmatrix:
+- vector:
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
+- vector:
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
+- vector:
+  - hstone: R
+  - hstone: R
+  - hstone: R
+  - hstone: R
+- vector:
+  - hstone: E
+  - hstone: E
+  - hstone: E
+  - hstone: E
+code:
+  code:
+  - stone: E
+  - stone: R
+  - stone: R
+  - stone: E
+turn: 1

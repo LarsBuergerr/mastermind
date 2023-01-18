@@ -2,15 +2,19 @@
   * MatrixSpec.scala
   */
 
-//********************************************************************** PACKAGE  
+//****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
+package GameComponent
+package GameBaseImpl
 
-//********************************************************************** IMPORTS
+
+//****************************************************************************** IMPORTS
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
 
+//****************************************************************************** CLASS DEFINITION
 class MatrixSpec extends AnyWordSpec {
     "A Matrix" should {
         "being created with two dimensions and a filling " in {
