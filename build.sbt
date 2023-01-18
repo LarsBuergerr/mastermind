@@ -45,8 +45,8 @@ lazy val root = project
     
       jacocoExcludes := Seq(
       "*aview.*",
-      "*Mastermind.*",
-      "*MastermindModule.*"
+      "*Mastermind.scala",
+      "*MastermindModule.scala"
       ),
     
     jacocoCoverallsServiceName := "github-actions", 
