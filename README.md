@@ -12,7 +12,6 @@
 ![Forks](https://img.shields.io/github/forks/LarsBuergerr/mastermind?color=green&style=social)
 ![Watcher](https://img.shields.io/github/watchers/LarsBuergerr/mastermind?style=social)
 [![Reddit](https://img.shields.io/reddit/subreddit-subscribers/ich_iel?color=green&style=social)](https://www.reddit.com/r/ich_iel/comments/aje7qh/ich_iel/)
-[![Reddit2](https://img.shields.io/reddit/subreddit-subscribers/sailing?style=social)](https://www.reddit.com/r/sailing)
 
 ---
 
