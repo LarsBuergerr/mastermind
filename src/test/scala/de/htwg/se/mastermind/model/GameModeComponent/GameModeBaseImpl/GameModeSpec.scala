@@ -19,7 +19,6 @@ import java.io.StringReader
 
 //****************************************************************************** CLASS DEFINITION
 class GameModeSpec extends AnyWordSpec {
-  
   "A GameMode" should {
     val string_easy   = "easy"
     val string_medium = "medium"
@@ -53,6 +52,18 @@ class GameModeSpec extends AnyWordSpec {
       strategy_hard       should be (new Field(10, 5, Stone("E"), HintStone("E")))
       strategy_extrem     should be (new Field(8,  5, Stone("E"), HintStone("E")))
 
+    }
+    
+    "have a String representation" in {
+      val string = GameMode.toString()
+      string should not be (null)
+      string should be ("GameMode")
+    }
+    
+    "should only be able to be created once" in {
+      val gameMode = GameMode
+      gameMode should not be (null)
+      gameMode should be (GameMode)
     }
   }
 }
