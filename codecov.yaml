@@ -1,0 +1,8 @@
+ignore:
+  - "**/Mastermind.scala"
+  - "**/MastermindModule.scala"
+  - "**/model/FileIOComponent/fileIOJsonImpl/FileIO.scala"
+  - "**/model/FileIOComponent/fileIOxmlImpl/FileIO.scala"
+  - "**/model/FileIOComponent/fileIOyamlImpl/FileIO.scala"
+  - "**/model/GameComponent/GameMockImpl/Game.scala"
+  - "**/controller/ControllerComponent/ControllerMockImpl/Controller.scala"

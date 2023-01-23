@@ -18,6 +18,13 @@ import util._
 trait State {
   def handle(): State
   override def toString(): String
+
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case that: State => this.toString == that.toString
+      case _ => false
+    }
+  }
 }
 
 

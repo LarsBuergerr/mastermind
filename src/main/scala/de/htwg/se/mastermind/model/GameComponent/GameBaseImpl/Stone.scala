@@ -18,11 +18,21 @@ import scala.util.Random
 trait Stone {
   val stringRepresentation: String
   override def toString(): String = stringRepresentation
+
+  override def equals(obj: Any): Boolean = obj match {
+    case that: Stone => this.stringRepresentation.equals(that.stringRepresentation)
+    case _ => false
+  }
 }
 
 trait HStone {
   val stringRepresentation: String
   override def toString(): String = stringRepresentation
+
+  override def equals(obj: Any): Boolean = obj match {
+    case that: HStone => this.stringRepresentation.equals(that.stringRepresentation)
+    case _ => false
+  }
 }
 
 

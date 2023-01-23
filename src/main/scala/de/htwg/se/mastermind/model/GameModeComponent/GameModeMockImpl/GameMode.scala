@@ -31,7 +31,7 @@ object GameMode extends GameModeInterface{
   
   def parseInput(): Field = {
    
-   val in = readLine("You are in mock mode so you have no choice (Muhahaha): ")
+   val in = print("You are in mock mode so you have no choice (Muhahaha): ")
 
    return strategy_medium
   }
