@@ -19,6 +19,7 @@ import java.io.StringReader
 
 //****************************************************************************** CLASS DEFINITION
 class GameModeSpec extends AnyWordSpec {
+  
   "A GameMode" should {
     val string_easy   = "easy"
     val string_medium = "medium"
@@ -26,13 +27,22 @@ class GameModeSpec extends AnyWordSpec {
     val string_extrem = "extrem"
     
     val inputStreamEasy     = new StringReader(string_easy.stripMargin)
-    val inputStreamMedium   = new ByteArrayInputStream(string_medium.getBytes())
-    val inputStreamHard     = new ByteArrayInputStream(string_hard.getBytes())
-    val inputStreamExtrem   = new ByteArrayInputStream(string_extrem.getBytes())
+    val inputStreamMedium   = new StringReader(string_medium.stripMargin)
+    val inputStreamHard     = new StringReader(string_hard.stripMargin)
+    val inputStreamExtrem   = new StringReader(string_extrem.stripMargin)
     
     "have a parseInput method" in {
+      Console.withIn(inputStreamEasy){
+        GameMode.parseInput() should be (new Field(10, 4, Stone("E"), HintStone("E")))
+      }
       Console.withIn(inputStreamMedium){
         GameMode.parseInput() should be (new Field(10, 4, Stone("E"), HintStone("E")))
+      }
+      Console.withIn(inputStreamHard){
+        GameMode.parseInput() should be (new Field(10, 5, Stone("E"), HintStone("E")))
+      }
+      Console.withIn(inputStreamExtrem){
+        GameMode.parseInput() should be (new Field(8, 5, Stone("E"), HintStone("E")))
       }
     }
     
@@ -64,6 +74,12 @@ class GameModeSpec extends AnyWordSpec {
       val gameMode = GameMode
       gameMode should not be (null)
       gameMode should be (GameMode)
+    }
+    
+    "should be a instance of GameModeInterface" in {
+      val gameMode = GameMode
+      gameMode should not be (null)
+      gameMode should be (a [GameModeInterface])
     }
   }
 }
