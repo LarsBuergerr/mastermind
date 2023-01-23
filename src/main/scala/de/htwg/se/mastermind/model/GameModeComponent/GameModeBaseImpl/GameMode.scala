@@ -17,7 +17,7 @@ import scala.io.StdIn.readLine
 
 
 //****************************************************************************** OBJECT DEFINITION
-object GameMode extends GameModeInterface{
+object GameMode extends GameModeInterface {
 
   var selectMode = parseInput()
 
