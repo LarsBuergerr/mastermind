@@ -1,3 +1,0 @@
-ignore:
-  - "**/Mastermind.scala"
-  - "**/MastermindModule.scala"
