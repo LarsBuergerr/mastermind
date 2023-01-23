@@ -6,15 +6,6 @@ on:
   pull_request:
     branches: [ master, develop]
 
-ignore:
-  - "**/Mastermind.scala"
-  - "**/MastermindModule.scala"
-  - "**/model/FileIOComponent/fileIOJsonImpl/FileIO.scala"
-  - "**/model/FileIOComponent/fileIOxmlImpl/FileIO.scala"
-  - "**/model/FileIOComponent/fileIOyamlImpl/FileIO.scala"
-  - "**/model/GameComponent/GameMockImpl/Game.scala"
-  - "**/controller/ControllerComponent/ControllerMockImpl/Controller.scala"
-
 jobs:
   build:
 
@@ -42,4 +33,12 @@ jobs:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           export CI_BRANCH="${GITHUB_REF#refs/heads/}"
-          sbt clean jacoco jacocoCoveralls 
+          sbt clean jacoco jacocoCoveralls    
+    ignore:
+      - "**/Mastermind.scala"
+      - "**/MastermindModule.scala"
+      - "**/model/FileIOComponent/fileIOJsonImpl/FileIO.scala"
+      - "**/model/FileIOComponent/fileIOxmlImpl/FileIO.scala"
+      - "**/model/FileIOComponent/fileIOyamlImpl/FileIO.scala"
+      - "**/model/GameComponent/GameMockImpl/Game.scala"
+      - "**/controller/ControllerComponent/ControllerMockImpl/Controller.scala"
