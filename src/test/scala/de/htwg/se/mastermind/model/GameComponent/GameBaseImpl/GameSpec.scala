@@ -75,6 +75,28 @@ class GameSpec extends AnyWordSpec {
         game.request(PlayerLoseStateEvent()) should be(PlayerLose())
         game.request(PlayerAnalyzeEvent()) should be(PlayerAnalyze())
       }
+      "should have a getCurrentStateEvent function that return the current state" in {
+        game.state = Init()
+        game.getCurrentStateEvent() should be(HelpStateEvent())
+        
+        game.state = Help()
+        game.getCurrentStateEvent() should be(HelpStateEvent())
+
+        game.state = Menu()
+        game.getCurrentStateEvent() should be(MenuStateEvent())
+
+        game.state = Play()
+        game.getCurrentStateEvent() should be(PlayStateEvent())
+
+        game.state = Quit()
+        game.getCurrentStateEvent() should be(QuitStateEvent())
+
+        game.state = PlayerInput()
+        game.getCurrentStateEvent() should be(PlayerInputStateEvent())
+      }
+      "have a getDefaultInputRule" in {
+        game.getDefaultInputRule("1234") should be(PlayerInputStateEvent())
+      }
     }
   }
 }
