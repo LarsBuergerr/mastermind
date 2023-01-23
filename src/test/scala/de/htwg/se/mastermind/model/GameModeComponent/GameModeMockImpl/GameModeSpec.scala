@@ -52,5 +52,11 @@ class GameModeSpec extends AnyWordSpec {
       gameMode should not be (null)
       gameMode should be (GameMode)
     }
+    
+    "should be a instance of GameModeInterface" in {
+      val gameMode = GameMode
+      gameMode should not be (null)
+      gameMode should be (a [GameModeInterface])
+    }
   }
 }
