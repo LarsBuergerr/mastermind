@@ -25,7 +25,19 @@ class StoneSpec extends AnyWordSpec{
         Stone.random should not be(Stone("E"))
       }
     }
+    "have a string representation" in {
+      Stone("R").toString() should be(Stone("R").stringRepresentation)
+    }
   }
+  "A HintStone object" should {
+    "be only instanced one time (singleton pattern)" in {
+      HintStone should be(HintStone)
+    }
+    "have a string representation" in {
+      HintStone("R").toString() should be(HintStone("R").stringRepresentation)
+    }
+  }
+  
   "A Game-Stone" should {
     "have a String representation of its color [Initial letter]" in {
       Stone.apply("R").toString() should be("R")
