@@ -49,6 +49,31 @@ class GameSpec extends AnyWordSpec {
         val resetted_game = game.resetGame()
         resetted_game shouldBe a [Game]
       }
+      "should have a buildVector function that return a vector of Stones" in {
+        val vector = game.buildVector(Vector(), Array('R', 'G', 'B', 'Y'))
+        vector.size should be(4)
+        vector(0) should be(Stone("R"))
+        vector(1) should be(Stone("G"))
+        vector(2) should be(Stone("B"))
+        vector(3) should be(Stone("Y"))
+
+        val second_vector = game.buildVector(Vector(), Array('B', 'Y', 'W', 'P'))
+        second_vector.size should be(4)
+        second_vector(0) should be(Stone("B"))
+        second_vector(1) should be(Stone("Y"))
+        second_vector(2) should be(Stone("W"))
+        second_vector(3) should be(Stone("P"))
+      }
+      "should have a request function that returns the state of the given event" in {
+        game.request(HelpStateEvent()) should be(Help())
+        game.request(MenuStateEvent()) should be(Menu())
+        game.request(PlayStateEvent()) should be(Play())
+        game.request(QuitStateEvent()) should be(Quit())
+        game.request(PlayerInputStateEvent()) should be(PlayerInput())
+        game.request(PlayerWinStateEvent()) should be(PlayerWin())
+        game.request(PlayerLoseStateEvent()) should be(PlayerLose())
+        game.request(PlayerAnalyzeEvent()) should be(PlayerAnalyze())
+      }
     }
   }
 }
