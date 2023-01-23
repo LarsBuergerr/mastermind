@@ -2,7 +2,7 @@ name: Scala CI
 
 on:
   push:
-    branches: [ master, develop, 14-Finalization]
+    branches: [ master, develop]
   pull_request:
     branches: [ master, develop]
 
@@ -33,4 +33,4 @@ jobs:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           export CI_BRANCH="${GITHUB_REF#refs/heads/}"
-          sbt clean jacoco jacocoCoveralls 
+          sbt clean jacoco jacocoCoveralls    
