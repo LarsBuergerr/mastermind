@@ -64,8 +64,8 @@ class Play extends State {
 class Help extends State {
   override def handle(): State = {
     val line      = "--- Help: [Input] : Function-----------------------------------" + eol
-    val linePlay  = "---       [p    ] : starts the menu" + eol
-    val lineMenu  = "---       [m    ] : starts the game" + eol
+    val linePlay  = "---       [p    ] : starts the game" + eol
+    val lineMenu  = "---       [m    ] : opens the menu" + eol
     val lineQuit  = "---       [q    ] : quits the game" + eol
     val lineHelp  = "---       [h    ] : shows this help" + eol
     val lineGame  = "---               : Select Stone ------------------------------" + eol
