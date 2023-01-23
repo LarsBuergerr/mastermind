@@ -34,6 +34,7 @@ class GameSpec extends AnyWordSpec {
         game.handleRequest(SingleCharRequest("l")) should be(LoadStateEvent())
 
         game.handleRequest(MultiCharRequest("1234")) should be(PlayerAnalyzeEvent())
+        game.handleRequest(MultiCharRequest("123")) should be(game.RequestHandlerSCR.DefaultInputRule("123"))
       }
       "should have setter and getter for Current Turn, Turn and Code" in {
         game.getCurrentTurn() should be(0)
