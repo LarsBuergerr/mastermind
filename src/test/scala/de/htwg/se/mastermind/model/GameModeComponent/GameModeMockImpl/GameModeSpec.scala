@@ -34,10 +34,23 @@ class GameModeSpec extends AnyWordSpec {
       strategy_hard       should be (new Field(1, 1, Stone("E"), HintStone("E")))
       strategy_extrem     should be (new Field(1, 1, Stone("E"), HintStone("E")))
     }
+    
     "have a parseInput method" in {
       val parseInput = GameMode.parseInput()
       parseInput should not be (null)
       parseInput should be (new Field(1, 1, Stone("E"), HintStone("E")))
+    }
+    
+    "have a String representation" in {
+      val string = GameMode.toString()
+      string should not be (null)
+      string should be ("GameMode")
+    }
+    
+    "should only be able to be created once" in {
+      val gameMode = GameMode
+      gameMode should not be (null)
+      gameMode should be (GameMode)
     }
   }
 }
