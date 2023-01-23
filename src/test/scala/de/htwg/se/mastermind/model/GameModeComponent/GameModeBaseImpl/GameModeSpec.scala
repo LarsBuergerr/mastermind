@@ -25,24 +25,29 @@ class GameModeSpec extends AnyWordSpec {
     val string_medium = "medium"
     val string_hard   = "hard"
     val string_extrem = "extrem"
+    val string_default = " "
     
     val inputStreamEasy     = new StringReader(string_easy.stripMargin)
     val inputStreamMedium   = new StringReader(string_medium.stripMargin)
     val inputStreamHard     = new StringReader(string_hard.stripMargin)
     val inputStreamExtrem   = new StringReader(string_extrem.stripMargin)
+    val inputStreamDefault  = new StringReader(string_default.stripMargin)
     
     "have a parseInput method" in {
-      Console.withIn(inputStreamEasy){
-        GameMode.parseInput() should be (new Field(10, 4, Stone("E"), HintStone("E")))
-      }
       Console.withIn(inputStreamMedium){
         GameMode.parseInput() should be (new Field(10, 4, Stone("E"), HintStone("E")))
       }
+      Console.withIn(inputStreamEasy){
+        GameMode.parseInput() should be (new Field(12, 4, Stone("E"), HintStone("E")))
+      }   
       Console.withIn(inputStreamHard){
         GameMode.parseInput() should be (new Field(10, 5, Stone("E"), HintStone("E")))
       }
       Console.withIn(inputStreamExtrem){
         GameMode.parseInput() should be (new Field(8, 5, Stone("E"), HintStone("E")))
+      }
+      Console.withIn(inputStreamDefault){
+        GameMode.parseInput() should be (new Field(10, 4, Stone("E"), HintStone("E")))
       }
     }
     
@@ -81,5 +86,6 @@ class GameModeSpec extends AnyWordSpec {
       gameMode should not be (null)
       gameMode should be (a [GameModeInterface])
     }
+
   }
 }
