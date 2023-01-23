@@ -34,6 +34,7 @@ class EventSpec extends AnyWordSpec {
         UndoStateEvent() shouldBe a [UndoStateEvent]
         RedoStateEvent() shouldBe a [RedoStateEvent]
         LoadStateEvent() shouldBe a [LoadStateEvent]
+        SaveStateEvent() shouldBe a [SaveStateEvent]
       }
       "a instance of Event" in {
         MenuStateEvent() shouldBe a [Event]
@@ -49,6 +50,7 @@ class EventSpec extends AnyWordSpec {
         UndoStateEvent() shouldBe a [Event]
         RedoStateEvent() shouldBe a [Event]
         LoadStateEvent() shouldBe a [Event]
+        SaveStateEvent() shouldBe a [Event]
       }
     }
 }
