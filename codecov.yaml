@@ -1,4 +1,6 @@
 ignore:
   - "**/Mastermind.scala"
   - "**/MastermindModule.scala"
-  - "**/FileIO.scala"
+  - "**/model/FileIOComponent/FileIOJsonImpl/FileIO.scala"
+  - "**/model/FileIOComponent/FileIOxmlImpl/FileIO.scala"
+  - "**/model/FileIOComponent/FileIOyamlImpl/FileIO.scala"
