@@ -3,7 +3,7 @@
 ---
 
 ![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/codecov.yml/badge.svg)
-[![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/develop/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/develop)
+[![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/master/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/master)
 
 
 ![RepoSize](https://img.shields.io/github/repo-size/LarsBuergerr/mastermind)
