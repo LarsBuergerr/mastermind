@@ -5,7 +5,7 @@
 //****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
 package model
-package GameModeComponent
+package GameModeComponent.GameModeBaseImpl
 
 
 //****************************************************************************** IMPORTS

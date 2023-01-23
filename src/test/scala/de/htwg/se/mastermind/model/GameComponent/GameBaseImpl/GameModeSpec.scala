@@ -4,7 +4,7 @@
 
 //****************************************************************************** PACKAGE  
 package de.htwg.se.mastermind
-package util
+package model.GameComponent.GameBaseImpl
 
 
 //****************************************************************************** IMPORTS
