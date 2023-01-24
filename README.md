@@ -4,8 +4,7 @@
 
 ![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/codecov.yml/badge.svg)
 [![codecov](https://codecov.io/gh/LarsBuergerr/mastermind/branch/14-Finalization/graph/badge.svg?token=PUIFJ9PH30)](https://codecov.io/gh/LarsBuergerr/mastermind/tree/14-Finalization)
-![MAIN status](https://github.com/LarsBuergerr/mastermind/actions/workflows/coveralls.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/LarsBuergerr/mastermind/badge.svg?branch=14-Finalization)](https://coveralls.io/github/LarsBuergerr/mastermind?branch=14-Finalization)
+
 
 ![RepoSize](https://img.shields.io/github/repo-size/LarsBuergerr/mastermind)
 [![License](https://img.shields.io/github/license/LarsBuergerr/mastermind?color=green)](https://cdn130.picsart.com/272563229032201.jpg?r1024x1024)
