@@ -17,6 +17,7 @@ class EventSpec extends AnyWordSpec {
     "The Event Interface" should {
         "not be able to be instantiated" in {
             //Event() should be (null)
+            //why man
         }
     }
     "Every Event class" should {
