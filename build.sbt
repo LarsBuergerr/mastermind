@@ -20,9 +20,8 @@ lazy val root = project
       "com.google.inject" % "guice" % "4.2.3",
       ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13),
       "org.scala-lang.modules" %% "scala-xml" % "2.0.1", // XML
-      "com.lihaoyi" %% "upickle" % "1.4.4", // JSON upickle
       ("net.jcazevedo" %% "moultingyaml" % "0.4.2").cross(CrossVersion.for3Use2_13), //YAML
-      ("com.typesafe.play" %% "play-json" % "2.9.3").cross(CrossVersion.for3Use2_13)), // JSON
+      ("com.typesafe.play" %% "play-json" % "2.10.1").cross(CrossVersion.for3Use2_13)), // JSON
     },
     libraryDependencies ++= {
   // Determine OS version of JavaFX binaries
@@ -52,6 +51,11 @@ lazy val root = project
     jacocoCoverallsServiceName := "github-actions", 
     jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
     jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
-    jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN")
+    jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN"), 
+
+    assemblyMergeStrategy in assembly := {
+    case PathList("META-INF", _*) => MergeStrategy.discard
+    case _                        => MergeStrategy.first
+    }
   )
   .enablePlugins(JacocoCoverallsPlugin)

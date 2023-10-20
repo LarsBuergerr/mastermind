@@ -12,13 +12,17 @@ package ControllerBaseImpl
 
 //****************************************************************************** IMPORTS
 import model.GameComponent.GameInterface
-import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field}
+import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field, Game}
 import model.FileIOComponent.FileIOInterface
 import util.{Request, Event, Observable}
+import de.htwg.se.mastermind.model.FileIOComponent.fileIOjsonImpl.FileIO
 
 
 //****************************************************************************** CLASS DEFINITION
-class Controller (using var game: GameInterface, var fileIO: FileIOInterface) extends ControllerInterface:
+case class Controller (var game: GameInterface, var fileIO: FileIOInterface) extends ControllerInterface:
+
+
+  def this() = this(new Game(), new FileIO())
 
   val invoker = new Invoker
   
