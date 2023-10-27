@@ -25,6 +25,8 @@ case class Controller (var game: GameInterface, var fileIO: FileIOInterface) ext
 
   def this() = this(new Game(), new FileIO())
 
+  var currentStoneVector: Vector[Stone] = Vector.from[Stone](Array.fill[Stone](game.field.matrix.cols)(Stone("E")))
+
   val invoker = new Invoker
   
   // Pass on the game state to the view and the event to game
