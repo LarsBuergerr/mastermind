@@ -16,6 +16,7 @@ import model.GameComponent.GameBaseImpl.{State, Stone, HStone, Field, Game}
 import model.FileIOComponent.FileIOInterface
 import util.{Request, Event, Observable}
 import de.htwg.se.mastermind.model.FileIOComponent.fileIOjsonImpl.FileIO
+import play.api.libs.json.JsObject
 
 
 //****************************************************************************** CLASS DEFINITION
@@ -64,3 +65,6 @@ case class Controller (var game: GameInterface, var fileIO: FileIOInterface) ext
   def update: String =
     print("How was it possible for you to call this function?")
     ""
+
+  def gameToJson: JsObject =
+    fileIO.gameToJson(game)

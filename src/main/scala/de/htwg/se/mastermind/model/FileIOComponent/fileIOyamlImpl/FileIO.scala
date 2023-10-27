@@ -10,9 +10,13 @@ import de.htwg.se.mastermind.model.GameComponent.GameInterface
 
 import net.jcazevedo.moultingyaml._
 import MastermindModule.{given}
+import play.api.libs.json.JsObject
 
 class FileIO extends FileIOInterface {
   
+
+  override def gameToJson(game: GameInterface): JsObject = ???
+
   override def load(game: GameInterface): GameInterface = 
     val source = scala.io.Source.fromFile("game.yaml")
     val yaml = source.mkString.parseYaml

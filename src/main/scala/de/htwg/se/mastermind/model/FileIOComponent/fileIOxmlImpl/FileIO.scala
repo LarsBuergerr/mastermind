@@ -10,8 +10,12 @@ import GameComponent.GameBaseImpl.Game
 
 import java.io._
 import scala.xml._
+import play.api.libs.json.JsObject
 
 class FileIO extends FileIOInterface {
+
+
+  override def gameToJson(game: GameInterface): JsObject = ???
 
   override def load(game: GameInterface): GameInterface = 
     import java.io._
